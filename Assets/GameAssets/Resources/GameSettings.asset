@@ -1,0 +1,378 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667471c241be8c0d8227f15cd88ff752, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier:
+  hackSettings:
+    infinitePower: 0
+    customDamage: 1
+    damage: 1
+    forceLevel: 0
+    level: 12
+    takeDamageDisabled: 0
+    prisonerInteractionDisabled:
+      isActive: 0
+      targetState: 1
+    infiniteStamina:
+      isActive: 0
+      targetState: 1
+    npcDayOverrider:
+      isActive: 0
+      targetState: 0
+  playerSettings:
+    fightLiveCount: 3
+    dropMoneyOnSeen: 1
+    thirdPersonMaxDegreeDelta: 720
+    animationBlendDuration: 0.25
+    rotateDuration: 0.2
+    miningOffset: 1
+    breakMoveDuration: 0.3
+    rotateEase: 1
+    breakEase: 1
+    idleExcludeLayers:
+      serializedVersion: 2
+      m_Bits: 0
+    climbSpeed: 2.3
+    climbAnimationMultiplier: 2.5
+    slipMultiplier: 2
+    climbMultiplier: 1
+    mopSnapDuration1: 0.75
+    mopSnapDuration2: 0.3
+    lookAtRock: 0
+    blastForce: 4
+    blastRadius: 2
+    blastRotateDuration: 0.35
+    blastJumpPower: 0.5
+    blastJumpDuration: 0.8
+    blastRecoverDuration: 0.8
+    caughtResetDuration: 2
+    fightReachDistance: 3.75
+    kickSequenceData:
+      actionAnimationId: Player_Flying_Kick
+      reactionAnimationId: Scissor_Kick
+      moveDuration: 0.8
+      rotateDuration: 0.1
+      wait: 0.2
+      delay: 0.1
+      delay2: 1
+    punchSequenceData:
+      actionAnimationId: Armature_Head_Level_Punch_Right_N
+      reactionAnimationId: Scissor_Kick
+      moveDuration: 0.7
+      rotateDuration: 0.35
+      wait: 1.3
+      delay: 0.1
+      delay2: 1
+    moneyLoseFeedback: {fileID: 114219914853522714, guid: 7dea1e7428c7f3648988f9983f3346d3, type: 2}
+    healthLoseFeedback: {fileID: 114466290465577776, guid: e329f2533cf23a54fa2f79fd0379a298, type: 2}
+  blockSettings:
+    destroyEase: 14
+    destroyDelayRandom: {x: 0.6, y: 2}
+    destroyDuration: 0.35
+    scaleDuration: 0.35
+    scaleEase: 0
+    explosionForce: 200
+    firstSmallScale: 0.5
+    firstSmallDuration: 0.5
+    scale: 0.88
+    shakeDuration: 0.15
+    shakeStrength: 2.5
+    shakeVibrato: 10
+    minAmount: 2
+    decreaseAmount: 0
+    resetDuration: 0.4
+    addComponents: 1
+    clear: 1
+    shatterAmount: 18
+    shatterAmountOld: 24
+    shatterGroup: 3
+    relativeSize: 0
+    absoluteSize: 5
+    strength: 0.5
+    scaleTweenEase: 0
+    scaleTweenDuration: 0.24
+    startWithInstantHit: 1
+    shakeType: 0
+    bounceDuration: 0.4
+    bounceValue: 0.1
+    hitOffset: {x: 0, y: 0, z: 2}
+  blockSettings2:
+    destroyEase: 14
+    destroyDelayRandom: {x: 0.6, y: 2}
+    destroyDuration: 0.35
+    scaleDuration: 0.35
+    scaleEase: 27
+    explosionForce: 200
+    firstSmallScale: 0.5
+    firstSmallDuration: 0.25
+    scale: 0
+    shakeDuration: 0.15
+    shakeStrength: 7
+    shakeVibrato: 10
+    minAmount: 1
+    decreaseAmount: 0
+    resetDuration: 0.3
+    addComponents: 0
+    clear: 0
+    shatterAmount: 1
+    shatterAmountOld: 24
+    shatterGroup: 1
+    relativeSize: 10
+    absoluteSize: 2
+    strength: 0.5
+    scaleTweenEase: 27
+    scaleTweenDuration: 0.24
+    startWithInstantHit: 0
+    shakeType: 1
+    bounceDuration: 0.25
+    bounceValue: 0.08
+    hitOffset: {x: 0, y: 0, z: 1}
+  miningSettings:
+    experienceReward: 10
+    staminaIncreaseDelay: 0.2
+    caughtAnimationDistance: 6
+    mineActionQueue: 0.25
+    minimumUpDistance: 1.1
+    upDelay: 0.02
+    snapDistance: 0.4
+    snapDuration: 0.5
+    snapEase: 1
+    lightRotation: {x: 0.017037096, y: 0.9829629, z: -0.12940952, w: 0.12940958}
+    miningSettings:
+    - id: true
+      excludeLayers:
+        serializedVersion: 2
+        m_Bits: 33024
+    - id: false
+      excludeLayers:
+        serializedVersion: 2
+        m_Bits: 32768
+  ladderSettings:
+    upOffset: -0.85
+    snapDuration: 0.12
+    scaleDuration: 0.12
+    joystickDeadZone: 0.2
+    reachDuration: 0.15
+    overlapRadius: 0.05
+    overlapOffsetY: 0.1
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotate: {x: 0, y: 0, z: 0}
+    ladderJumpRaycastData:
+      maximumAmount: 9
+      jumpSpeed: 1.3
+      rotateSpeed: 0.3
+      distance: 15
+      duration: 0.7
+      ladderCountDurationIncrease: 0.02
+      delay: 0.5
+      rotateDelay: 0
+      power: 0.4
+      ladderCountPowerIncrease: 0.17
+      layerMask:
+        serializedVersion: 2
+        m_Bits: 16384
+      ease: 1
+      direction: {x: 0, y: -1, z: 0}
+    ladderPositionGroups:
+    - id: Top
+      distanceActivation: 2
+      verticalMin: -1
+      verticalMax: -0.5
+      horizontalMin: -0.5
+      horizontalMax: 0.2
+      offsetY: 0
+      climbOffset: {x: 0, y: 0.5, z: 0}
+    - id: Bot
+      distanceActivation: 1.5
+      verticalMin: 0.5
+      verticalMax: 1
+      horizontalMin: -2
+      horizontalMax: 2
+      offsetY: 0
+      climbOffset: {x: 0, y: 0, z: 0}
+    ladderObstacleAutoUp:
+      layerMask:
+        serializedVersion: 2
+        m_Bits: 16384
+      sphereY: 4
+      sphereRadius: 3
+      gizmosColor: {r: 0, g: 0, b: 1, a: 0.23529412}
+    ladderObstacleUp:
+      layerMask:
+        serializedVersion: 2
+        m_Bits: 16384
+      sphereY: 1.8
+      sphereRadius: 0.5
+      gizmosColor: {r: 0, g: 0, b: 1, a: 0.23529412}
+    ladderObstacleDown:
+      layerMask:
+        serializedVersion: 2
+        m_Bits: 147456
+      sphereY: 0.5
+      sphereRadius: 0.5
+      gizmosColor: {r: 1, g: 0.12319462, b: 0, a: 0.23529412}
+  roomSettings:
+    fadeDuration: 0.25
+    snapDuration: 0.25
+    hitDamageDelay: 0.2
+    attackDensity: 0.3
+    roomExitMessage: Mine Until Morning
+    roomEnterMessage: Finish All Your Quests
+    roomEnterMessageNight: This Is Not Your Room
+    finishYourQuestText: Finish Your Quest First
+    snapDistance: 1
+  npcSettings:
+    snapDuration: 0.3
+    animationSpeed: {x: 0.92, y: 1.08}
+    movementDelay: {x: 0, y: 1.1}
+    customerHealDuration: 1.7
+    customerHealWaitDuration: 0.25
+    customerBedCompleteDuration: 0.5
+    wakeUpSleepDuration: 3.2
+    wakeUpSnapDuration: 0.6
+    sleepSnapDuration: 0.6
+    leftSnapDuration: 0.2
+    leftSnapDelay: 2
+    fightMovementDuration: 7
+    fightSequenceDuration: 3.75
+    kickedDelay: 0.4
+    emoteTimer: {x: 5.5, y: 12}
+    animationSpeed2: {x: 0.85, y: 1.15}
+    guestTaskDelay: 0.7
+    guestTransitionDuration: 0.5
+    guestWaitDuration: 0.75
+    guestWaitPower: 0.3
+    guestWaitDismissDuration: 0.2
+    guestWalkDelay: {x: 0.5, y: 1}
+    guestWalkTransition: 0.5
+    bathCustomerMoveEffectDuration: 1
+    bathCustomerSnapDuration: 0.4
+    bathCustomerSnapDurationExit: 0.6
+    bathCustomerSnapDurationEnter: 0.65
+    bathExitDelay: 0.9
+    bathEnterDelay: 0.3
+    baseModelIds:
+    - body
+    - Moustache
+    - Hair
+    bathExceptionModels:
+    - body
+    - Moustache
+    bathPremiumItems:
+    - martini
+    bathModels:
+    - {fileID: 11400000, guid: dd9bcbd3fcfec0f4bb9d62c966897684, type: 2}
+    - {fileID: 11400000, guid: f2a385c1950f7624b92ecf271f87ba56, type: 2}
+    bathModelsGolden:
+    - {fileID: 11400000, guid: 871c5f1e5a42c6647aed5af8372edd74, type: 2}
+    - {fileID: 11400000, guid: ce9e8d7fa1ec53b41a5eab7c9f0b438e, type: 2}
+    bathPremiumModels:
+    - {fileID: 11400000, guid: 03ae3fa2e1fd88f4bb7f19ca6f9fbd49, type: 2}
+  customSettings:
+    waitForNightText: Wait for night!
+    pickDuration: 0.5
+    pickJumpPower: 2
+    movementDuration: 2.5
+    sceneFadeDuration: 2
+    orthoValue: 10
+    orthoDuration: 2
+    rotateDuration: 0.5
+    mapHideDelay: 2.25
+    transformIdFinder:
+      items:
+      - {fileID: 114879066421579055, guid: 83b396bb59af79c4196a2f6629b633eb, type: 2}
+      - {fileID: 114937026835900370, guid: ccfa12f20a65e624bb9f4cc6caec1f5e, type: 2}
+      - {fileID: 114921896918807614, guid: b96aecfab9c4a674ea7edc861b1d6711, type: 2}
+      - {fileID: 114244784137976959, guid: b4c84d3a95cfc394695a3287567f0bdd, type: 2}
+      - {fileID: 114570494196383155, guid: be703f9981724684f84828182e6994e4, type: 2}
+      - {fileID: 114034689045791973, guid: d952bf7bbf737e141ac38ae7532de10d, type: 2}
+      - {fileID: 114593914182165731, guid: fdd2289cf86197c4c9ebcee8554269b4, type: 2}
+      - {fileID: 114839743620325930, guid: e03bd1e7a3e17a942930653ff0a2ba14, type: 2}
+    gemDataContainer:
+      prefab: {fileID: 114100133123737159, guid: b92e8ee1723a10f49bf1672f1796b351, type: 2}
+      useTestGem:
+        isActive: 0
+        targetState: 1
+      gems:
+      - {fileID: 11400000, guid: 100d4e0546d29ae439337ced035ea4c4, type: 2}
+      - {fileID: 11400000, guid: eb89123b8bafb294cad8ce04b6820128, type: 2}
+      - {fileID: 11400000, guid: 8a47e48596f7fff4ead019fe4c88722a, type: 2}
+      - {fileID: 11400000, guid: ad7be50b4d075334baebda5ea303ec47, type: 2}
+      - {fileID: 11400000, guid: 803553716a7a06b4890d95831016083d, type: 2}
+      - {fileID: 11400000, guid: 54d384d59f290ed4982be94d590a01e3, type: 2}
+      - {fileID: 11400000, guid: 1d77d10cd7da80d4fad85f6935165c08, type: 2}
+      - {fileID: 11400000, guid: a6b61e2cadae9934c94a7a2598bffb55, type: 2}
+      - {fileID: 11400000, guid: 1202e23c2dadeb142a9dca8c3c7eac40, type: 2}
+      - {fileID: 11400000, guid: 7b151557ae306b24ebe726ac87827315, type: 2}
+      - {fileID: 11400000, guid: 129253afd16487242a62ce46692dadef, type: 2}
+      - {fileID: 11400000, guid: c9a78d3fa2b8ca24ebf3f36a2154f5b2, type: 2}
+      highlightData:
+      - rotateDelay: 0.35
+        moveForward: 1
+        highlightData:
+          duration: 0.75
+          power: 0
+          delay: 0.35
+          vector: {x: 0, y: 0, z: 0}
+          ease: 28
+          target: {fileID: 0}
+          disabled: 0
+        completeData:
+          duration: 0.5
+          power: 0
+          delay: 0.4
+          vector: {x: 0, y: 0, z: 0}
+          ease: 4
+          target: {fileID: 0}
+          disabled: 0
+      - rotateDelay: 0
+        moveForward: 0
+        highlightData:
+          duration: 0.75
+          power: 0
+          delay: 0
+          vector: {x: 0, y: 0, z: 0}
+          ease: 28
+          target: {fileID: 0}
+          disabled: 0
+        completeData:
+          duration: 0.5
+          power: 0
+          delay: 0.4
+          vector: {x: 0, y: 0, z: 0}
+          ease: 4
+          target: {fileID: 0}
+          disabled: 0
+    slapData: {fileID: 11400000, guid: 4c7d86468e480864389c111a8a278970, type: 2}
+  remoteSettings:
+    bathLevelData:
+      dirtyTargetCount: 0
+      customerTaskDuration: 0
+  adSettings:
+    adWatchDisabled: 1
+  mineAreaSetting:
+    items:
+    - {fileID: 114999253003265405, guid: b9072e8cf2d54374e9cf1e9d43240452, type: 2}
+    - {fileID: 114838449307385035, guid: b528d1bcf05f9564f8bafbe05d0eea5b, type: 2}
+    - {fileID: 114001638803046441, guid: 578e0e9c3969b3e40b5a8c520bb78dea, type: 2}
+    containerSettings:
+      scaleDuration: 0.5
+      removeOnDestroyItems: []
+    settings:
+      jumpPower: 1.7
+      jumpAmount: 1
+      jumpDuration: 0.45
+      jumpDurationDelay: 0
+  storeLinks:
+    android: https://play.google.com/store/apps/details?id=com.yamystudio.prisonbreakout
+    ios: https://apps.apple.com/app/prison-break-out/id6736354721
+  iapSettings: {fileID: 11400000, guid: 668f339d54556654d852bac11102cf63, type: 2}
