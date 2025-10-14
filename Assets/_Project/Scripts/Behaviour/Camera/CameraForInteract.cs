@@ -3,18 +3,39 @@
 public class CameraForInteract : MonoBehaviour
 {
     [SerializeField] private Transform interactorSource;
-    [SerializeField] private float interactRange;
+    [SerializeField] private float interactRange = 3f;
 
-    public void Update()
+    private InteractableBase currentInteractable; 
+
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        Ray ray = new Ray(interactorSource.position, interactorSource.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, interactRange))
         {
-            Ray r = new Ray(interactorSource.position, interactorSource.forward);
-            if (Physics.Raycast(r, out RaycastHit hitInfo, interactRange))
-                if (hitInfo.collider.TryGetComponent(out IInteractable interactOBJ))
+            if (hitInfo.collider.TryGetComponent(out InteractableBase interactOBJ))
+            {
+                if (currentInteractable != interactOBJ)
                 {
-                    interactOBJ.Interact();
+                    currentInteractable?.OnRaycastExit();
+
+                    currentInteractable = interactOBJ;
+                    currentInteractable.OnRaycastHit();
                 }
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    currentInteractable.Interact();
+                }
+            }
+        }
+        else
+        {
+            if (currentInteractable != null)
+            {
+                currentInteractable.OnRaycastExit();
+                currentInteractable = null;
+            }
         }
     }
 
@@ -22,11 +43,10 @@ public class CameraForInteract : MonoBehaviour
     {
         if (interactorSource == null) return;
 
-        Gizmos.color = Color.green; // màu của tia
+        Gizmos.color = Color.green;
         Vector3 start = interactorSource.position;
         Vector3 end = start + interactorSource.forward * interactRange;
-
         Gizmos.DrawLine(start, end);
-        Gizmos.DrawSphere(end, 0.05f); // vẽ chấm nhỏ ở điểm kết thúc (tùy chọn)
+        Gizmos.DrawSphere(end, 0.05f);
     }
 }
