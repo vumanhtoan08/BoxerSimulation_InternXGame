@@ -13,7 +13,7 @@ public class TouchController : MonoBehaviour
     }
 
     
-    void Update()
+    public void Update()
     {
         cameraLook.OnUpdate();
 

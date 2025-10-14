@@ -1,29 +1,42 @@
 using UnityEngine;
 
-[RequireComponent (typeof(PlayerMovement))]
-[RequireComponent (typeof(Animator))]
-[RequireComponent (typeof(CharacterController))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(StateMachinePlayer))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Reference")]
-    private PlayerMovement characterMovement;
     private Animator animator;
     private CharacterController character;
+    private StateMachinePlayer stateMachine;
+
+    #region Moving
+    [Header("Ref")]
+    [SerializeField] private FixedJoystick joystick;
+
+    [Header("Variable")]
+    [SerializeField, Range(0, 10)] private float speed = 2f;
+    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float groundCheckDistance = 0.2f;
+    [SerializeField] private LayerMask groundMask = 0;
+
+    #endregion
 
     private void Awake()
     {
-        characterMovement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>();
         character = GetComponent<CharacterController>();
+        stateMachine = GetComponent<StateMachinePlayer>();
     }
 
     private void Start()
     {
-        characterMovement?.Init(animator, character); 
+        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed,
+                                    gravity, groundCheckDistance, groundMask, stateMachine, this.transform));
     }
 
-    private void Update()
+    public void Update()
     {
-        characterMovement?.OnUpdate();
+        stateMachine?.OnUpdate();
     }
 }

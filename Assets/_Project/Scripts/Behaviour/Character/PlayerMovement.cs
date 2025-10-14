@@ -6,20 +6,22 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     [SerializeField] private FixedJoystick joystick;
     private CharacterController character;
+    private StateMachinePlayer stateMachine; 
 
     [Header("Variable")]
     [SerializeField, Range(0, 10)] private float speed = 2f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float groundCheckDistance = 0.2f;
-    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private LayerMask groundMask = 0;
 
     private Vector3 velocity;
     private bool isGrounded;
 
-    public void Init(Animator animator, CharacterController character)
+    public void Init(Animator animator, CharacterController character, StateMachinePlayer stateMachine)
     {
         this.animator = animator;
         this.character = character;
+        this.stateMachine = stateMachine;
     }
 
     public void OnUpdate()

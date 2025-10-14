@@ -1548,9 +1548,9 @@ GameObject:
   - component: {fileID: 5377667536105990177}
   - component: {fileID: 5749758474080112341}
   - component: {fileID: 1732604789358823709}
-  - component: {fileID: 8135042519024834724}
   - component: {fileID: 1599137705066169503}
   - component: {fileID: 6952546718724493460}
+  - component: {fileID: 2266687382537145289}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1625,25 +1625,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8135042519024834724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5645567201653638278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc1b48e306a65e45bb63c63e722380c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  joystick: {fileID: 0}
-  speed: 2
-  gravity: -9.81
-  groundCheckDistance: 0.2
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &1599137705066169503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,6 +1637,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f030fc130cba949a37ecdb40996fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystick: {fileID: 0}
+  speed: 3
+  gravity: -9.81
+  groundCheckDistance: 0.2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6952546718724493460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,7 +1657,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fixedTouchField: {fileID: 0}
-  cameraLook: {fileID: 0}
+  cameraLook: {fileID: 1080045567247459061}
+--- !u!114 &2266687382537145289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5645567201653638278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61aab4510d1acae498013060aa7e55b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5707439868790927745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1714,7 @@ GameObject:
   - component: {fileID: 7762788150993913963}
   - component: {fileID: 8360922057101988094}
   - component: {fileID: 1080045567247459061}
+  - component: {fileID: 4209161286437587381}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1809,7 +1810,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerBody: {fileID: 5377667536105990177}
   LockAxis: {x: 0, y: 0}
-  Sensivity: 40
+  Sensivity: 20
+--- !u!114 &4209161286437587381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5737936351433907755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54f7fac10cd4522459238056f5f717c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactorSource: {fileID: 5053477307426550055}
+  interactRange: 5
 --- !u!1 &5936359849040785951
 GameObject:
   m_ObjectHideFlags: 0
