@@ -33,7 +33,6 @@ public class PlayerIdleState : IState
     public void Enter()
     {
         animator.SetBool("isMoving", false);
-        Debug.Log("Enter IDLE");
     }
 
     public void Excute()
@@ -51,11 +50,9 @@ public class PlayerIdleState : IState
                 groundCheckDistance, groundMask, stateMachine, player)
             );
         }
-        Debug.Log("EXCUTE IDLE");
     }
 
     public void Exit()
     {
-        Debug.Log("EXIT IDLE");
     }
 }

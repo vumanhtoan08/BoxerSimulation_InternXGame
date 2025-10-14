@@ -36,7 +36,6 @@ public class PlayerMovingState :  IState
     public void Enter()
     {
         animator?.SetBool("isMoving", true);
-        Debug.Log("ENTER MOVING");
     }
 
     public void Excute()
@@ -46,7 +45,6 @@ public class PlayerMovingState :  IState
 
     public void Exit()
     {
-        Debug.Log("EXIT MOVING");
     }
 
     private void Moving()
