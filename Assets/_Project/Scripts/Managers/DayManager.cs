@@ -31,9 +31,5 @@ public class DayManager : Singleton<DayManager>
 
     public void OnUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            data.EnergyUse(1);
-        }
     }
 }

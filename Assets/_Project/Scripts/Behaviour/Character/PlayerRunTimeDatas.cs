@@ -9,6 +9,8 @@ public class PlayerRunTimeDatas : MonoBehaviour
     [SerializeField] private int maxEnergy = 3;
     private int currentEnergy;
 
+    public int CurrentEnergy => currentEnergy;
+
     public void OnStart()
     {
         currentEnergy = maxEnergy;

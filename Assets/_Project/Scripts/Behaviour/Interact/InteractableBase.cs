@@ -7,6 +7,8 @@ public class InteractableBase : MonoBehaviour, IInteractable
     [SerializeField] protected TYPE_TRAINING type; 
     protected Outline outline;
 
+    public TYPE_TRAINING Type => type;
+
     private void Awake()
     {
         outline = GetComponent<Outline>();

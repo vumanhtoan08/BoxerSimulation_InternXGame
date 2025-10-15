@@ -9,7 +9,12 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private CharacterController character;
     private StateMachinePlayer stateMachine;
-    private PlayerRunTimeDatas data; 
+    private PlayerRunTimeDatas data;
+
+    [SerializeField] private Transform playerEyes;
+    private CameraForInteract cameraForInteract;
+    private CameraLook cameraLook;
+    private TouchController touchController;
 
     #region Moving
     [Header("Ref")]
@@ -31,6 +36,8 @@ public class PlayerController : MonoBehaviour
     public PlayerRunTimeDatas Data => data;
     public FixedJoystick FixedJoystick => joystick;
 
+    public CameraForInteract CameraForInteract => cameraForInteract;
+
     public float Speed => speed;
     public float Gravity => gravity;
     public float GroundCheckDistance => groundCheckDistance;
@@ -44,6 +51,9 @@ public class PlayerController : MonoBehaviour
         character = GetComponent<CharacterController>();
         stateMachine = GetComponent<StateMachinePlayer>();
         data = GetComponent<PlayerRunTimeDatas>();
+        cameraForInteract = playerEyes.GetComponent<CameraForInteract>();
+        cameraLook = playerEyes.GetComponent<CameraLook>();
+        touchController = GetComponent<TouchController>();
     }
 
     private void Start()
@@ -51,10 +61,14 @@ public class PlayerController : MonoBehaviour
         stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed,
                                     gravity, groundCheckDistance, groundMask, stateMachine, this.transform));
         data?.OnStart();
+        cameraForInteract?.OnStart();
+        touchController?.OnStart();
     }
 
     public void Update()
     {
         stateMachine?.OnUpdate();
+        cameraForInteract?.OnUpdate();
+        touchController?.OnUpdate();
     }
 }

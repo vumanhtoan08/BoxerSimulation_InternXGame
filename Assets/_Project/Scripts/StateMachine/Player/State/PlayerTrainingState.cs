@@ -15,6 +15,8 @@ public class PlayerTrainingState : IState
     private float groundCheckDistance;
     private LayerMask groundMask;
 
+    private PlayerController playerController;
+
     public PlayerTrainingState(Animator animator, FixedJoystick joystick, CharacterController character,
                            float speed, float gravity, float groundCheckDistance, LayerMask groundMask,
                            StateMachinePlayer stateMachine, Transform player)
@@ -32,6 +34,7 @@ public class PlayerTrainingState : IState
 
     public void Enter()
     {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         CanvasManager.Instance.OnActiveTrainingPanel();
         OnChangeStateTraining();
     }
@@ -59,8 +62,8 @@ public class PlayerTrainingState : IState
     private void OnChangeStateTraining()
     {
         CanvasManager.Instance.OnBoxingComplete += OnBoxingComplete;
-        CanvasManager.Instance.OnBoxingComplete += OnRunningComplete;
-        CanvasManager.Instance.OnBoxingComplete += OnSquatComplete;
+        CanvasManager.Instance.OnRuningComplete += OnRunningComplete;
+        CanvasManager.Instance.OnSquatComplete += OnSquatComplete;
     }
 
     private void OnBoxingComplete()
@@ -68,6 +71,7 @@ public class PlayerTrainingState : IState
         // tang suc manh
         stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
                                                     groundMask, stateMachine, player));
+        playerController.Data.EnergyUse(1);
         Debug.Log("Hoan thanh bai boxing");
     }
 
@@ -76,6 +80,7 @@ public class PlayerTrainingState : IState
         // tang suc manh
         stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
                                                     groundMask, stateMachine, player));
+        playerController.Data.EnergyUse(1);
         Debug.Log("Hoan thanh bai chay");
     }
     private void OnSquatComplete()
@@ -83,6 +88,7 @@ public class PlayerTrainingState : IState
         // tang suc manh
         stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
                                                     groundMask, stateMachine, player));
+        playerController.Data.EnergyUse(1);
         Debug.Log("Hoan thanh bai squat");
     }
 

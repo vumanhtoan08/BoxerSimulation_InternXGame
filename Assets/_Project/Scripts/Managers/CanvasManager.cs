@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CanvasManager : Singleton<CanvasManager>
 {
+    private PlayerController playerController;
+
     [Header("Canvas For Training")]
     [SerializeField] private GameObject trainingPanel;
     [SerializeField] private Image fillEnergyBar;
@@ -23,6 +25,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void OnStart()
     {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         trainingPanel?.SetActive(false);
         OnResetAction();
     }
@@ -66,9 +69,20 @@ public class CanvasManager : Singleton<CanvasManager>
             DOVirtual.DelayedCall(fillDuration, () => {
                 OnUnActiveTrainingPanel();
 
-                OnBoxingComplete?.Invoke();
-                OnRuningComplete?.Invoke();
-                OnSquatComplete?.Invoke();
+                switch (playerController.CameraForInteract.CurrentInteractable.Type)
+                {
+                    case TYPE_TRAINING.BOXING:
+                        OnBoxingComplete?.Invoke();
+                        break;
+                    case TYPE_TRAINING.RUNING:
+                        OnRuningComplete?.Invoke();
+                        break;
+                    case TYPE_TRAINING.SQUAT:
+                        OnSquatComplete?.Invoke();
+                        break;
+                    default:
+                        break;
+                }
 
                 OnResetAction();
             });

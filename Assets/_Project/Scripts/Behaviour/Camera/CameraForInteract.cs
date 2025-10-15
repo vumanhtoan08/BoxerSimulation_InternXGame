@@ -8,12 +8,14 @@ public class CameraForInteract : MonoBehaviour
 
     private InteractableBase currentInteractable;
 
-    private void Start()
+    public InteractableBase CurrentInteractable => currentInteractable;
+
+    public void OnStart()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    private void Update()
+    public void OnUpdate()
     {
         Ray ray = new Ray(interactorSource.position, interactorSource.forward);
 
