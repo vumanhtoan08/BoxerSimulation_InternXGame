@@ -29,15 +29,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void OnUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            OnUnActiveTrainingPanel();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            OnTraining();
-        }
+        
     }
 
     #region Training Logic
@@ -77,6 +69,8 @@ public class CanvasManager : Singleton<CanvasManager>
                 OnBoxingComplete?.Invoke();
                 OnRuningComplete?.Invoke();
                 OnSquatComplete?.Invoke();
+
+                OnResetAction();
             });
         }
     }

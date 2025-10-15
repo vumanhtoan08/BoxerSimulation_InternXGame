@@ -4,6 +4,8 @@ public class StateMachinePlayer : MonoBehaviour
 {
     [SerializeField] private IState currentState; 
 
+    public IState CurrentState => currentState;
+
     public void ChangeState(IState newState)
     {
         if (currentState != null && newState == currentState)

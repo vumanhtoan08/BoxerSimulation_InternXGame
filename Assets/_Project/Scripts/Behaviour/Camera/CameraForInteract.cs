@@ -4,8 +4,14 @@ public class CameraForInteract : MonoBehaviour
 {
     [SerializeField] private Transform interactorSource;
     [SerializeField] private float interactRange = 3f;
+    [SerializeField] private PlayerController playerController;
 
-    private InteractableBase currentInteractable; 
+    private InteractableBase currentInteractable;
+
+    private void Start()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
 
     private void Update()
     {
@@ -23,7 +29,8 @@ public class CameraForInteract : MonoBehaviour
                     currentInteractable.OnRaycastHit();
                 }
 
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.E) 
+                    && playerController.StateMachine.CurrentState.ToString() != "PlayerTrainingState")
                 {
                     currentInteractable.Interact();
                 }

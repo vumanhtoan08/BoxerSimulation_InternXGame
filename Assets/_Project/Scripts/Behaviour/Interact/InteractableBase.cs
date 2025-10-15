@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Outline))]
 public class InteractableBase : MonoBehaviour, IInteractable
 {
-    [SerializeField] protected PlayerController controller;
+    [SerializeField] protected PlayerController playerController;
     [SerializeField] protected TYPE_TRAINING type; 
     protected Outline outline;
 
@@ -11,6 +11,7 @@ public class InteractableBase : MonoBehaviour, IInteractable
     {
         outline = GetComponent<Outline>();
         outline.enabled = false;
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     public virtual void Interact()

@@ -9,13 +9,13 @@ public class TouchController : MonoBehaviour
   
     void Start()
     {
-
+        cameraLook?.OnStart();
     }
 
     
     public void Update()
     {
-        cameraLook.OnUpdate();
+        cameraLook?.OnUpdate();
 
         cameraLook.LockAxis = fixedTouchField.TouchDist;
     }

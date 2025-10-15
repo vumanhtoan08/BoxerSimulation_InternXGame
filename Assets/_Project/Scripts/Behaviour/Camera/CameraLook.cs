@@ -11,14 +11,24 @@ public class CameraLook : MonoBehaviour
     public Vector2 LockAxis;
     public float Sensivity = 40f;
 
+    [SerializeField] private PlayerController playerController;
+
+    public void OnStart()
+    {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
+
     public void OnUpdate()
     {
-        XMove = LockAxis.x * Sensivity * Time.deltaTime;
-        YMove = LockAxis.y * Sensivity * Time.deltaTime;
-        XRotation -= YMove;
-        XRotation = Mathf.Clamp(XRotation, -90f, 90f);
+        if (playerController.StateMachine.CurrentState.ToString() != "PlayerTrainingState")
+        {
+            XMove = LockAxis.x * Sensivity * Time.deltaTime;
+            YMove = LockAxis.y * Sensivity * Time.deltaTime;
+            XRotation -= YMove;
+            XRotation = Mathf.Clamp(XRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(XRotation,0,0);
-        PlayerBody.Rotate(Vector3.up * XMove);
+            transform.localRotation = Quaternion.Euler(XRotation, 0, 0);
+            PlayerBody.Rotate(Vector3.up * XMove);
+        }
     }
 }
