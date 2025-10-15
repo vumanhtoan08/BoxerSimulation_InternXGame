@@ -3,7 +3,7 @@
 [RequireComponent(typeof(Outline))]
 public class InteractableBase : MonoBehaviour, IInteractable
 {
-    private Outline outline;
+    protected Outline outline;
 
     private void Awake()
     {
@@ -11,17 +11,17 @@ public class InteractableBase : MonoBehaviour, IInteractable
         outline.enabled = false;
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         Debug.Log("Interacted with " + gameObject.name);
     }
 
-    public void OnRaycastHit()
+    public virtual void OnRaycastHit()
     {
         outline.enabled = true; 
     }
 
-    public void OnRaycastExit()
+    public virtual void OnRaycastExit()
     {
         outline.enabled = false; 
     }

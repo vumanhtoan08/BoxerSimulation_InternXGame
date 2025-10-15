@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private CharacterController character;
     private StateMachinePlayer stateMachine;
+    private PlayerRunTimeDatas data; 
 
     #region Moving
     [Header("Ref")]
@@ -27,12 +28,14 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         character = GetComponent<CharacterController>();
         stateMachine = GetComponent<StateMachinePlayer>();
+        data = GetComponent<PlayerRunTimeDatas>();
     }
 
     private void Start()
     {
         stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed,
                                     gravity, groundCheckDistance, groundMask, stateMachine, this.transform));
+        data?.OnStart();
     }
 
     public void Update()
