@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +15,16 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] private float cooldown = 0.75f;
 
     private float currentFill = 0f;
-    private float lastTapTime = -999f; // lưu thời điểm tương tác cuối
+    private float lastTapTime = -999f;
+
+    public event Action OnBoxingComplete; 
+    public event Action OnRuningComplete; 
+    public event Action OnSquatComplete; 
 
     public void OnStart()
     {
         trainingPanel?.SetActive(false);
+        OnResetAction();
     }
 
     public void OnUpdate()
@@ -47,11 +53,10 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void OnTraining()
     {
-        // Nếu chưa qua cooldown thì return
         if (Time.time - lastTapTime < cooldown)
             return;
 
-        lastTapTime = Time.time; // cập nhật thời điểm tương tác
+        lastTapTime = Time.time;
 
         float target = Mathf.Clamp(currentFill + increaseAmount, 0f, 1f);
         DOTween.Kill(fillEnergyBar);
@@ -66,7 +71,13 @@ public class CanvasManager : Singleton<CanvasManager>
 
         if (target >= 1f)
         {
-            DOVirtual.DelayedCall(fillDuration, () => OnUnActiveTrainingPanel());
+            DOVirtual.DelayedCall(fillDuration, () => {
+                OnUnActiveTrainingPanel();
+
+                OnBoxingComplete?.Invoke();
+                OnRuningComplete?.Invoke();
+                OnSquatComplete?.Invoke();
+            });
         }
     }
 
@@ -80,6 +91,17 @@ public class CanvasManager : Singleton<CanvasManager>
     private void UpdateUI()
     {
         fillEnergyBar.fillAmount = currentFill;
+    }
+
+    #endregion
+
+    #region Action
+
+    private void OnResetAction()
+    {
+        OnBoxingComplete = null;
+        OnRuningComplete = null;
+        OnSquatComplete = null;
     }
 
     #endregion

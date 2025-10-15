@@ -3,6 +3,8 @@
 [RequireComponent(typeof(Outline))]
 public class InteractableBase : MonoBehaviour, IInteractable
 {
+    [SerializeField] protected PlayerController controller;
+    [SerializeField] protected TYPE_TRAINING type; 
     protected Outline outline;
 
     private void Awake()
@@ -25,4 +27,11 @@ public class InteractableBase : MonoBehaviour, IInteractable
     {
         outline.enabled = false; 
     }
+}
+
+public enum TYPE_TRAINING
+{
+    BOXING, 
+    RUNING,
+    SQUAT
 }

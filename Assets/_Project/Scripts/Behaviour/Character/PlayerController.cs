@@ -23,6 +23,21 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region GETSET 
+
+    public Animator Animator => animator;
+    public CharacterController CharacterController => character;
+    public StateMachinePlayer StateMachine => stateMachine;
+    public PlayerRunTimeDatas Data => data;
+    public FixedJoystick FixedJoystick => joystick;
+
+    public float Speed => speed;
+    public float Gravity => gravity;
+    public float GroundCheckDistance => groundCheckDistance;
+    public LayerMask GroundMask => groundMask;
+
+    #endregion
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
