@@ -34,6 +34,7 @@ public class InteractableBase : MonoBehaviour, IInteractable
 
 public enum TYPE_TRAINING
 {
+    NONE,
     BOXING, 
     RUNING,
     SQUAT

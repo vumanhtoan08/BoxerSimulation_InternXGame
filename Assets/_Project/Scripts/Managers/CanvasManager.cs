@@ -27,6 +27,7 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         trainingPanel?.SetActive(false);
+        canvasArena?.SetActive(false);
         OnResetAction();
     }
 
@@ -101,8 +102,6 @@ public class CanvasManager : Singleton<CanvasManager>
         fillEnergyBar.fillAmount = currentFill;
     }
 
-    #endregion
-
     #region Action
 
     private void OnResetAction()
@@ -110,6 +109,37 @@ public class CanvasManager : Singleton<CanvasManager>
         OnBoxingComplete = null;
         OnRuningComplete = null;
         OnSquatComplete = null;
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Arena Infor
+
+    [Header("Canvas For Arena")]
+    [SerializeField] private GameObject canvasArena;
+    [SerializeField] private GameObject canvasBehaviour; 
+
+   /// [Header("Enemy Stats")]
+
+
+
+    public void OnActiveEnemyInfoPanel()
+    {
+        canvasBehaviour.SetActive(false);
+        canvasArena.SetActive(true);
+    }
+
+    public void OnUnActiveEnemyInfoPanel()
+    {
+        canvasArena.SetActive(false);
+        canvasBehaviour.SetActive(true);
+    }
+
+    public void UpdateInfoEnemy()
+    {
+        // cập nhật data của enemy 
     }
 
     #endregion

@@ -1638,6 +1638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f030fc130cba949a37ecdb40996fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEyes: {fileID: 0}
   joystick: {fileID: 0}
   speed: 3
   gravity: -9.81
@@ -1825,6 +1826,7 @@ MonoBehaviour:
   PlayerBody: {fileID: 5377667536105990177}
   LockAxis: {x: 0, y: 0}
   Sensivity: 10
+  playerController: {fileID: 0}
 --- !u!114 &4209161286437587381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1838,7 +1840,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactorSource: {fileID: 5053477307426550055}
-  interactRange: 2
+  interactRange: 3
+  playerController: {fileID: 0}
 --- !u!1 &5936359849040785951
 GameObject:
   m_ObjectHideFlags: 0
