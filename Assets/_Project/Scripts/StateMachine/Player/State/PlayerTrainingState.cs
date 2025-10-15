@@ -59,16 +59,33 @@ public class PlayerTrainingState : IState
     private void OnChangeStateTraining()
     {
         CanvasManager.Instance.OnBoxingComplete += OnBoxingComplete;
+        CanvasManager.Instance.OnBoxingComplete += OnRunningComplete;
+        CanvasManager.Instance.OnBoxingComplete += OnSquatComplete;
     }
 
     private void OnBoxingComplete()
     {
         // tang suc manh
-
         stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
                                                     groundMask, stateMachine, player));
         Debug.Log("Hoan thanh bai boxing");
     }
+
+    private void OnRunningComplete()
+    {
+        // tang suc manh
+        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
+                                                    groundMask, stateMachine, player));
+        Debug.Log("Hoan thanh bai chay");
+    }
+    private void OnSquatComplete()
+    {
+        // tang suc manh
+        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
+                                                    groundMask, stateMachine, player));
+        Debug.Log("Hoan thanh bai squat");
+    }
+
 
     #endregion
 }
