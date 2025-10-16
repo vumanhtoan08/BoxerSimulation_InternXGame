@@ -3,39 +3,19 @@ using UnityEngine;
 public class PlayerMovingState :  IState
 {
     [Header("Ref")]
-    private Animator animator;
-    private FixedJoystick joystick;
-    private CharacterController character;
-    private StateMachinePlayer stateMachine;
-    private Transform player; 
-
-    [Header("Var")]
-    private float speed;
-    private float gravity;
-    private float groundCheckDistance;
-    private LayerMask groundMask;
+    private PlayerController playerController; 
 
     private Vector3 velocity;
     private bool isGrounded;
 
-    public PlayerMovingState(Animator animator, FixedJoystick joystick, CharacterController character,
-                            float speed, float gravity, float groundCheckDistance, LayerMask groundMask,
-                            StateMachinePlayer stateMachine, Transform player)
+    public PlayerMovingState(PlayerController playerController)
     {
-        this.animator = animator;
-        this.joystick = joystick;
-        this.character = character;
-        this.speed = speed;
-        this.gravity = gravity;
-        this.groundCheckDistance = groundCheckDistance;
-        this.groundMask = groundMask;
-        this.stateMachine = stateMachine;
-        this.player = player;
+        this.playerController = playerController;
     }
 
     public void Enter()
     {
-        animator?.SetBool("isMoving", true);
+        playerController.Animator?.SetBool("isMoving", true);
     }
 
     public void Excute()
@@ -49,12 +29,12 @@ public class PlayerMovingState :  IState
 
     private void Moving()
     {
-        isGrounded = Physics.CheckSphere(player.position, groundCheckDistance, groundMask);
+        isGrounded = Physics.CheckSphere(playerController.transform.position, playerController.GroundCheckDistance, playerController.GroundMask);
         if (isGrounded && velocity.y < 0)
             velocity.y = -2f;
 
-        float joyX = joystick.Horizontal;
-        float joyZ = joystick.Vertical;
+        float joyX = playerController.FixedJoystick.Horizontal;
+        float joyZ = playerController.FixedJoystick.Vertical;
 
         float inputX = Input.GetAxis("Horizontal");
         float inputZ = Input.GetAxis("Vertical");
@@ -62,17 +42,16 @@ public class PlayerMovingState :  IState
         float finalX = Mathf.Abs(joyX) > 0.1f ? joyX : inputX;
         float finalZ = Mathf.Abs(joyZ) > 0.1f ? joyZ : inputZ;
 
-        Vector3 move = player.right * finalX + player.forward * finalZ;
-        character.Move(move * speed * Time.deltaTime);
+        Vector3 move = playerController.transform.right * finalX + playerController.transform.forward * finalZ;
+        playerController.CharacterController.Move(move * playerController.Speed * Time.deltaTime);
 
-        velocity.y += gravity * Time.deltaTime;
-        character.Move(velocity * Time.deltaTime);
+        velocity.y += playerController.Gravity * Time.deltaTime;
+        playerController.CharacterController.Move(velocity * Time.deltaTime);
 
         bool isMoving = move.magnitude > 0.1f;
         if (!isMoving)
         {
-            stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character,
-                speed, gravity, groundCheckDistance, groundMask, stateMachine, player));
+            playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         }
     }
 }

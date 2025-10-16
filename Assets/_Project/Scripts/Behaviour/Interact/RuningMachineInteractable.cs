@@ -10,10 +10,6 @@ public class RuningMachineInteractable : InteractableBase
             Debug.Log("Het nang luong");
             return;
         }
-        playerController.StateMachine.ChangeState(new PlayerTrainingState(playerController.Animator, playerController.FixedJoystick,
-                                                                    playerController.CharacterController, playerController.Speed,
-                                                                    playerController.Gravity, playerController.GroundCheckDistance,
-                                                                    playerController.GroundMask, playerController.StateMachine,
-                                                                    playerController.transform));
+        playerController.StateMachine.ChangeState(new PlayerTrainingState(playerController));
     }
 }

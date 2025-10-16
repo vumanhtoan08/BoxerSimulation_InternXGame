@@ -58,8 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed,
-                                    gravity, groundCheckDistance, groundMask, stateMachine, this.transform));
+        stateMachine.ChangeState(new PlayerIdleState(this));
         data?.OnStart();
         cameraForInteract?.OnStart();
         touchController?.OnStart();

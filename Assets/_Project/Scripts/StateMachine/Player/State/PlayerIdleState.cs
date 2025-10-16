@@ -3,52 +3,30 @@ using UnityEngine;
 public class PlayerIdleState : IState
 {
     [Header("Ref")]
-    private Animator animator;
-    private FixedJoystick joystick;
-    private CharacterController character;
-    private StateMachinePlayer stateMachine;
-    private Transform player; 
+    private PlayerController playerController;
 
-    [Header("Var")]
-    private float speed;
-    private float gravity;
-    private float groundCheckDistance;
-    private LayerMask groundMask;
-
-    public PlayerIdleState(Animator animator, FixedJoystick joystick, CharacterController character,
-                           float speed, float gravity, float groundCheckDistance, LayerMask groundMask,
-                           StateMachinePlayer stateMachine, Transform player)
+    public PlayerIdleState(PlayerController playerController)
     {
-        this.animator = animator;
-        this.joystick = joystick;
-        this.character = character;
-        this.speed = speed;
-        this.gravity = gravity;
-        this.groundCheckDistance = groundCheckDistance;
-        this.groundMask = groundMask;
-        this.stateMachine = stateMachine;
-        this.player = player;
+        this.playerController = playerController;
     }
 
     public void Enter()
     {
-        animator.SetBool("isMoving", false);
+        playerController.Animator.SetBool("isMoving", false);
     }
 
     public void Excute()
     {
         float inputX = Mathf.Abs(Input.GetAxisRaw("Horizontal"));
         float inputZ = Mathf.Abs(Input.GetAxisRaw("Vertical"));
-        float joyX = Mathf.Abs(joystick.Horizontal);
-        float joyZ = Mathf.Abs(joystick.Vertical);
+        float joyX = Mathf.Abs(playerController.FixedJoystick.Horizontal);
+        float joyZ = Mathf.Abs(playerController.FixedJoystick.Vertical);
 
         bool hasInput = (inputX + inputZ + joyX + joyZ) > 0.1f;
 
         if (hasInput)
         {
-            stateMachine.ChangeState(new PlayerMovingState(animator, joystick, character, speed, gravity,
-                groundCheckDistance, groundMask, stateMachine, player)
-            );
+            playerController.StateMachine.ChangeState(new PlayerMovingState(playerController));
         }
     }
 

@@ -3,38 +3,33 @@ using UnityEngine;
 public class PlayerTrainingState : IState
 {
     [Header("Ref")]
-    private Animator animator;
-    private FixedJoystick joystick;
-    private CharacterController character;
-    private StateMachinePlayer stateMachine;
-    private Transform player;
-
-    [Header("Var")]
-    private float speed;
-    private float gravity;
-    private float groundCheckDistance;
-    private LayerMask groundMask;
-
     private PlayerController playerController;
 
-    public PlayerTrainingState(Animator animator, FixedJoystick joystick, CharacterController character,
-                           float speed, float gravity, float groundCheckDistance, LayerMask groundMask,
-                           StateMachinePlayer stateMachine, Transform player)
+    public PlayerTrainingState(PlayerController playerController)
     {
-        this.animator = animator;
-        this.joystick = joystick;
-        this.character = character;
-        this.speed = speed;
-        this.gravity = gravity;
-        this.groundCheckDistance = groundCheckDistance;
-        this.groundMask = groundMask;
-        this.stateMachine = stateMachine;
-        this.player = player;
+        this.playerController = playerController;
     }
 
     public void Enter()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        switch (playerController.CameraForInteract.CurrentInteractable.Type)
+        {
+            case TYPE_TRAINING.NONE:
+                break;
+            case TYPE_TRAINING.BOXING:
+                playerController.Animator.SetBool("isBoxing", true);
+                break;
+            case TYPE_TRAINING.RUNING:
+                playerController.Animator.SetBool("isRunning", true);
+                break;
+            case TYPE_TRAINING.SQUAT:
+                playerController.Animator.SetBool("isSquat", true);
+                break;
+            default:
+                break;
+        }
+
+
         CanvasManager.Instance.OnActiveTrainingPanel();
         OnChangeStateTraining();
     }
@@ -54,7 +49,22 @@ public class PlayerTrainingState : IState
 
     public void Exit()
     {
-
+        switch (playerController.CameraForInteract.CurrentInteractable.Type)
+        {
+            case TYPE_TRAINING.NONE:
+                break;
+            case TYPE_TRAINING.BOXING:
+                playerController.Animator.SetBool("isBoxing", false);
+                break;
+            case TYPE_TRAINING.RUNING:
+                playerController.Animator.SetBool("isRunning", false);
+                break;
+            case TYPE_TRAINING.SQUAT:
+                playerController.Animator.SetBool("isSquat", false);
+                break;
+            default:
+                break;
+        }
     }
 
     #region Methods
@@ -69,8 +79,7 @@ public class PlayerTrainingState : IState
     private void OnBoxingComplete()
     {
         // tang suc manh
-        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
-                                                    groundMask, stateMachine, player));
+        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.Data.EnergyUse(1);
         Debug.Log("Hoan thanh bai boxing");
     }
@@ -78,16 +87,14 @@ public class PlayerTrainingState : IState
     private void OnRunningComplete()
     {
         // tang suc manh
-        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
-                                                    groundMask, stateMachine, player));
+        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.Data.EnergyUse(1);
         Debug.Log("Hoan thanh bai chay");
     }
     private void OnSquatComplete()
     {
         // tang suc manh
-        stateMachine.ChangeState(new PlayerIdleState(animator, joystick, character, speed, gravity, groundCheckDistance,
-                                                    groundMask, stateMachine, player));
+        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.Data.EnergyUse(1);
         Debug.Log("Hoan thanh bai squat");
     }
