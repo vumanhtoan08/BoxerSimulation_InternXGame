@@ -1,20 +1,21 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class StateMachinePlayer : MonoBehaviour 
+public class StateMachineEnemy : MonoBehaviour
 {
-    private IState currentState; 
+    private IState currentState;
 
     public IState CurrentState => currentState;
 
     public void ChangeState(IState newState)
     {
         if (currentState != null && newState == currentState)
-            return; 
+            return;
 
         currentState?.Exit();
 
         currentState = newState;
-        
+
         currentState?.Enter();
     }
 

@@ -9,6 +9,7 @@ public class GameManager : Singleton<DataManager>
     [SerializeField] private SoundManager soundManager;
     [SerializeField] private DayManager dayManager;
     [SerializeField] private CanvasManager canvasManager;
+    [SerializeField] private InteractableManager interactableManager;
 
     private void Start()
     {
@@ -18,11 +19,13 @@ public class GameManager : Singleton<DataManager>
         //
         dayManager?.OnStart();
         canvasManager?.OnStart();
+        interactableManager?.OnStart();
     }
 
     private void Update()
     {
         dayManager?.OnUpdate();
         canvasManager?.OnUpdate();
+        interactableManager?.OnUpdate();
     }
 }

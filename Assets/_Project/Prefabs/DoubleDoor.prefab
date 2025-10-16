@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2039616572098402444}
   m_Layer: 0
   m_Name: DoubleDoor
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,6 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb033e11b5d2d944d8e3d0a8157ad8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  type: 0
 --- !u!1001 &3712992394288865640
 PrefabInstance:
   m_ObjectHideFlags: 0
