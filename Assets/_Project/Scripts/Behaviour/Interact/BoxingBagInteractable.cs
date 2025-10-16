@@ -11,6 +11,7 @@ public class BoxingBagInteractable : InteractableBase
             return;
         }
 
+        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.StateMachine.ChangeState(new PlayerTrainingState(playerController));
     }
 }

@@ -54,12 +54,15 @@ public class PlayerTrainingState : IState
             case TYPE_TRAINING.NONE:
                 break;
             case TYPE_TRAINING.BOXING:
+                playerController.Animator.SetBool("isMoving", false);
                 playerController.Animator.SetBool("isBoxing", false);
                 break;
             case TYPE_TRAINING.RUNING:
+                playerController.Animator.SetBool("isMoving", false);
                 playerController.Animator.SetBool("isRunning", false);
                 break;
             case TYPE_TRAINING.SQUAT:
+                playerController.Animator.SetBool("isMoving", false);
                 playerController.Animator.SetBool("isSquat", false);
                 break;
             default:

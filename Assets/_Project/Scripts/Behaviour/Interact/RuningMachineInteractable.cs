@@ -10,6 +10,8 @@ public class RuningMachineInteractable : InteractableBase
             Debug.Log("Het nang luong");
             return;
         }
+
+        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.StateMachine.ChangeState(new PlayerTrainingState(playerController));
     }
 }
