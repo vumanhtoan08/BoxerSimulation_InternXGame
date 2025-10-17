@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerRunTimeDatas : MonoBehaviour
 {
     [Header("Data Runtime")]
-    private PlayerDatas dataRuntime;
+    private PlayerData dataRuntime = new();
 
     [Header("Data Energy")]
     [SerializeField] private int maxEnergy = 3;
@@ -14,10 +14,11 @@ public class PlayerRunTimeDatas : MonoBehaviour
     public void OnStart()
     {
         currentEnergy = maxEnergy;
+        dataRuntime.SetDataForPlayer();
     }
 
     #region Methods Energy
-    
+
     public bool EnergyUse(int amount = 0)
     {
         currentEnergy -= amount;
