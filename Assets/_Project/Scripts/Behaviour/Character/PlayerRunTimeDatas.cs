@@ -4,6 +4,7 @@ public class PlayerRunTimeDatas : MonoBehaviour
 {
     [Header("Data Runtime")]
     private PlayerData dataRuntime = new();
+    public PlayerData DataRuntime => dataRuntime;
 
     [Header("Data Energy")]
     [SerializeField] private int maxEnergy = 3;

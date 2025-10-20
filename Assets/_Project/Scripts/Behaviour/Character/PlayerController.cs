@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(StateMachinePlayer))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     [Header("Reference")]
     private Animator animator;
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
         animator = GetComponent<Animator>();
         character = GetComponent<CharacterController>();
