@@ -50,7 +50,6 @@ public class PlayerRunTimeDatas : MonoBehaviour
     public bool CheckStamina(float value)
     {
         bool isEnough = currentStamina < value ? false : true;
-        Debug.Log($"Không đủ năng lượng {currentStamina} == {value}");
         return isEnough;
     }
 

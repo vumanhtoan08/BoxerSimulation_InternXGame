@@ -65,8 +65,9 @@ public class PlayerPunchState : IState
 
         foreach (var hit in hits)
         {
+            StateMachineEnemy stateMachine = hit.GetComponent<StateMachineEnemy>();
             IHealth health = hit.GetComponent<IHealth>();
-            if (health != null)
+            if (health != null && stateMachine.CurrentState.ToString() != "EnemyBlockState")
             {
                 health.ChangeHealth(-attack);
             }
