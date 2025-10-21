@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EntityHealth : MonoBehaviour, IHealth
 {
-    protected float maxHealth = 100;
+    protected float maxHealth;
     protected float currentHealth;
     protected Animator animator;
 

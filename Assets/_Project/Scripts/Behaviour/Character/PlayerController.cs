@@ -10,6 +10,7 @@ public class PlayerController : Singleton<PlayerController>
     private CharacterController character;
     private StateMachinePlayer stateMachine;
     private PlayerRunTimeDatas data;
+    private PlayerHealth health; 
 
     [SerializeField] private Transform playerEyes;
     private CameraForInteract cameraForInteract;
@@ -42,6 +43,7 @@ public class PlayerController : Singleton<PlayerController>
     public CharacterController CharacterController => character;
     public StateMachinePlayer StateMachine => stateMachine;
     public PlayerRunTimeDatas Data => data;
+    public PlayerHealth Health => health;
     public FixedJoystick FixedJoystick => joystick;
 
     public CameraForInteract CameraForInteract => cameraForInteract;
@@ -77,6 +79,7 @@ public class PlayerController : Singleton<PlayerController>
         cameraForInteract = playerEyes.GetComponent<CameraForInteract>();
         cameraLook = playerEyes.GetComponent<CameraLook>();
         touchController = GetComponent<TouchController>();
+        health = GetComponent<PlayerHealth>();
     }
 
     private void Start()
@@ -86,6 +89,8 @@ public class PlayerController : Singleton<PlayerController>
         data?.OnStart();
         cameraForInteract?.OnStart();
         touchController?.OnStart();
+        
+        health?.Init(this);
     }
 
     public void Update()

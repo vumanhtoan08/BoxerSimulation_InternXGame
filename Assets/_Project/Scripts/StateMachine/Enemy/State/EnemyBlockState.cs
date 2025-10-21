@@ -33,7 +33,6 @@ public class EnemyBlockState : IState
     }
     public void Exit()
     {
-        Debug.Log("Exit Block");
         enemyController.Animator.SetBool("isBlock", false);
     }
 }

@@ -11,6 +11,7 @@ public class EnemyHealth : EntityHealth
         this.animator = enemyController.Animator;
         this.enemyController = enemyController;
 
+        maxHealth = enemyController.RuntimeData.EnemyData.Health;
         currentHealth = maxHealth;
         isDead = false;
     }
@@ -18,14 +19,13 @@ public class EnemyHealth : EntityHealth
     protected override void Dead()
     {
         base.Dead();
-        animator.SetTrigger("isDead");
+        enemyController.StateMachine.ChangeState(new EnemyDeadState(enemyController));
         isDead = true;
     }
 
     protected override void Hurt()
     {
         base.Hurt();
-        animator.SetTrigger("isHeadHit");
-        enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+        enemyController.StateMachine.ChangeState(new EnemyHitState(enemyController));
     }
 }

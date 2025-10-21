@@ -1,17 +1,18 @@
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyMoveState : IState
 {
     private EnemyController enemyController;
     private Transform enemyTransform;
-    private Transform playerTransform; 
+    private Transform playerTransform;
 
     private float currentHealth;
     private float maxHealth;
-    private float dangerHealthRatio;
-    private float healthRatio; 
+    private float dangerHealthRatio = 0.25f;
+    private float healthRatio;
 
+    private float retreatTimer;
+    private float retreatDuration;
 
     public EnemyMoveState(EnemyController enemyController)
     {
@@ -27,24 +28,37 @@ public class EnemyMoveState : IState
     {
         Debug.Log("Enter Move");
         enemyController.Animator.SetBool("isMoving", true);
+
+        retreatTimer = 0f;
+        retreatDuration = Random.Range(1f, 2f);
     }
 
     public void Excute()
     {
         healthRatio = currentHealth / maxHealth;
-        if (healthRatio > dangerHealthRatio)
-            MoveToward();
-        else
-            StepBack();
 
-        if (CheckDistanceToPlayer() <= enemyController.DetectedRange)
+        if (healthRatio > dangerHealthRatio)
+        {
+            MoveToward();
+        }
+        else
+        {
+            StepBack();
+            retreatTimer += Time.deltaTime;
+            if (retreatTimer >= retreatDuration)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+                return;
+            }
+        }
+
+        if (CheckDistanceToPlayer() <= enemyController.DetectedRange && healthRatio > dangerHealthRatio)
         {
             enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
         }
     }
     public void Exit()
     {
-        Debug.Log("Exit Move");
         enemyController.Animator.SetBool("isMoving", false);
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditorInternal;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerCounterState : IState
@@ -60,8 +61,6 @@ public class PlayerCounterState : IState
     public void Exit()
     {
         playerController.SetCounter(false);
-        Debug.Log(playerController.IsCounter);
-
     }
 
     private void DealtDamage()
@@ -70,11 +69,11 @@ public class PlayerCounterState : IState
 
         foreach (var hit in hits)
         {
+            StateMachineEnemy stateMachine = hit.GetComponent<StateMachineEnemy>();
             IHealth health = hit.GetComponent<IHealth>();
-            if (health != null)
+            if (health != null || stateMachine.CurrentState.ToString() == "EnemyBlockState")
             {
                 health.ChangeHealth(-attack);
-                Debug.Log($"Gay dame cho {hit.name}");
             }
         }
     }

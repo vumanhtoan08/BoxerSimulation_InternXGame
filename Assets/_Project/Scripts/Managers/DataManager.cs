@@ -108,6 +108,7 @@ public class DataManager : Singleton<DataManager>
 
     public ListStatLevelTable StatLevelTables => statLevelTables; 
     public ListSkillLevelTable SkillLevelTables => skillLevelTables; 
+    public EnemyStatDatabase EnemyStatDatabase => enemyStatDatabase;
 
     public DataSaveForPlayer CurrentPlayerData { get; private set; }
 
@@ -230,6 +231,23 @@ public class ListStatLevelTable : ScriptableObject
 public class ListSkillLevelTable : ScriptableObject
 {
     public List<SkillLevelTable> StatLevelTables = new List<SkillLevelTable>();
+}
+
+#endregion
+
+#region Enemy Runtime Data
+
+[Serializable]
+public class EnemyData
+{
+    public float Attack; 
+    public float Health; 
+
+    public void SetDataForEnemy()
+    {
+        Attack = DataManager.Instance.EnemyStatDatabase.Enemies[0].Attack; // Ve sau thay 0 = level luu trong Prefabs
+        Health = DataManager.Instance.EnemyStatDatabase.Enemies[0].Defense;
+    }
 }
 
 #endregion

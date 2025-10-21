@@ -22,13 +22,10 @@ public class EnemyIdleState : IState
 
     public void Enter()
     {
-        Debug.Log("Vao Idle");
     }
 
     public void Excute()
     {
-        Debug.Log("Đang chạy IDle");
-
         CheckDistanceToDecided();
     }
     public void Exit()
