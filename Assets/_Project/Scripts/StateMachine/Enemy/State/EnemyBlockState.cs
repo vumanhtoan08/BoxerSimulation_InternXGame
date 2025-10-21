@@ -14,8 +14,6 @@ public class EnemyBlockState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Block");
-
         blockDuration = Random.Range(1f, 2f);
         blockTimer = 0f;
 

@@ -17,7 +17,6 @@ public class EnemyPunchState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Punch");
         hasDealtDamage = false;
         enemyController.Animator.SetTrigger("isPunch");
     }
@@ -56,6 +55,10 @@ public class EnemyPunchState : IState
         {
             Debug.Log($"Va cham vao {hits[0].name}");
             var playerController = hits[0].GetComponent<PlayerController>();
+            if (playerController.StateMachine.CurrentState.ToString() == "PlayerBlockState")
+            {
+                return;
+            }
             playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
         }
     }

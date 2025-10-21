@@ -36,7 +36,7 @@ public class EnemyIdleState : IState
     private void CheckDistanceToDecided()
     {
         float currentDistance = Vector3.Distance(enemyTransform.position, playerTransform.position);
-        float healthRatio = currentHealth / maxHealth;
+        float healthRatio = enemyController.Health.CurrentHealth / enemyController.Health.MaxHealth;
         int randomDecision = Random.Range(0, 100);
 
         if (currentDistance > enemyController.DetectedRange && healthRatio > dangerHealthRatio)
@@ -56,12 +56,13 @@ public class EnemyIdleState : IState
         }
         else
         {
-            if(randomDecision < 45)
+            if (randomDecision < 45)
                 enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
-            else if(randomDecision < 90)
+            else if (randomDecision < 90)
                 enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
             else
                 enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
         }
     }
+
 }
