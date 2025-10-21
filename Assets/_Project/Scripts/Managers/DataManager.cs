@@ -177,8 +177,8 @@ public class PlayerData
     public void SetDataForPlayer()
     {
         Attack = DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Value;
-        Health = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Value;
-        Stamina = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].Value;
+        Health = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Value;
+        Stamina = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].Value;
 
         AttackLevel = DataManager.Instance.CurrentPlayerData.AttackLevel;
         HealthLevel = DataManager.Instance.CurrentPlayerData.HealthLevel;

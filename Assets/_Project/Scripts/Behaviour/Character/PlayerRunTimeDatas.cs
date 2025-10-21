@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerRunTimeDatas : MonoBehaviour
 {
@@ -10,12 +10,16 @@ public class PlayerRunTimeDatas : MonoBehaviour
     [SerializeField] private int maxEnergy = 3;
     private int currentEnergy;
 
+    private float currentStamina; 
+
     public int CurrentEnergy => currentEnergy;
+    public float CurrentStamina => currentStamina;
 
     public void OnStart()
     {
         currentEnergy = maxEnergy;
         dataRuntime.SetDataForPlayer();
+        currentStamina = dataRuntime.Stamina;
     }
 
     #region Methods Energy
@@ -32,6 +36,22 @@ public class PlayerRunTimeDatas : MonoBehaviour
     {
         currentEnergy = maxEnergy;
         Debug.Log("Hoi phuc the luc");
+    }
+
+    #endregion
+
+    #region Methods Stamina 
+
+    public void ChangeStamina(float amount)
+    {
+        currentStamina = Mathf.Clamp(currentStamina + amount, 0, dataRuntime.Stamina);
+    }
+
+    public bool CheckStamina(float value)
+    {
+        bool isEnough = currentStamina < value ? false : true;
+        Debug.Log($"Không đủ năng lượng {currentStamina} == {value}");
+        return isEnough;
     }
 
     #endregion

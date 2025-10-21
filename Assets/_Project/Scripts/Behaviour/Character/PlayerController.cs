@@ -28,6 +28,14 @@ public class PlayerController : Singleton<PlayerController>
 
     #endregion
 
+    [Header("Attack Collider")]
+    [SerializeField] private Transform rightHand; 
+    [SerializeField] private Transform leftHand;
+    [SerializeField] private LayerMask enemyMask;
+    private bool isPunch = false; 
+    private bool isCounter = false; 
+    private bool isBlock = false;
+
     #region GETSET 
 
     public Animator Animator => animator;
@@ -42,6 +50,21 @@ public class PlayerController : Singleton<PlayerController>
     public float Gravity => gravity;
     public float GroundCheckDistance => groundCheckDistance;
     public LayerMask GroundMask => groundMask;
+
+    public Transform RightHand => rightHand;
+    public Transform LeftHand => leftHand;
+
+    public LayerMask EnemyMask => enemyMask;
+
+    public bool IsPunch => isPunch;
+    public bool IsCounter => isCounter;
+
+    public bool IsBlocking => isBlock;
+
+    public bool SetPunch(bool value) => isPunch = value;
+    public bool SetCounter(bool value) => isCounter = value;
+
+    public bool SetBlock(bool value) => isBlock = value;
 
     #endregion
 
@@ -59,6 +82,7 @@ public class PlayerController : Singleton<PlayerController>
     private void Start()
     {
         stateMachine.ChangeState(new PlayerIdleState(this));
+        stateMachine?.OnStart();
         data?.OnStart();
         cameraForInteract?.OnStart();
         touchController?.OnStart();
