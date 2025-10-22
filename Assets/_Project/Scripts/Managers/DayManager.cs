@@ -1,14 +1,28 @@
+using System;
 using UnityEngine;
 
 public class DayManager : Singleton<DayManager>
 {
-    [SerializeField] private int currentDay;
-    [SerializeField] private PlayerRunTimeDatas data; 
+    [SerializeField] private int currentDay = 1;
+    [SerializeField] private PlayerRunTimeDatas data;
+
+    public int CurrentDay => currentDay;
+
+    public event Action OnNextDay;
+    
+    #region Unity Methods
 
     public void OnStart()
     {
-        data = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerRunTimeDatas>();
+        data = PlayerController.Instance.Data;
     }
+
+    public void OnUpdate()
+    {
+
+    }
+
+    #endregion
 
     public void CheckConditionToNextDay()
     {
@@ -25,11 +39,7 @@ public class DayManager : Singleton<DayManager>
     private void MoveToNextDay()
     {
         currentDay += 1;
-        data.EnergyRegen();
         Debug.Log("Sang ngay moi" + currentDay);
-    }
-
-    public void OnUpdate()
-    {
+        OnNextDay?.Invoke();
     }
 }

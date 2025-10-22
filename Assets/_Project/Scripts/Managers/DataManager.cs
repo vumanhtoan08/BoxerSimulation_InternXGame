@@ -112,10 +112,25 @@ public class DataManager : Singleton<DataManager>
 
     public DataSaveForPlayer CurrentPlayerData { get; private set; }
 
-    public void Awake()
+    #region Unity Methods
+
+    protected override void Awake()
     {
+        base.Awake();
         LoadData();
     }
+
+    public void OnStart()
+    {
+
+    }
+
+    public void OnUpdate()
+    {
+
+    }
+
+    #endregion
 
     private void LoadData()
     {
@@ -148,6 +163,11 @@ public class DataManager : Singleton<DataManager>
         PlayerPrefs.DeleteKey(PlayerDataKey);
         LoadData();
         Debug.Log("♻️ Player data reset to default");
+    }
+
+    internal void ChangeGameState(Game_State battle)
+    {
+        throw new NotImplementedException();
     }
 }
 

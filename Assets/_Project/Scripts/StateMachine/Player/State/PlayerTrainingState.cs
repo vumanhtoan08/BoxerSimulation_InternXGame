@@ -75,8 +75,11 @@ public class PlayerTrainingState : IState
     private void OnChangeStateTraining()
     {
         CanvasManager.Instance.OnBoxingComplete += OnBoxingComplete;
+        CanvasManager.Instance.OnBoxingComplete += CanvasManager.Instance.OnEnergyChange;
         CanvasManager.Instance.OnRuningComplete += OnRunningComplete;
+        CanvasManager.Instance.OnRuningComplete += CanvasManager.Instance.OnEnergyChange;
         CanvasManager.Instance.OnSquatComplete += OnSquatComplete;
+        CanvasManager.Instance.OnSquatComplete += CanvasManager.Instance.OnEnergyChange;
     }
 
     private void OnBoxingComplete()

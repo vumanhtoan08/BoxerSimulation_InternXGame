@@ -8,20 +8,23 @@ public class CanvasManager : Singleton<CanvasManager>
 {
     private PlayerController playerController;
 
+    #region Unity Methods
     public void OnStart()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         trainingPanel?.SetActive(false);
         canvasArena?.SetActive(false);
         OnResetAction();
+        OnEnergyChange();
     }
 
     public void OnUpdate()
     {
-        
-    }
 
-    #region Training Logic
+    }
+    #endregion
+
+    #region Training UI
 
     [Header("Canvas For Training")]
     [SerializeField] private GameObject trainingPanel;
@@ -68,7 +71,8 @@ public class CanvasManager : Singleton<CanvasManager>
 
         if (target >= 1f)
         {
-            DOVirtual.DelayedCall(fillDuration, () => {
+            DOVirtual.DelayedCall(fillDuration, () =>
+            {
                 OnUnActiveTrainingPanel();
 
                 switch (playerController.CameraForInteract.CurrentInteractable.Type)
@@ -123,9 +127,9 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] private GameObject canvasBehaviour;     // Nút di chuyển của người chơi,...
 
     [Header("Enemy Stats")]
-    [SerializeField] private TextMeshProUGUI enemyAttack; 
+    [SerializeField] private TextMeshProUGUI enemyAttack;
     [SerializeField] private TextMeshProUGUI enemyHealth;
-    [SerializeField] private Image enemyAvatar; 
+    [SerializeField] private Image enemyAvatar;
     [SerializeField] private Button fightButton;
 
     public void OnActiveEnemyInfoPanel()
@@ -149,9 +153,9 @@ public class CanvasManager : Singleton<CanvasManager>
     }
 
     [Header("Setting Position")]
-    [SerializeField] private Vector3 playerBattlePositon; 
-    [SerializeField] private Vector3 playerTrainingPositon; 
-    [SerializeField] private Vector3 enemyBattlePositon; 
+    [SerializeField] private Vector3 playerBattlePositon;
+    [SerializeField] private Vector3 playerTrainingPositon;
+    [SerializeField] private Vector3 enemyBattlePositon;
 
     public void ButtonFightActive()
     {
@@ -159,6 +163,8 @@ public class CanvasManager : Singleton<CanvasManager>
         MovePlayerToBattle();
 
         OnUnActiveEnemyInfoPanel();
+
+        GameManager.Instance.ChangeGameState(Game_State.Battle);
     }
 
     public void MovePlayerToBattle()
@@ -170,4 +176,34 @@ public class CanvasManager : Singleton<CanvasManager>
     }
 
     #endregion
+
+    #region UI Info
+
+    [Header("Information Day")]
+    [SerializeField] private TextMeshProUGUI textDay;
+    [Header("Infomation Energy")]
+    [SerializeField] private TextMeshProUGUI textEnergy;
+
+    public void OnNextDay()
+    {
+        textDay.text = $"DAY {DayManager.Instance.CurrentDay}";
+    }
+
+    public void OnEnergyChange()
+    {
+        textEnergy.text = playerController.Data.CurrentEnergy.ToString();
+    }
+    #endregion
+
+    private void OnEnable()
+    {
+        DayManager.Instance.OnNextDay += OnNextDay;
+        DayManager.Instance.OnNextDay += OnEnergyChange;
+    }
+
+    private void OnDisable()
+    {
+        DayManager.Instance.OnNextDay -= OnNextDay;
+        DayManager.Instance.OnNextDay -= OnEnergyChange;
+    }
 }

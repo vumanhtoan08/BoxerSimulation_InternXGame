@@ -54,4 +54,14 @@ public class PlayerRunTimeDatas : MonoBehaviour
     }
 
     #endregion
+
+    private void OnEnable()
+    {
+        DayManager.Instance.OnNextDay += EnergyRegen;
+    }
+
+    private void OnDisable()
+    {
+        DayManager.Instance.OnNextDay -= EnergyRegen;
+    }
 }

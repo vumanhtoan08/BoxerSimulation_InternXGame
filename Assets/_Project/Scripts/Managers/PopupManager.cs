@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class SoundManager : Singleton<SoundManager>
+public class PopupManager : Singleton<PopupManager>
 {
     #region Unity Methods
-
     public void OnStart()
     {
 

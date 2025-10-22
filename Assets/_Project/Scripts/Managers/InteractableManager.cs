@@ -5,6 +5,7 @@ public class InteractableManager : Singleton<InteractableManager>
 {
     [SerializeField] private List<InteractableBase> interactableLists = new List<InteractableBase>();
 
+    #region UnityMethods
     public void OnStart()
     {
         GameObject[] interactables = GameObject.FindGameObjectsWithTag("Interactable");
@@ -18,4 +19,5 @@ public class InteractableManager : Singleton<InteractableManager>
     {
 
     }
+    #endregion
 }
