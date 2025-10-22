@@ -4,113 +4,26 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-namespace D.Editor
-{
 
-//#if UNITY_EDITOR
-
-//    using UnityEditor;
-
-//    [CustomEditor(typeof(DataManager))]
-//    public class DataManagerEditor : Editor
-//    {
-//        public Dictionary<string, string> prefInfos;
-
-//        public override void OnInspectorGUI()
-//        {
-//            base.OnInspectorGUI();
-//            if (prefInfos == null)
-//            {
-//                foldOut = true;
-//                if (GUILayout.Button("Show Prefs"))
-//                {
-//                    string data = SaveSystem.LoadGame(DataManager.DATAPATH);
-//                    if (data == null || data.Length == 0) return;
-//                    var userData = JsonConvert.DeserializeObject<PlayerData>(data);
-//                    //if (userData.prefData == null || userData.prefData.Length == 0) return;
-//                    //prefInfos = JsonConvert.DeserializeObject<Dictionary<string, string>>(userData.prefData);
-//                }
-//            }
-//            else
-//            {
-//                ShowPrefs();
-//                if (GUILayout.Button("Save Prefs"))
-//                {
-//                    string data = SaveSystem.LoadGame(DataManager.DATAPATH);
-//                    if (data == null || data.Length == 0) return;
-//                    var userData = JsonConvert.DeserializeObject<PlayerData>(data);
-//                    string newData = JsonConvert.SerializeObject(prefInfos);
-//                    //userData.prefData = newData;
-//                    var d = JsonConvert.SerializeObject(userData);
-//                    PlayerPrefs.SetString("user_data", d);
-//                    Debug.Log("Saved:" + d);
-//                    if (Application.isPlaying)
-//                    {
-//                        DataManager dataManager = target as DataManager;
-//                        //dataManager.data.prefData = newData;
-//                        dataManager.SendMessage("ReloadPref");
-//                    }
-//                }
-//            }
-//        }
-
-//        private bool foldOut;
-
-//        private void ShowPrefs()
-//        {
-//            int index = 0;
-//            foldOut = EditorGUILayout.Foldout(foldOut, "ListPrefs");
-//            if (foldOut)
-//            {
-//                EditorGUI.indentLevel++;
-//                var newList = new Dictionary<string, string>(prefInfos);
-//                foreach (var item in newList)
-//                {
-//                    EditorGUILayout.LabelField("Element " + index);
-//                    EditorGUI.indentLevel++;
-//                    EditorGUILayout.BeginHorizontal();
-//                    EditorGUILayout.LabelField(item.Key);
-//                    string newValue = "";
-//                    if (int.TryParse(item.Value, out int newNum))
-//                    {
-//                        newValue = EditorGUILayout.IntField(newNum).ToString();
-//                    }
-//                    else
-//                    {
-//                        newValue = EditorGUILayout.TextField(item.Value);
-//                    }
-//                    if (newValue != item.Value)
-//                    {
-//                        prefInfos[item.Key] = newValue;
-//                        Debug.Log("change " + item.Key + ":" + newValue);
-//                    }
-//                    EditorGUILayout.EndHorizontal();
-//                    index++;
-//                    EditorGUI.indentLevel--;
-//                }
-//                EditorGUI.indentLevel--;
-//            }
-
-//        }
-//    }
-
-//#endif
-
-}
 public class DataManager : Singleton<DataManager>
 {
     private const string PlayerDataKey = "PlayerData";
+    private const string WalletDataKey = "WalletData";
+    private const string InteractableDataKey = "InteractableData";
 
     [SerializeField] private ListStatLevelTable statLevelTables;
-    [SerializeField] private ListSkillLevelTable skillLevelTables; 
+    [SerializeField] private ListSkillLevelTable skillLevelTables;
     [SerializeField] private EnemyStatDatabase enemyStatDatabase;
+    [SerializeField] private ListInteractableTable listInteractableTable;
 
-
-    public ListStatLevelTable StatLevelTables => statLevelTables; 
-    public ListSkillLevelTable SkillLevelTables => skillLevelTables; 
+    public ListStatLevelTable StatLevelTables => statLevelTables;
+    public ListSkillLevelTable SkillLevelTables => skillLevelTables;
     public EnemyStatDatabase EnemyStatDatabase => enemyStatDatabase;
+    public ListInteractableTable ListInteractableTable => listInteractableTable;
 
     public DataSaveForPlayer CurrentPlayerData { get; private set; }
+    public DataSaveForWallet CurrentWalletData { get; private set; }
+    public DataSaveForInteractable CurrentInteractableData { get; private set; }
 
     #region Unity Methods
 
@@ -148,19 +61,53 @@ public class DataManager : Singleton<DataManager>
             SaveData();
             Debug.Log("⚙️ No player data found. Created default values.");
         }
+
+        if (PlayerPrefs.HasKey(WalletDataKey))
+        {
+            string json = PlayerPrefs.GetString(WalletDataKey);
+            CurrentWalletData = JsonUtility.FromJson<DataSaveForWallet>(json);
+            Debug.Log("✅ Wallet data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentWalletData = new DataSaveForWallet();
+            SaveData();
+            Debug.Log("⚙️ No wallet data found. Created default values.");
+        }
+
+        if (PlayerPrefs.HasKey(InteractableDataKey))
+        {
+            string json = PlayerPrefs.GetString(InteractableDataKey);
+            CurrentInteractableData = JsonUtility.FromJson<DataSaveForInteractable>(json);
+            Debug.Log("✅ Interactable data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentInteractableData = new DataSaveForInteractable();
+            SaveData();
+            Debug.Log("⚙️ No Interactable data found. Created default values.");
+        }
     }
 
     public void SaveData()
     {
-        string json = JsonUtility.ToJson(CurrentPlayerData);
-        PlayerPrefs.SetString(PlayerDataKey, json);
+        string jsonPlayerData = JsonUtility.ToJson(CurrentPlayerData);
+        PlayerPrefs.SetString(PlayerDataKey, jsonPlayerData);
+
+        string jsonWalletData = JsonUtility.ToJson(CurrentWalletData);
+        PlayerPrefs.SetString(WalletDataKey,jsonWalletData);
+
+        string jsonInteractableData = JsonUtility.ToJson(CurrentInteractableData);
+        PlayerPrefs.SetString(InteractableDataKey, jsonInteractableData);
+
         PlayerPrefs.Save();
-        Debug.Log("💾 Player data saved to PlayerPrefs");
+        Debug.Log("💾 Data saved to PlayerPrefs");
     }
 
     private void ReloadPref()
     {
         PlayerPrefs.DeleteKey(PlayerDataKey);
+        PlayerPrefs.DeleteKey(WalletDataKey);
         LoadData();
         Debug.Log("♻️ Player data reset to default");
     }
@@ -170,6 +117,8 @@ public class DataManager : Singleton<DataManager>
         throw new NotImplementedException();
     }
 }
+
+#region PlayerData
 
 [System.Serializable]
 public class PlayerData
@@ -219,13 +168,13 @@ public class PlayerData
     }
 }
 
-[SerializeField] 
+[SerializeField]
 public class DataSaveForPlayer
 {
-    public int AttackLevel; 
+    public int AttackLevel;
     public int HealthLevel;
     public int StaminaLevel;
-    public int AttackProcess; 
+    public int AttackProcess;
     public int HealthProcess;
     public int StaminaProcess;
 
@@ -239,6 +188,8 @@ public class DataSaveForPlayer
         StaminaProcess = 0;
     }
 }
+
+#endregion
 
 #region Stat Data 
 [CreateAssetMenu(fileName = "NewStatLevelTable", menuName = "Database/ListStat")]
@@ -260,13 +211,114 @@ public class ListSkillLevelTable : ScriptableObject
 [Serializable]
 public class EnemyData
 {
-    public float Attack; 
-    public float Health; 
+    public float Attack;
+    public float Health;
 
     public void SetDataForEnemy()
     {
         Attack = DataManager.Instance.EnemyStatDatabase.Enemies[0].Attack; // Ve sau thay 0 = level luu trong Prefabs
         Health = DataManager.Instance.EnemyStatDatabase.Enemies[0].Defense;
+    }
+}
+
+#endregion
+
+#region Wallet Data
+
+[Serializable]
+public class WalletData
+{
+    public int currentMoney;
+
+    public void SetDataForWallet()
+    {
+        currentMoney = DataManager.Instance.CurrentWalletData.currentMoney;
+    }
+}
+
+[SerializeField]
+public class DataSaveForWallet
+{
+    public int currentMoney;
+
+    public DataSaveForWallet()
+    {
+        currentMoney = 0;
+    }
+}
+
+#endregion
+
+#region InteractableData
+
+[CreateAssetMenu(fileName = "NewInteractableTable", menuName = "Database/Interactable Table")]
+public class InteractableTable : ScriptableObject
+{
+    public string ID;
+    public string Name;
+    public List<InteractableLevelData> Levels = new List<InteractableLevelData>();
+
+    [System.Serializable]
+    public class InteractableLevelData
+    {
+        public int Level;
+        public int Value;
+        public int Cost;
+    }
+}
+
+[CreateAssetMenu(fileName = "NewInteractableTable", menuName = "Database/Interactable List")]
+public class ListInteractableTable : ScriptableObject
+{
+    public List<InteractableTable> InteractableTables = new List<InteractableTable>();
+}
+
+[SerializeField]
+public class DataSaveForInteractable
+{
+    public int BoxingLevel;
+    public int RunningLevel;
+    public int SquatLevel;
+
+    public DataSaveForInteractable()
+    {
+        BoxingLevel = 0;
+        RunningLevel = 0;
+        SquatLevel = 0;
+    }
+}
+
+[Serializable]
+public class InteractableData
+{
+    public int Level;
+    public int Value;
+    public int Cost;
+
+    public void SetDataForInteractable(TYPE_TRAINING type)
+    {
+        switch (type)
+        {
+            case TYPE_TRAINING.NONE:
+                break;
+            case TYPE_TRAINING.BOXING:
+                Level = DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Level;
+                Value = DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value;
+                Cost = DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Cost;
+                break;
+            case TYPE_TRAINING.RUNING:
+                Level = DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Level;
+                Value = DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value;
+                Cost = DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Cost;
+                break;
+            case TYPE_TRAINING.SQUAT:
+                Level = DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Level;
+                Value = DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value;
+                Cost = DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Cost;
+                break;
+            default:
+                break;
+        }
     }
 }
 

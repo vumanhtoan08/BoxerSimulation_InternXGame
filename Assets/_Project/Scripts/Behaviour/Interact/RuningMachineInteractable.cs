@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class RuningMachineInteractable : InteractableBase
 {
+    [SerializeField] private InteractableData data;
+
+    public override void Init()
+    {
+        base.Init();
+        data.SetDataForInteractable(TYPE_TRAINING.RUNING);
+    }
+
     public override void Interact()
     {
         base.Interact();

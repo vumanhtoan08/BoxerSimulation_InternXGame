@@ -13,6 +13,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private InteractableManager interactableManager;
     [SerializeField] private EnemyManager enemyManager;
     [SerializeField] private PopupManager popupManager;
+    [SerializeField] private WalletManager walletManager;
+    [SerializeField] private ShopManager shopManager;
 
     [Header("Parameters")]
     public Game_State gameState;
@@ -33,6 +35,8 @@ public class GameManager : Singleton<GameManager>
         interactableManager?.OnStart();
         enemyManager?.OnStart();
         popupManager?.OnStart();
+        walletManager?.OnStart();
+        shopManager?.OnStart();
     }
 
     private void Update()
@@ -46,7 +50,9 @@ public class GameManager : Singleton<GameManager>
         if (gameState == Game_State.Battle)
             enemyManager?.OnUpdate();
 
-        popupManager.OnUpdate();
+        popupManager?.OnUpdate();
+        walletManager?.OnUpdate();
+        shopManager?.OnUpdate();
     }
 
     #region StateGame Manager

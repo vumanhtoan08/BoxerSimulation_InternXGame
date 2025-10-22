@@ -16,6 +16,11 @@ public class InteractableBase : MonoBehaviour, IInteractable
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
+    public virtual void Init()
+    {
+
+    }
+
     public virtual void Interact()
     {
         Debug.Log("Interacted with " + gameObject.name);

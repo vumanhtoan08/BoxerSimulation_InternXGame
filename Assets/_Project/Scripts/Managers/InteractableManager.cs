@@ -5,6 +5,8 @@ public class InteractableManager : Singleton<InteractableManager>
 {
     [SerializeField] private List<InteractableBase> interactableLists = new List<InteractableBase>();
 
+    public List<InteractableBase> InteractableLists => interactableLists;
+
     #region UnityMethods
     public void OnStart()
     {
@@ -12,6 +14,11 @@ public class InteractableManager : Singleton<InteractableManager>
         foreach (var item in interactables)
         {
             interactableLists.Add(item.GetComponent<InteractableBase>());
+        }
+
+        foreach (var item in interactableLists)
+        {
+            item.Init();
         }
     }
 
