@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
         runtimeData = GetComponent<EnemyRuntimeData>();
     }
 
-    private void Start()
+    public void OnStart()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         runtimeData?.OnStart();
@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
         health?.Init(this);
     }
 
-    private void Update()
+    public void OnUpdate()
     {
         stateMachine?.OnUpdate();
 

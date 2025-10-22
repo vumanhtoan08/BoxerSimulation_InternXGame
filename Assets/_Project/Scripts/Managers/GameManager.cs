@@ -10,6 +10,7 @@ public class GameManager : Singleton<DataManager>
     [SerializeField] private DayManager dayManager;
     [SerializeField] private CanvasManager canvasManager;
     [SerializeField] private InteractableManager interactableManager;
+    [SerializeField] private EnemyManager enemyManager;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class GameManager : Singleton<DataManager>
         dayManager?.OnStart();
         canvasManager?.OnStart();
         interactableManager?.OnStart();
+        enemyManager?.OnStart();
     }
 
     private void Update()
@@ -27,5 +29,6 @@ public class GameManager : Singleton<DataManager>
         dayManager?.OnUpdate();
         canvasManager?.OnUpdate();
         interactableManager?.OnUpdate();
+        enemyManager?.OnUpdate();
     }
 }

@@ -56,7 +56,7 @@ public class PlayerBattleState : IState
         float current = playerController.Data.CurrentStamina;
         float max = playerController.Data.DataRuntime.Stamina;
 
-        float regenRate = max / 2f;
+        float regenRate = max / 4f;
         float regenAmount = regenRate * Time.deltaTime;
 
         if (current < max)

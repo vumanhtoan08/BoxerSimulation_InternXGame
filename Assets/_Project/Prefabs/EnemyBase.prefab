@@ -1308,10 +1308,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &343689517967323486
 MonoBehaviour:
@@ -1326,6 +1326,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectedRange: 1.5
+  rightHand: {fileID: 1014793085878486367}
+  leftHand: {fileID: 230479783457002296}
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &984188700945047491
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,7 +17,6 @@ public class EnemyCounterState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Counter");
         hasDealtDamage = false;
         enemyController.Animator.SetTrigger("isCounter");
     }
@@ -41,7 +40,6 @@ public class EnemyCounterState : IState
     public void Exit()
     {
         enemyController.Animator.ResetTrigger("isCounter");
-        Debug.Log("Exit Counter");
     }
 
     private void DealDamageToPlayer()

@@ -6,34 +6,40 @@ public class EnemyIdleState : IState
     private Transform enemyTransform;
     private Transform playerTransform;
 
-    private float currentHealth;
-    private float maxHealth;
-    private float dangerHealthRatio = 0.25f; 
+    private float decisionCooldown;           // Cooldown hiện tại (thay đổi ngẫu nhiên mỗi lần)
+    private float decisionTimer;              // Bộ đếm thời gian
+    private float dangerHealthRatio = 0.25f;  // Ngưỡng máu thấp
 
     public EnemyIdleState(EnemyController enemyController)
     {
         this.enemyController = enemyController;
         enemyTransform = enemyController.transform;
         playerTransform = enemyController.PlayerTransform;
-
-        currentHealth = enemyController.Health.CurrentHealth;
-        maxHealth = enemyController.Health.MaxHealth;
     }
 
     public void Enter()
     {
+        decisionCooldown = Random.Range(0.25f, 0.5f);
+        decisionTimer = 0f;
     }
 
     public void Excute()
     {
-        CheckDistanceToDecided();
-    }
-    public void Exit()
-    {
-        
+        decisionTimer += Time.deltaTime;
+
+        if (decisionTimer < decisionCooldown) return;
+
+        CheckDistanceToDecide();
+
+        decisionTimer = 0f;
+        decisionCooldown = Random.Range(0.25f, 1f);
     }
 
-    private void CheckDistanceToDecided()
+    public void Exit()
+    {
+    }
+
+    private void CheckDistanceToDecide()
     {
         float currentDistance = Vector3.Distance(enemyTransform.position, playerTransform.position);
         float healthRatio = enemyController.Health.CurrentHealth / enemyController.Health.MaxHealth;
@@ -64,5 +70,4 @@ public class EnemyIdleState : IState
                 enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
         }
     }
-
 }

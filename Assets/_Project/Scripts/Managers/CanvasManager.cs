@@ -1,27 +1,12 @@
 ﻿using DG.Tweening;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CanvasManager : Singleton<CanvasManager>
 {
     private PlayerController playerController;
-
-    [Header("Canvas For Training")]
-    [SerializeField] private GameObject trainingPanel;
-    [SerializeField] private Image fillEnergyBar;
-
-    [Header("Energy Settings")]
-    [SerializeField] private float increaseAmount = 0.2f;
-    [SerializeField] private float fillDuration = 0.5f;
-    [SerializeField] private float cooldown = 0.75f;
-
-    private float currentFill = 0f;
-    private float lastTapTime = -999f;
-
-    public event Action OnBoxingComplete; 
-    public event Action OnRuningComplete; 
-    public event Action OnSquatComplete; 
 
     public void OnStart()
     {
@@ -37,6 +22,22 @@ public class CanvasManager : Singleton<CanvasManager>
     }
 
     #region Training Logic
+
+    [Header("Canvas For Training")]
+    [SerializeField] private GameObject trainingPanel;
+    [SerializeField] private Image fillEnergyBar;
+
+    [Header("Energy Settings")]
+    [SerializeField] private float increaseAmount = 0.2f;
+    [SerializeField] private float fillDuration = 0.5f;
+    [SerializeField] private float cooldown = 0.75f;
+
+    private float currentFill = 0f;
+    private float lastTapTime = -999f;
+
+    public event Action OnBoxingComplete;
+    public event Action OnRuningComplete;
+    public event Action OnSquatComplete;
 
     public void OnActiveTrainingPanel()
     {
@@ -118,15 +119,18 @@ public class CanvasManager : Singleton<CanvasManager>
     #region Arena Infor
 
     [Header("Canvas For Arena")]
-    [SerializeField] private GameObject canvasArena;
-    [SerializeField] private GameObject canvasBehaviour; 
+    [SerializeField] private GameObject canvasArena;         // Canvas hiển thị thông tin.
+    [SerializeField] private GameObject canvasBehaviour;     // Nút di chuyển của người chơi,...
 
-   /// [Header("Enemy Stats")]
-
-
+    [Header("Enemy Stats")]
+    [SerializeField] private TextMeshProUGUI enemyAttack; 
+    [SerializeField] private TextMeshProUGUI enemyHealth;
+    [SerializeField] private Image enemyAvatar; 
+    [SerializeField] private Button fightButton;
 
     public void OnActiveEnemyInfoPanel()
     {
+        UpdateInfoEnemy();
         canvasBehaviour.SetActive(false);
         canvasArena.SetActive(true);
     }
@@ -139,7 +143,30 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void UpdateInfoEnemy()
     {
-        // cập nhật data của enemy 
+        EnemyRuntimeData enemyData = EnemyManager.Instance.EnemyController.RuntimeData;
+        enemyAttack.text = enemyData.EnemyData.Attack.ToString();
+        enemyHealth.text = enemyData.EnemyData.Health.ToString();
+    }
+
+    [Header("Setting Position")]
+    [SerializeField] private Vector3 playerBattlePositon; 
+    [SerializeField] private Vector3 playerTrainingPositon; 
+    [SerializeField] private Vector3 enemyBattlePositon; 
+
+    public void ButtonFightActive()
+    {
+        Debug.Log("Kich hoat");
+        MovePlayerToBattle();
+
+        OnUnActiveEnemyInfoPanel();
+    }
+
+    public void MovePlayerToBattle()
+    {
+        playerController.CharacterController.enabled = false;
+        playerController.transform.position = playerBattlePositon;
+        playerController.transform.rotation = Quaternion.Euler(0, -45, 0);
+        playerController.CharacterController.enabled = true;
     }
 
     #endregion

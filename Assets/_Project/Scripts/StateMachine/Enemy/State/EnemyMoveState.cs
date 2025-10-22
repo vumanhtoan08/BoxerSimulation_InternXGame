@@ -26,7 +26,6 @@ public class EnemyMoveState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Move");
         enemyController.Animator.SetBool("isMoving", true);
 
         retreatTimer = 0f;
