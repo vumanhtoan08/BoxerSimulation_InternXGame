@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class RuningMachineInteractable : InteractableBase
 {
-    [SerializeField] private InteractableData data;
 
     public override void Init()
     {

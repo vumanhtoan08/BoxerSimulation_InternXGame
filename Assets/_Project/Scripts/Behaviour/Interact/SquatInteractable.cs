@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SquatInteractable : InteractableBase
 {
-    [SerializeField] private InteractableData data;
-
     public override void Init()
     {
         base.Init();

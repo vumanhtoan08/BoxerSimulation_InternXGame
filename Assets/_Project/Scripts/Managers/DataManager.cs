@@ -320,6 +320,64 @@ public class InteractableData
                 break;
         }
     }
+
+    public void UpgradeInteractable(TYPE_TRAINING type)
+    {
+        var data = DataManager.Instance.CurrentInteractableData;
+        var tables = DataManager.Instance.ListInteractableTable.InteractableTables;
+
+        switch (type)
+        {
+            case TYPE_TRAINING.NONE:
+                return;
+
+            case TYPE_TRAINING.BOXING:
+                {
+                    int maxLevel = tables[0].Levels.Count - 1;
+                    if (data.BoxingLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ {type} đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    data.BoxingLevel++;
+                    DataManager.Instance.SaveData();
+                    break;
+                }
+
+            case TYPE_TRAINING.RUNING:
+                {
+                    int maxLevel = tables[1].Levels.Count - 1;
+                    if (data.RunningLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ {type} đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    data.RunningLevel++;
+                    DataManager.Instance.SaveData();
+                    break;
+                }
+
+            case TYPE_TRAINING.SQUAT:
+                {
+                    int maxLevel = tables[2].Levels.Count - 1;
+                    if (data.SquatLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ {type} đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    data.SquatLevel++;
+                    DataManager.Instance.SaveData();
+                    break;
+                }
+        }
+
+        SetDataForInteractable(type);
+
+        Debug.Log($"✅ {type} upgraded! (Level: {Level})");
+    }
 }
 
 #endregion

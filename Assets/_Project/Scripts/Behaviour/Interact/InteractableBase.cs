@@ -6,6 +6,8 @@ public class InteractableBase : MonoBehaviour, IInteractable
     [SerializeField] protected PlayerController playerController;
     [SerializeField] protected TYPE_TRAINING type; 
     protected Outline outline;
+    [SerializeField] protected InteractableData data;
+    public InteractableData Data => data;
 
     public TYPE_TRAINING Type => type;
 
