@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+
+
 public class DataManager : Singleton<DataManager>
 {
     private const string PlayerDataKey = "PlayerData";
@@ -47,47 +49,65 @@ public class DataManager : Singleton<DataManager>
 
     private void LoadData()
     {
+        // --- PLAYER ---
         if (PlayerPrefs.HasKey(PlayerDataKey))
         {
-            // Đã có dữ liệu -> load từ PlayerPrefs
             string json = PlayerPrefs.GetString(PlayerDataKey);
-            CurrentPlayerData = JsonUtility.FromJson<DataSaveForPlayer>(json);
+            if (!string.IsNullOrEmpty(json))
+                CurrentPlayerData = JsonUtility.FromJson<DataSaveForPlayer>(json);
+            else
+                CurrentPlayerData = new DataSaveForPlayer();
+
             Debug.Log("✅ Player data loaded from PlayerPrefs");
         }
         else
         {
-            // Chưa có dữ liệu -> tạo mới và lưu mặc định
             CurrentPlayerData = new DataSaveForPlayer();
-            SaveData();
             Debug.Log("⚙️ No player data found. Created default values.");
         }
 
+        // --- WALLET ---
         if (PlayerPrefs.HasKey(WalletDataKey))
         {
             string json = PlayerPrefs.GetString(WalletDataKey);
-            CurrentWalletData = JsonUtility.FromJson<DataSaveForWallet>(json);
+            if (!string.IsNullOrEmpty(json))
+                CurrentWalletData = JsonUtility.FromJson<DataSaveForWallet>(json);
+            else
+                CurrentWalletData = new DataSaveForWallet();
+
             Debug.Log("✅ Wallet data loaded from PlayerPrefs");
         }
         else
         {
             CurrentWalletData = new DataSaveForWallet();
-            SaveData();
             Debug.Log("⚙️ No wallet data found. Created default values.");
         }
 
+        // --- INTERACTABLE ---
         if (PlayerPrefs.HasKey(InteractableDataKey))
         {
             string json = PlayerPrefs.GetString(InteractableDataKey);
-            CurrentInteractableData = JsonUtility.FromJson<DataSaveForInteractable>(json);
+            if (!string.IsNullOrEmpty(json))
+                CurrentInteractableData = JsonUtility.FromJson<DataSaveForInteractable>(json);
+            else
+                CurrentInteractableData = new DataSaveForInteractable();
+
             Debug.Log("✅ Interactable data loaded from PlayerPrefs");
         }
         else
         {
             CurrentInteractableData = new DataSaveForInteractable();
-            SaveData();
             Debug.Log("⚙️ No Interactable data found. Created default values.");
         }
+
+        // 🔥 Đảm bảo tất cả đã được khởi tạo trước khi SaveData()
+        if (CurrentPlayerData == null) CurrentPlayerData = new DataSaveForPlayer();
+        if (CurrentWalletData == null) CurrentWalletData = new DataSaveForWallet();
+        if (CurrentInteractableData == null) CurrentInteractableData = new DataSaveForInteractable();
+
+        SaveData(); // ✅ Gọi 1 lần duy nhất, sau khi tất cả có dữ liệu
     }
+
 
     public void SaveData()
     {
@@ -108,6 +128,7 @@ public class DataManager : Singleton<DataManager>
     {
         PlayerPrefs.DeleteKey(PlayerDataKey);
         PlayerPrefs.DeleteKey(WalletDataKey);
+        PlayerPrefs.DeleteKey(InteractableDataKey);
         LoadData();
         Debug.Log("♻️ Player data reset to default");
     }
@@ -116,6 +137,17 @@ public class DataManager : Singleton<DataManager>
     {
         throw new NotImplementedException();
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Reset All Save Data")]
+    public void ResetAllData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        LoadData();
+        Debug.Log("🧹 All saved data reset to default!");
+    }
+#endif
 }
 
 #region PlayerData
@@ -159,13 +191,179 @@ public class PlayerData
         CurrentStaminaProcess = DataManager.Instance.CurrentPlayerData.StaminaProcess;
 
         MaxAttackProcess = DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].ProgressToNext;
-        MaxHealthProcess = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].ProgressToNext;
-        MaxStaminaProcess = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].ProgressToNext;
+        MaxHealthProcess = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].ProgressToNext;
+        MaxStaminaProcess = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].ProgressToNext;
 
         PunchCost = DataManager.Instance.SkillLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Cost;
         CounterCost = DataManager.Instance.SkillLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Cost;
         BlockCost = DataManager.Instance.SkillLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Cost;
     }
+
+    public void UpgradeState(STATE_TYPE type)
+    {
+        var dataManager = DataManager.Instance;
+        var playerData = dataManager.CurrentPlayerData;
+        var statTables = dataManager.StatLevelTables.StatLevelTables;
+
+        switch (type)
+        {
+            case STATE_TYPE.Attack:
+                {
+                    int maxLevel = statTables[0].Levels.Count - 1;
+                    if (playerData.AttackLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ Attack đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    playerData.AttackLevel++;
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+                    Debug.Log($"✅ Attack upgraded to level {playerData.AttackLevel}");
+                    break;
+                }
+
+            case STATE_TYPE.Health:
+                {
+                    int maxLevel = statTables[2].Levels.Count - 1;
+                    if (playerData.HealthLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ Health đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    playerData.HealthLevel++;
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+                    Debug.Log($"✅ Health upgraded to level {playerData.HealthLevel}");
+                    break;
+                }
+
+            case STATE_TYPE.Stamina:
+                {
+                    int maxLevel = statTables[1].Levels.Count - 1;
+                    if (playerData.StaminaLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ Stamina đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    playerData.StaminaLevel++;
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+                    Debug.Log($"✅ Stamina upgraded to level {playerData.StaminaLevel}");
+                    break;
+                }
+
+            default:
+                Debug.LogWarning("⚠️ STATE_TYPE không hợp lệ khi gọi UpgradeState()");
+                break;
+        }
+    }
+
+    public void UpProcess(TYPE_TRAINING type)
+    {
+        var dataManager = DataManager.Instance;
+        var playerData = dataManager.CurrentPlayerData;
+
+        switch (type)
+        {
+            case TYPE_TRAINING.BOXING:
+                {
+                    int currentLevel = playerData.AttackLevel;
+                    int maxLevel = dataManager.StatLevelTables.StatLevelTables[0].Levels.Count - 1;
+
+                    if (currentLevel >= maxLevel)
+                    {
+                        Debug.LogWarning("🥊 Boxing đã đạt cấp tối đa!");
+                        return;
+                    }
+
+                    playerData.AttackProcess++;
+                    DataManager.Instance.CurrentPlayerData.AttackProcess = playerData.AttackProcess;
+                    Debug.Log($"➡️ Process Boxing: {playerData.AttackProcess}/{MaxAttackProcess} == {DataManager.Instance.CurrentPlayerData.AttackProcess}");
+
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+
+                    if (playerData.AttackProcess >= MaxAttackProcess)
+                    {
+                        playerData.AttackProcess = 0;
+                        DataManager.Instance.CurrentPlayerData.AttackProcess = 0;
+                        UpgradeState(STATE_TYPE.Attack);
+                    }
+
+                    break;
+                }
+
+            case TYPE_TRAINING.RUNING:
+                {
+                    int currentLevel = playerData.StaminaLevel;
+                    int maxLevel = dataManager.StatLevelTables.StatLevelTables[1].Levels.Count - 1;
+
+                    if (currentLevel >= maxLevel)
+                    {
+                        Debug.LogWarning("🏃‍♂️ Running đã đạt cấp tối đa!");
+                        return;
+                    }
+
+                    playerData.StaminaProcess++;
+                    DataManager.Instance.CurrentPlayerData.StaminaProcess = playerData.StaminaProcess;
+                    Debug.Log($"➡️ Process Running: {playerData.StaminaProcess}/{MaxStaminaProcess}");
+
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+
+                    if (playerData.StaminaProcess >= MaxStaminaProcess)
+                    {
+                        playerData.StaminaProcess = 0;
+                        DataManager.Instance.CurrentPlayerData.StaminaProcess = 0;
+                        UpgradeState(STATE_TYPE.Stamina);
+                    }
+
+                    break;
+                }
+
+            case TYPE_TRAINING.SQUAT:
+                {
+                    int currentLevel = playerData.HealthLevel;
+                    int maxLevel = dataManager.StatLevelTables.StatLevelTables[2].Levels.Count - 1;
+
+                    if (currentLevel >= maxLevel)
+                    {
+                        Debug.LogWarning("🏋️‍♂️ Squat đã đạt cấp tối đa!");
+                        return;
+                    }
+
+                    playerData.HealthProcess++;
+                    DataManager.Instance.CurrentPlayerData.HealthProcess = playerData.HealthProcess;
+                    Debug.Log($"➡️ Process Squat: {playerData.HealthProcess}/{MaxHealthProcess}");
+
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+
+                    if (playerData.HealthProcess >= MaxHealthProcess)
+                    {
+                        playerData.HealthProcess = 0;
+                        DataManager.Instance.CurrentPlayerData.HealthProcess = 0;
+                        UpgradeState(STATE_TYPE.Health);
+                    }
+
+                    break;
+                }
+
+            default:
+                Debug.LogWarning("⚠️ Loại tập luyện không hợp lệ!");
+                break;
+        }
+    }
+}
+
+public enum STATE_TYPE
+{
+    Attack, 
+    Health,
+    Stamina,
 }
 
 [SerializeField]

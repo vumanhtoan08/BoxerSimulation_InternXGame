@@ -87,6 +87,7 @@ public class PlayerTrainingState : IState
         // tang suc manh
         playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.Data.EnergyUse(1);
+        playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.BOXING);
         Debug.Log("Hoan thanh bai boxing");
     }
 
@@ -95,6 +96,7 @@ public class PlayerTrainingState : IState
         // tang suc manh
         playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.Data.EnergyUse(1);
+        playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.RUNING);
         Debug.Log("Hoan thanh bai chay");
     }
     private void OnSquatComplete()
@@ -102,6 +104,7 @@ public class PlayerTrainingState : IState
         // tang suc manh
         playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
         playerController.Data.EnergyUse(1);
+        playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.SQUAT);
         Debug.Log("Hoan thanh bai squat");
     }
 

@@ -8,7 +8,7 @@ public class ShopManager : Singleton<ShopManager>
 
     public void OnStart()
     {
-        SetEventForButton();
+        //SetEventForButton();
     }
 
     public void OnUpdate()
@@ -65,7 +65,6 @@ public class ShopManager : Singleton<ShopManager>
 
         Debug.Log($"✅ Upgraded {type} interactables (Level: {interactables[0].Data.Level}) — Total objects refreshed: {interactables.Count}");  
     }
-
 
     #endregion
 }
