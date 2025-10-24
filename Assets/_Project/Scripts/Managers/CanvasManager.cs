@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Đang định nghĩa sai tác dụng của CanvasManager, đãng lẽ là ScreenManager
 public class CanvasManager : Singleton<CanvasManager>
 {
     private PlayerController playerController;
@@ -11,6 +12,8 @@ public class CanvasManager : Singleton<CanvasManager>
     #region Unity Methods
     public void OnStart()
     {
+        OnStartForMainButton();
+
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         trainingPanel?.SetActive(false);
         canvasArena?.SetActive(false);
@@ -125,6 +128,9 @@ public class CanvasManager : Singleton<CanvasManager>
     [Header("Canvas For Arena")]
     [SerializeField] private GameObject canvasArena;         // Canvas hiển thị thông tin.
     [SerializeField] private GameObject canvasBehaviour;     // Nút di chuyển của người chơi,...
+    [SerializeField] private Button attackButton;
+    [SerializeField] private Button counterButton;          // Ẩn khi training 
+    [SerializeField] private Button blockButton;            // Ẩn khi training
 
     [Header("Enemy Stats")]
     [SerializeField] private TextMeshProUGUI enemyAttack;
@@ -173,6 +179,84 @@ public class CanvasManager : Singleton<CanvasManager>
         playerController.transform.position = playerBattlePositon;
         playerController.transform.rotation = Quaternion.Euler(0, -45, 0);
         playerController.CharacterController.enabled = true;
+    }
+
+    public void MovePlayerToTraining()
+    {
+        playerController.CharacterController.enabled = false;
+        playerController.transform.position = playerTrainingPositon;
+        playerController.transform.rotation = Quaternion.Euler(0, 180, 0);
+        playerController.CharacterController.enabled = true;
+    }
+
+    // Hiển thị nút, thay đổi icon
+    public void UpdateActionButtonsByGameState(Game_State state)
+    {
+        switch (state)
+        {
+            case Game_State.Init:
+                break;
+            case Game_State.Pause:
+                break;
+            case Game_State.Training:
+                SetStateForCounterAndBlockButton(false);
+                break;
+            case Game_State.OnTraning:
+                SetStateForCounterAndBlockButton(false);
+                break;
+            case Game_State.Battle:
+                SetStateForCounterAndBlockButton(true);
+                break;
+            case Game_State.Win:
+                break;
+            case Game_State.Lose:
+                break;
+        }
+
+        ChangeAbilityButtonInteract(state);
+    }
+
+    // Thay đổi chức năng của button
+    public void ChangeAbilityButtonInteract(Game_State state)
+    {
+        switch (state)
+        {
+            case Game_State.Init:
+                break;
+            case Game_State.Pause:
+                break;
+            case Game_State.Training:
+                attackButton.onClick.RemoveAllListeners();
+                attackButton.onClick.AddListener(playerController.CameraForInteract.OnInteractButtonClicked);
+                break;
+            case Game_State.OnTraning:
+                attackButton.onClick.RemoveAllListeners();
+                attackButton.onClick.AddListener(OnTraining);
+                break;
+            case Game_State.Battle:
+                attackButton.onClick.RemoveAllListeners();
+                attackButton.onClick.AddListener(playerController.StateMachine.OnPunchAction);
+
+                counterButton.onClick.RemoveAllListeners();
+                counterButton.onClick.AddListener(playerController.StateMachine.OnCounterAction);
+                break;
+            case Game_State.Win:
+                break;
+            case Game_State.Lose:
+                break;
+        }
+    }
+
+    private void SetStateForCounterAndBlockButton(bool value)
+    {
+        counterButton.gameObject.SetActive(value);
+        blockButton.gameObject.SetActive(value);
+    }
+
+    private void OnStartForMainButton()
+    {
+        attackButton.onClick.RemoveAllListeners();
+        attackButton.onClick.AddListener(PlayerController.Instance.CameraForInteract.OnInteractButtonClicked);
     }
 
     #endregion

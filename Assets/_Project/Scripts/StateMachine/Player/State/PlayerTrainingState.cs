@@ -89,6 +89,8 @@ public class PlayerTrainingState : IState
         playerController.Data.EnergyUse(1);
         playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.BOXING);
         Debug.Log("Hoan thanh bai boxing");
+
+        GameManager.Instance.ChangeGameState(Game_State.Training);
     }
 
     private void OnRunningComplete()
@@ -98,6 +100,8 @@ public class PlayerTrainingState : IState
         playerController.Data.EnergyUse(1);
         playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.RUNING);
         Debug.Log("Hoan thanh bai chay");
+
+        GameManager.Instance.ChangeGameState(Game_State.Training);
     }
     private void OnSquatComplete()
     {
@@ -106,6 +110,8 @@ public class PlayerTrainingState : IState
         playerController.Data.EnergyUse(1);
         playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.SQUAT);
         Debug.Log("Hoan thanh bai squat");
+
+        GameManager.Instance.ChangeGameState(Game_State.Training);
     }
 
 

@@ -17,8 +17,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private ShopManager shopManager;
 
     [Header("Parameters")]
-    public Game_State gameState;
-    public Action<Game_State> OnGameStateChanged;
+    private Game_State gameState;
+    public Game_State GameState => gameState;
 
     private void Start()
     {
@@ -37,6 +37,8 @@ public class GameManager : Singleton<GameManager>
         popupManager?.OnStart();
         walletManager?.OnStart();
         shopManager?.OnStart();
+
+        ChangeGameState(Game_State.Training);
     }
 
     private void Update()
@@ -73,14 +75,18 @@ public class GameManager : Singleton<GameManager>
             case Game_State.Pause:
                 break;
             case Game_State.Training:
+                PlayerController.Instance.StateMachine.ChangeState(new PlayerIdleState(PlayerController.Instance));
                 break;
             case Game_State.Battle:
+                PlayerController.Instance.StateMachine.ChangeState(new PlayerBattleState(PlayerController.Instance));
                 break;
             case Game_State.Win:
                 break;
             case Game_State.Lose:
                 break;
         }
+
+        CanvasManager.Instance.UpdateActionButtonsByGameState(gameState);
     }
 
     #endregion
@@ -91,6 +97,7 @@ public enum Game_State
     Init,
     Pause,
     Training,
+    OnTraning, 
     Battle,
     Win,
     Lose,

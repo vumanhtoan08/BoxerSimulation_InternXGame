@@ -4,7 +4,7 @@
 public class InteractableBase : MonoBehaviour, IInteractable
 {
     [SerializeField] protected PlayerController playerController;
-    [SerializeField] protected TYPE_TRAINING type; 
+    [SerializeField] protected TYPE_TRAINING type;
     protected Outline outline;
     [SerializeField] protected InteractableData data;
     public InteractableData Data => data;
@@ -26,23 +26,27 @@ public class InteractableBase : MonoBehaviour, IInteractable
     public virtual void Interact()
     {
         Debug.Log("Interacted with " + gameObject.name);
+        if (type != TYPE_TRAINING.NONE)
+            GameManager.Instance.ChangeGameState(Game_State.OnTraning);
+        else
+            GameManager.Instance.ChangeGameState(Game_State.Training);
     }
 
     public virtual void OnRaycastHit()
     {
-        outline.enabled = true; 
+        outline.enabled = true;
     }
 
     public virtual void OnRaycastExit()
     {
-        outline.enabled = false; 
+        outline.enabled = false;
     }
 }
 
 public enum TYPE_TRAINING
 {
     NONE,
-    BOXING, 
+    BOXING,
     RUNING,
     SQUAT
 }

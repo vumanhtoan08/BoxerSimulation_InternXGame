@@ -14,6 +14,8 @@ public class EnemyDeadState : IState
     {
         Debug.Log("Enter Dead");
         enemyController.Animator.SetTrigger("isDead");
+
+        PopupManager.Instance.ShowPopup(Type_Popup.Win);
     }
 
     public void Excute()

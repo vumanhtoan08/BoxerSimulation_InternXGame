@@ -48,6 +48,16 @@ public class CameraForInteract : MonoBehaviour
         }
     }
 
+    public void OnInteractButtonClicked()
+    {
+        if (currentInteractable == null) return;
+
+        if (playerController.StateMachine.CurrentState.ToString() != "PlayerTrainingState")
+        {
+            currentInteractable.Interact();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (interactorSource == null) return;

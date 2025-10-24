@@ -12,7 +12,7 @@ public class PlayerIdleState : IState
 
     public void Enter()
     {
-        playerController.Animator.SetBool("isMoving", false);
+        playerController.Animator.SetTrigger("isTraning");
     }
 
     public void Excute()

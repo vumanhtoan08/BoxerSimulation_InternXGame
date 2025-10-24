@@ -25,6 +25,7 @@ public class PlayerMovingState :  IState
 
     public void Exit()
     {
+        playerController.Animator.SetBool("isMoving", false);
     }
 
     private void Moving()
