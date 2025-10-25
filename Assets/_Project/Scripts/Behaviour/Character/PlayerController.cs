@@ -70,7 +70,7 @@ public class PlayerController : Singleton<PlayerController>
 
     #endregion
 
-    protected override void Awake()
+    public void OnAwake()
     {
         animator = GetComponent<Animator>();
         character = GetComponent<CharacterController>();
@@ -82,7 +82,7 @@ public class PlayerController : Singleton<PlayerController>
         health = GetComponent<PlayerHealth>();
     }
 
-    private void Start()
+    public void OnStart()
     {
         stateMachine.ChangeState(new PlayerIdleState(this));
         stateMachine?.OnStart();
@@ -93,7 +93,7 @@ public class PlayerController : Singleton<PlayerController>
         health?.Init(this);
     }
 
-    public void Update()
+    public void OnUpdate()
     {
         stateMachine?.OnUpdate();
         cameraForInteract?.OnUpdate();

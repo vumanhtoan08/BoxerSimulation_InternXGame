@@ -189,6 +189,12 @@ public class CanvasManager : Singleton<CanvasManager>
         playerController.CharacterController.enabled = true;
     }
 
+    public void MoveEnemyToBattle()
+    {
+        EnemyManager.Instance.EnemyController.transform.position = enemyBattlePositon;
+        EnemyManager.Instance.EnemyController.transform.rotation = Quaternion.Euler(0, 135, 0);
+    }
+
     // Hiển thị nút, thay đổi icon
     public void UpdateActionButtonsByGameState(Game_State state)
     {

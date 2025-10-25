@@ -28,9 +28,8 @@ public class DataManager : Singleton<DataManager>
 
     #region Unity Methods
 
-    protected override void Awake()
+    public void OnAwake()
     {
-        base.Awake();
         LoadData();
     }
 

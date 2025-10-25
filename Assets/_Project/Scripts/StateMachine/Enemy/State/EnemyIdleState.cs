@@ -19,6 +19,7 @@ public class EnemyIdleState : IState
 
     public void Enter()
     {
+        enemyController.Animator.SetTrigger("isIdle");
         decisionCooldown = Random.Range(0.25f, 0.5f);
         decisionTimer = 0f;
     }

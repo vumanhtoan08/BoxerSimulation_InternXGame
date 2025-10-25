@@ -16,6 +16,9 @@ public class PopupWin : PopupBase
             CanvasManager.Instance.MovePlayerToTraining();
             Hide();
             GameManager.Instance.ChangeGameState(Game_State.Training);
+            EnemyManager.Instance.EnemyController.Health.Init(EnemyManager.Instance.EnemyController);
+            EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyIdleState(EnemyManager.Instance.EnemyController));
+            CanvasManager.Instance.MoveEnemyToBattle();
         });
     }
 

@@ -13,7 +13,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField, Range(1f, 10f)] private float detectedRange;
     [SerializeField] private Transform rightHand; 
     [SerializeField] private Transform leftHand;
-    [SerializeField] private LayerMask layerPlayer; 
+    [SerializeField] private LayerMask layerPlayer;
+    [SerializeField] private Collider dynamicCollider;
 
     #region Get Set
 
@@ -26,6 +27,8 @@ public class EnemyController : MonoBehaviour
     public Transform RightHand => rightHand;
     public Transform LeftHand => leftHand; 
     public LayerMask LayerPlayer => layerPlayer;
+
+    public Collider DynamicCollider => dynamicCollider;
 
     #endregion
 

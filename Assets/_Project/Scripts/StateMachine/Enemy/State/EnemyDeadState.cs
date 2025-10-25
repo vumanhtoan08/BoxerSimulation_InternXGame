@@ -16,6 +16,8 @@ public class EnemyDeadState : IState
         enemyController.Animator.SetTrigger("isDead");
 
         PopupManager.Instance.ShowPopup(Type_Popup.Win);
+
+        enemyController.DynamicCollider.enabled = false;
     }
 
     public void Excute()
@@ -25,5 +27,6 @@ public class EnemyDeadState : IState
     public void Exit()
     {
         enemyController.Animator.ResetTrigger("isDead");
+        enemyController.DynamicCollider.enabled = true;
     }
 }

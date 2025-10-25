@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -16,9 +18,19 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private WalletManager walletManager;
     [SerializeField] private ShopManager shopManager;
 
+    [SerializeField] private PlayerController playerController;
+
     [Header("Parameters")]
     private Game_State gameState;
     public Game_State GameState => gameState;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        dataManager?.OnAwake();
+
+        playerController?.OnAwake();
+    }
 
     private void Start()
     {
@@ -27,23 +39,29 @@ public class GameManager : Singleton<GameManager>
 
         //
         StartState();
+        StartingSetupForSplashScreen();
 
         dataManager?.OnStart();
         soundManager?.OnStart();
         dayManager?.OnStart();
-        canvasManager?.OnStart();
         interactableManager?.OnStart();
         enemyManager?.OnStart();
         popupManager?.OnStart();
         walletManager?.OnStart();
         shopManager?.OnStart();
 
+        playerController?.OnStart();
+
+        canvasManager?.OnStart();
+
         ChangeGameState(Game_State.Training);
     }
 
     private void Update()
     {
-        dataManager?.OnUpdate();
+        UpdateFillImage();
+
+        //dataManager?.OnUpdate();
         soundManager?.OnUpdate();
         dayManager?.OnUpdate();
         canvasManager?.OnUpdate();
@@ -55,13 +73,15 @@ public class GameManager : Singleton<GameManager>
         popupManager?.OnUpdate();
         walletManager?.OnUpdate();
         shopManager?.OnUpdate();
+
+        playerController?.OnUpdate();
     }
 
     #region StateGame Manager
 
     private void StartState()
     {
-        gameState = Game_State.Training;
+        gameState = Game_State.Init;
     }
 
     public void ChangeGameState(Game_State newState)
@@ -71,11 +91,14 @@ public class GameManager : Singleton<GameManager>
         switch (gameState)
         {
             case Game_State.Init:
+
                 break;
             case Game_State.Pause:
                 break;
             case Game_State.Training:
                 PlayerController.Instance.StateMachine.ChangeState(new PlayerIdleState(PlayerController.Instance));
+                break;
+            case Game_State.OnTraning:
                 break;
             case Game_State.Battle:
                 PlayerController.Instance.StateMachine.ChangeState(new PlayerBattleState(PlayerController.Instance));
@@ -87,6 +110,44 @@ public class GameManager : Singleton<GameManager>
         }
 
         CanvasManager.Instance.UpdateActionButtonsByGameState(gameState);
+    }
+
+    #endregion
+
+    #region For Splash Screen 
+
+    [SerializeField] private GameObject splashScreen;
+    [SerializeField] private Image fillImage;
+    [SerializeField] private float duration = 2f;
+    
+    private float timer;
+    private bool isRunning = true;
+
+    private void StartingSetupForSplashScreen()
+    {
+        if (fillImage != null)
+            fillImage.fillAmount = 0f;
+
+        timer = 0f;
+        isRunning = true;
+    }
+
+    private void UpdateFillImage()
+    {
+        if (!isRunning) return;
+
+        timer += Time.deltaTime;
+        float progress = Mathf.Clamp01(timer / duration);
+
+        if (fillImage != null)
+            fillImage.fillAmount = progress;
+
+        // Khi đầy thì tắt splash
+        if (progress >= 1f)
+        {
+            isRunning = false;
+            splashScreen.SetActive(false); // Tắt canvas splash
+        }
     }
 
     #endregion
