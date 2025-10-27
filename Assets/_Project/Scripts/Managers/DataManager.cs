@@ -11,6 +11,7 @@ public class DataManager : Singleton<DataManager>
     private const string PlayerDataKey = "PlayerData";
     private const string WalletDataKey = "WalletData";
     private const string InteractableDataKey = "InteractableData";
+    private const string DayDataKey = "DayData";
 
     [SerializeField] private ListStatLevelTable statLevelTables;
     [SerializeField] private ListSkillLevelTable skillLevelTables;
@@ -25,6 +26,8 @@ public class DataManager : Singleton<DataManager>
     public DataSaveForPlayer CurrentPlayerData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
     public DataSaveForWallet CurrentWalletData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
     public DataSaveForInteractable CurrentInteractableData { get; private set; }           // 3 cái này lấy từ PlayerPrebs
+
+    public DataSaveForDay CurrentDayData { get; private set; }
 
     #region Unity Methods
 
@@ -98,10 +101,28 @@ public class DataManager : Singleton<DataManager>
             Debug.Log("⚙️ No Interactable data found. Created default values.");
         }
 
+        // --- DAY ---
+        if (PlayerPrefs.HasKey(DayDataKey))
+        {
+            string json = PlayerPrefs.GetString(DayDataKey);
+            if (!string.IsNullOrEmpty(json))
+                CurrentDayData = JsonUtility.FromJson<DataSaveForDay>(json);
+            else
+                CurrentDayData = new DataSaveForDay();
+
+            Debug.Log("✅ Day data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentDayData = new DataSaveForDay();
+            Debug.Log("⚙️ No day data found. Created default values.");
+        }
+
         // 🔥 Đảm bảo tất cả đã được khởi tạo trước khi SaveData()
         if (CurrentPlayerData == null) CurrentPlayerData = new DataSaveForPlayer();
         if (CurrentWalletData == null) CurrentWalletData = new DataSaveForWallet();
         if (CurrentInteractableData == null) CurrentInteractableData = new DataSaveForInteractable();
+        if (CurrentDayData == null) CurrentDayData = new DataSaveForDay();
 
         SaveData(); // ✅ Gọi 1 lần duy nhất, sau khi tất cả có dữ liệu
     }
@@ -117,6 +138,9 @@ public class DataManager : Singleton<DataManager>
 
         string jsonInteractableData = JsonUtility.ToJson(CurrentInteractableData);
         PlayerPrefs.SetString(InteractableDataKey, jsonInteractableData);
+
+        string jsonDayData = JsonUtility.ToJson(CurrentDayData);
+        PlayerPrefs.SetString(DayDataKey, jsonDayData);
 
         PlayerPrefs.Save();
         Debug.Log("💾 Data saved to PlayerPrefs");
@@ -135,17 +159,6 @@ public class DataManager : Singleton<DataManager>
     {
         throw new NotImplementedException();
     }
-
-#if UNITY_EDITOR
-    [ContextMenu("Reset All Save Data")]
-    public void ResetAllData()
-    {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save();
-        LoadData();
-        Debug.Log("🧹 All saved data reset to default!");
-    }
-#endif
 }
 
 #region PlayerData
@@ -407,11 +420,13 @@ public class ListSkillLevelTable : ScriptableObject
 [Serializable]
 public class EnemyData
 {
+    public string Name;
     public float Attack;
     public float Health;
 
     public void SetDataForEnemy()
     {
+        Name = DataManager.Instance.EnemyStatDatabase.Enemies[0].Name;
         Attack = DataManager.Instance.EnemyStatDatabase.Enemies[0].Attack; // Ve sau thay 0 = level luu trong Prefabs
         Health = DataManager.Instance.EnemyStatDatabase.Enemies[0].Defense;
     }
@@ -440,6 +455,32 @@ public class DataSaveForWallet
     public DataSaveForWallet()
     {
         currentMoney = 0;
+    }
+}
+
+#endregion
+
+#region Day Data 
+
+[Serializable]
+public class DayData
+{
+    public int currentDay; 
+
+    public void SetDataForDay()
+    {
+        currentDay = DataManager.Instance.CurrentDayData.currentDay;
+    }
+}
+
+[Serializable]
+public class DataSaveForDay
+{
+    public int currentDay;
+    
+    public DataSaveForDay()
+    {
+        currentDay = 1;
     }
 }
 

@@ -13,6 +13,7 @@ public class EnemyHitState : IState
     public void Enter()
     {
         Debug.Log("Enter Hit");
+        CanvasManager.Instance.OnEnemyHealthChange();
         enemyController.Animator.SetTrigger("isHeadHit");
     }
 

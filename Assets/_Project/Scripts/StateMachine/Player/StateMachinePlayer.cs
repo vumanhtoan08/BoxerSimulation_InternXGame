@@ -10,7 +10,7 @@ public class StateMachinePlayer : MonoBehaviour
     public void ChangeState(IState newState)
     {
         if (currentState != null && newState == currentState)
-            return; 
+            return;
 
         currentState?.Exit();
 

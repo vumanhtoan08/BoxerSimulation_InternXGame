@@ -107,6 +107,7 @@ public class GameManager : Singleton<GameManager>
                 PopupManager.Instance.ShowPopup(Type_Popup.Win);
                 break;
             case Game_State.Lose:
+                CanvasManager.Instance.OnPlayerHealthChange();
                 PopupManager.Instance.ShowPopup(Type_Popup.Lose);
                 break;
         }

@@ -26,7 +26,6 @@ public class PlayerCounterState : IState
 
     public void Enter()
     {
-        Debug.Log("Vao trang thai counter");
         playerController.Data.ChangeStamina(-staminaCost);
 
         playerController.SetCounter(true);

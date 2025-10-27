@@ -16,9 +16,16 @@ public class CanvasManager : Singleton<CanvasManager>
 
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         trainingPanel?.SetActive(false);
-        canvasArena?.SetActive(false);
         OnResetAction();
         OnEnergyChange();
+
+        // Setup Info day
+        OnNextDay();
+        OnUpdateUIMoney();
+
+        // Setup Info Enemy
+        OnUpdateUIEnemy();
+        OnUpdateUIPlayer();
     }
 
     public void OnUpdate()
@@ -32,6 +39,7 @@ public class CanvasManager : Singleton<CanvasManager>
     [Header("Canvas For Training")]
     [SerializeField] private GameObject trainingPanel;
     [SerializeField] private Image fillEnergyBar;
+    [SerializeField] private Button exitBtn; 
 
     [Header("Energy Settings")]
     [SerializeField] private float increaseAmount = 0.2f;
@@ -50,6 +58,14 @@ public class CanvasManager : Singleton<CanvasManager>
         ResetEnergy();
         UpdateUI();
         trainingPanel?.SetActive(true);
+
+        exitBtn.onClick.RemoveAllListeners();
+        exitBtn.onClick.AddListener(() =>
+        {
+            trainingPanel?.SetActive(false);
+            GameManager.Instance.ChangeGameState(Game_State.Training);
+            OnResetAction();
+        });
     }
 
     public void OnUnActiveTrainingPanel() => trainingPanel?.SetActive(false);
@@ -126,73 +142,33 @@ public class CanvasManager : Singleton<CanvasManager>
     #region Arena Infor
 
     [Header("Canvas For Arena")]
-    [SerializeField] private GameObject canvasArena;         // Canvas hiển thị thông tin.
-    [SerializeField] private GameObject canvasBehaviour;     // Nút di chuyển của người chơi,...
+    [SerializeField] private GameObject playerInfor;        // Ngày, thể lực, tiền, shop
+    [SerializeField] private GameObject playerInforBattle;  // thanh máu, thanh lực 
     [SerializeField] private Button attackButton;
     [SerializeField] private Button counterButton;          // Ẩn khi training 
     [SerializeField] private Button blockButton;            // Ẩn khi training
 
     [Header("Enemy Stats")]
-    [SerializeField] private TextMeshProUGUI enemyAttack;
-    [SerializeField] private TextMeshProUGUI enemyHealth;
-    [SerializeField] private Image enemyAvatar;
+    [SerializeField] private TextMeshProUGUI enemyAttackTxt;
+    [SerializeField] private TextMeshProUGUI enemyHealthTxt;
+    [SerializeField] private Image enemyAvatarTmg;
     [SerializeField] private Button fightButton;
 
-    public void OnActiveEnemyInfoPanel()
-    {
-        UpdateInfoEnemy();
-        canvasBehaviour.SetActive(false);
-        canvasArena.SetActive(true);
-    }
-
-    public void OnUnActiveEnemyInfoPanel()
-    {
-        canvasArena.SetActive(false);
-        canvasBehaviour.SetActive(true);
-    }
+    #region Update UI 
 
     public void UpdateInfoEnemy()
     {
         EnemyRuntimeData enemyData = EnemyManager.Instance.EnemyController.RuntimeData;
-        enemyAttack.text = enemyData.EnemyData.Attack.ToString();
-        enemyHealth.text = enemyData.EnemyData.Health.ToString();
+        enemyAttackTxt.text = enemyData.EnemyData.Attack.ToString();
+        enemyHealthTxt.text = enemyData.EnemyData.Health.ToString();
     }
 
-    [Header("Setting Position")]
-    [SerializeField] private Vector3 playerBattlePositon;
-    [SerializeField] private Vector3 playerTrainingPositon;
-    [SerializeField] private Vector3 enemyBattlePositon;
-
-    public void ButtonFightActive()
+    private void SetStateForCounterAndBlockButton(bool value)
     {
-        Debug.Log("Kich hoat");
-        MovePlayerToBattle();
-
-        OnUnActiveEnemyInfoPanel();
-
-        GameManager.Instance.ChangeGameState(Game_State.Battle);
-    }
-
-    public void MovePlayerToBattle()
-    {
-        playerController.CharacterController.enabled = false;
-        playerController.transform.position = playerBattlePositon;
-        playerController.transform.rotation = Quaternion.Euler(0, -45, 0);
-        playerController.CharacterController.enabled = true;
-    }
-
-    public void MovePlayerToTraining()
-    {
-        playerController.CharacterController.enabled = false;
-        playerController.transform.position = playerTrainingPositon;
-        playerController.transform.rotation = Quaternion.Euler(0, 180, 0);
-        playerController.CharacterController.enabled = true;
-    }
-
-    public void MoveEnemyToBattle()
-    {
-        EnemyManager.Instance.EnemyController.transform.position = enemyBattlePositon;
-        EnemyManager.Instance.EnemyController.transform.rotation = Quaternion.Euler(0, 135, 0);
+        playerInfor.SetActive(!value);
+        playerInforBattle.SetActive(value);
+        counterButton.gameObject.SetActive(value);
+        blockButton.gameObject.SetActive(value);
     }
 
     // Hiển thị nút, thay đổi icon
@@ -221,6 +197,38 @@ public class CanvasManager : Singleton<CanvasManager>
 
         ChangeAbilityButtonInteract(state);
     }
+
+    #endregion
+
+    #region Set position 
+
+    [Header("Setting Position")]
+    [SerializeField] private Vector3 playerBattlePositon;
+    [SerializeField] private Vector3 playerTrainingPositon;
+    [SerializeField] private Vector3 enemyBattlePositon;
+
+    public void MovePlayerToBattle()
+    {
+        playerController.CharacterController.enabled = false;
+        playerController.transform.position = playerBattlePositon;
+        playerController.transform.rotation = Quaternion.Euler(0, -45, 0);
+        playerController.CharacterController.enabled = true;
+    }
+
+    public void MovePlayerToTraining()
+    {
+        playerController.CharacterController.enabled = false;
+        playerController.transform.position = playerTrainingPositon;
+        playerController.transform.rotation = Quaternion.Euler(0, 180, 0);
+        playerController.CharacterController.enabled = true;
+    }
+    public void MoveEnemyToBattle()
+    {
+        EnemyManager.Instance.EnemyController.transform.position = enemyBattlePositon;
+        EnemyManager.Instance.EnemyController.transform.rotation = Quaternion.Euler(0, 135, 0);
+    }
+
+    #endregion
 
     // Thay đổi chức năng của button
     public void ChangeAbilityButtonInteract(Game_State state)
@@ -253,26 +261,72 @@ public class CanvasManager : Singleton<CanvasManager>
         }
     }
 
-    private void SetStateForCounterAndBlockButton(bool value)
-    {
-        counterButton.gameObject.SetActive(value);
-        blockButton.gameObject.SetActive(value);
-    }
-
     private void OnStartForMainButton()
     {
         attackButton.onClick.RemoveAllListeners();
         attackButton.onClick.AddListener(PlayerController.Instance.CameraForInteract.OnInteractButtonClicked);
     }
 
+    #region UI Infor Player and Enemy In Battle
+
+    [Header("Enemy Health, name, avatar")]
+    [SerializeField] private Image enemyHealthImg;
+    [SerializeField] private Image enemyAvaterImg;
+    [SerializeField] private TextMeshProUGUI enemyName; 
+
+    public void OnUpdateUIEnemy()
+    {
+        EnemyController enemyController = EnemyManager.Instance.EnemyController;
+        EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
+
+        enemyName.text = $"{enemyController.RuntimeData.EnemyData.Name}";
+        enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
+    }
+
+    public void OnEnemyHealthChange()
+    {
+        EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
+
+        enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
+    }
+
+    [Header("Player Health and Stamina")]
+    [SerializeField] private Image playerHealthImg;
+    [SerializeField] private Image playerStaminaImg;
+
+    public void OnUpdateUIPlayer()
+    {
+        PlayerRunTimeDatas data = PlayerController.Instance.Data;
+        PlayerHealth health = PlayerController.Instance.Health;
+
+        playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
+        playerStaminaImg.fillAmount = data.CurrentStamina / data.DataRuntime.Stamina;
+    }
+
+    public void OnPlayerHealthChange()
+    {
+        PlayerHealth health = PlayerController.Instance.Health;
+        playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
+    }
+    
+    public void OnPlayerStaminaChange()
+    {
+        PlayerRunTimeDatas data = PlayerController.Instance.Data;
+        playerStaminaImg.fillAmount = data.CurrentStamina / data.DataRuntime.Stamina;
+    }
+
     #endregion
 
-    #region UI Info
+    #endregion
+
+    #region UI Player Info
 
     [Header("Information Day")]
     [SerializeField] private TextMeshProUGUI textDay;
     [Header("Infomation Energy")]
     [SerializeField] private TextMeshProUGUI textEnergy;
+    [Header("Infomation Money")]
+    [SerializeField] private TextMeshProUGUI textMoney; 
 
     public void OnNextDay()
     {
@@ -283,17 +337,26 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         textEnergy.text = playerController.Data.CurrentEnergy.ToString();
     }
+
+    public void OnUpdateUIMoney()
+    {
+        textMoney.text = $"{WalletManager.Instance.DataRuntime.currentMoney}";
+    }
     #endregion
 
     private void OnEnable()
     {
         DayManager.Instance.OnNextDay += OnNextDay;
         DayManager.Instance.OnNextDay += OnEnergyChange;
+
+        WalletManager.Instance.OnDataChange += OnUpdateUIMoney;
     }
 
     private void OnDisable()
     {
         DayManager.Instance.OnNextDay -= OnNextDay;
         DayManager.Instance.OnNextDay -= OnEnergyChange;
+
+        WalletManager.Instance.OnDataChange -= OnUpdateUIMoney;
     }
 }

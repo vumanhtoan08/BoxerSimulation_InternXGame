@@ -23,7 +23,8 @@ public class PopupInfoEnemy : PopupBase
             CanvasManager.Instance.MovePlayerToBattle();
             Hide();
             GameManager.Instance.ChangeGameState(Game_State.Battle);
-
+            PlayerController.Instance.Health.OnSettingHealthBeforeBattle();
+            CanvasManager.Instance.OnUpdateUIPlayer();
         });
 
         // setup for close button

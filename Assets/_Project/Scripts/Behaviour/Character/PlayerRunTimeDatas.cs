@@ -26,6 +26,7 @@ public class PlayerRunTimeDatas : MonoBehaviour
 
     public bool EnergyUse(int amount = 0)
     {
+        Debug.Log("Su dung Energy'");
         currentEnergy -= amount;
         currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
         bool isHasEnergy = currentEnergy <= 0 ? true : false;
@@ -45,6 +46,7 @@ public class PlayerRunTimeDatas : MonoBehaviour
     public void ChangeStamina(float amount)
     {
         currentStamina = Mathf.Clamp(currentStamina + amount, 0, dataRuntime.Stamina);
+        CanvasManager.Instance.OnPlayerStaminaChange();
     }
 
     public bool CheckStamina(float value)

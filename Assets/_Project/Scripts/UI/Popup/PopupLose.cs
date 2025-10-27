@@ -18,6 +18,7 @@ public class PopupLose : PopupBase
             EnemyManager.Instance.EnemyController.Health.Init(EnemyManager.Instance.EnemyController);
             EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyIdleState(EnemyManager.Instance.EnemyController));
             CanvasManager.Instance.MoveEnemyToBattle();
+            CanvasManager.Instance.OnUpdateUIEnemy();
         });
     }
 }

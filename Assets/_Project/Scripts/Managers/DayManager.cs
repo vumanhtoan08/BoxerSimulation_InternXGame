@@ -1,9 +1,11 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class DayManager : Singleton<DayManager>
 {
-    [SerializeField] private int currentDay = 1;
+    [SerializeField] private DayData dataRuntime;
+
+    [SerializeField] private int currentDay;
     [SerializeField] private PlayerRunTimeDatas data;
 
     public int CurrentDay => currentDay;
@@ -15,6 +17,8 @@ public class DayManager : Singleton<DayManager>
     public void OnStart()
     {
         data = PlayerController.Instance.Data;
+        dataRuntime.SetDataForDay();
+        currentDay = dataRuntime.currentDay;
     }
 
     public void OnUpdate()
@@ -39,8 +43,15 @@ public class DayManager : Singleton<DayManager>
 
     public void MoveToNextDay()
     {
-        currentDay += 1;
-        Debug.Log("Sang ngay moi" + currentDay);
+        dataRuntime.currentDay++;
+
+        // 🔥 Đồng bộ với DataManager trước khi lưu
+        DataManager.Instance.CurrentDayData.currentDay = dataRuntime.currentDay;
+
+        DataManager.Instance.SaveData();
+
+        currentDay = dataRuntime.currentDay;
+        Debug.Log("🌅 Sang ngày mới: " + currentDay);
         OnNextDay?.Invoke();
     }
 }
