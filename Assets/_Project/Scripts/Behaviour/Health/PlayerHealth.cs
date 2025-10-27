@@ -12,4 +12,10 @@ public class PlayerHealth : EntityHealth
         currentHealth = maxHealth;
         animator = playerController.Animator;
     }
+
+    protected override void Dead()
+    {
+        base.Dead();
+        GameManager.Instance.ChangeGameState(Game_State.Lose);
+    }
 }

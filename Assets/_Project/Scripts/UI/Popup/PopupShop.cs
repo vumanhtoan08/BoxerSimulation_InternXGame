@@ -7,10 +7,15 @@ public class PopupShop : PopupBase
     [SerializeField] private Image fillAmountRunningMachine; 
     [SerializeField] private Image fillAmountSquat;
     [SerializeField] private Button closeButton;
+    [SerializeField] private Button openButton; // chính là nút Shop trong Canvas
 
     public override void Init()
     {
         base.Init();
+
+        openButton.onClick.RemoveAllListeners();
+        openButton.onClick.AddListener(Show);
+
         closeButton.onClick.RemoveAllListeners();
         closeButton.onClick.AddListener(Hide);
     }

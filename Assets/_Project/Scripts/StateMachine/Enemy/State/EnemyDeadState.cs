@@ -12,11 +12,10 @@ public class EnemyDeadState : IState
 
     public void Enter()
     {
+        GameManager.Instance.ChangeGameState(Game_State.Win);
+
         Debug.Log("Enter Dead");
         enemyController.Animator.SetTrigger("isDead");
-
-        PopupManager.Instance.ShowPopup(Type_Popup.Win);
-
         enemyController.DynamicCollider.enabled = false;
     }
 

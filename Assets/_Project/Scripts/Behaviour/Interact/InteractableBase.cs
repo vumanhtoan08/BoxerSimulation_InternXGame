@@ -26,10 +26,16 @@ public class InteractableBase : MonoBehaviour, IInteractable
     public virtual void Interact()
     {
         Debug.Log("Interacted with " + gameObject.name);
+
+        if (playerController.Data.CurrentEnergy <= 0 && type != TYPE_TRAINING.NONE)
+        {
+            Debug.Log("Het nang luong");
+            PopupManager.Instance.ShowPopup(Type_Popup.NotEnoughEnergy);
+            return;
+        }
+
         if (type != TYPE_TRAINING.NONE)
             GameManager.Instance.ChangeGameState(Game_State.OnTraning);
-        else
-            GameManager.Instance.ChangeGameState(Game_State.Training);
     }
 
     public virtual void OnRaycastHit()

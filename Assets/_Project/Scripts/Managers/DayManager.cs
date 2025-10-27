@@ -33,10 +33,11 @@ public class DayManager : Singleton<DayManager>
         else
         {
             Debug.Log("con nang luong");
+            PopupManager.Instance.ShowPopup(Type_Popup.WarningEnergy);
         }
     }
 
-    private void MoveToNextDay()
+    public void MoveToNextDay()
     {
         currentDay += 1;
         Debug.Log("Sang ngay moi" + currentDay);

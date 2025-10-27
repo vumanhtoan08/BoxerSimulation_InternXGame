@@ -104,8 +104,10 @@ public class GameManager : Singleton<GameManager>
                 PlayerController.Instance.StateMachine.ChangeState(new PlayerBattleState(PlayerController.Instance));
                 break;
             case Game_State.Win:
+                PopupManager.Instance.ShowPopup(Type_Popup.Win);
                 break;
             case Game_State.Lose:
+                PopupManager.Instance.ShowPopup(Type_Popup.Lose);
                 break;
         }
 
