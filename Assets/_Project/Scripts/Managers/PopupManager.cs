@@ -44,4 +44,5 @@ public enum Type_Popup
     InfoEnemy, 
     Win, 
     Lose, 
+    Shop, 
 }

@@ -22,9 +22,9 @@ public class DataManager : Singleton<DataManager>
     public EnemyStatDatabase EnemyStatDatabase => enemyStatDatabase;
     public ListInteractableTable ListInteractableTable => listInteractableTable;
 
-    public DataSaveForPlayer CurrentPlayerData { get; private set; }
-    public DataSaveForWallet CurrentWalletData { get; private set; }
-    public DataSaveForInteractable CurrentInteractableData { get; private set; }
+    public DataSaveForPlayer CurrentPlayerData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
+    public DataSaveForWallet CurrentWalletData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
+    public DataSaveForInteractable CurrentInteractableData { get; private set; }           // 3 cái này lấy từ PlayerPrebs
 
     #region Unity Methods
 
