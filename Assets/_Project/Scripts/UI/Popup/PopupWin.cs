@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,20 +16,31 @@ public class PopupWin : PopupBase
         rewardButton.onClick.RemoveAllListeners();
         rewardButton.onClick.AddListener(() =>
         {
-            CanvasManager.Instance.MovePlayerToTraining();
             Hide();
-            GameManager.Instance.ChangeGameState(Game_State.Training);
 
-            // Enemy
-            DataManager.Instance.CurrentEnemyData.Level++;
-            DataManager.Instance.SaveData();
-            // SetData mới cho Enemy
-            EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.SetDataForEnemy();
+            Sequence seq = DOTween.Sequence();
 
-            EnemyManager.Instance.EnemyController.Health.Init(EnemyManager.Instance.EnemyController);
-            EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyIdleState(EnemyManager.Instance.EnemyController));
-            CanvasManager.Instance.MoveEnemyToBattle();
-            CanvasManager.Instance.OnUpdateUIEnemy();
+            seq.Append(CanvasManager.Instance.DarkPanelActive())
+               .AppendCallback(() =>
+               {
+                   GameManager.Instance.ChangeGameState(Game_State.Training);
+                   CanvasManager.Instance.MovePlayerToTraining();
+               })
+               .Append(CanvasManager.Instance.DarkPanelUnActive())
+               .AppendCallback(() => 
+               {
+                   // Enemy
+                   DataManager.Instance.CurrentEnemyData.Level++;
+                   DataManager.Instance.SaveData();
+                   // SetData mới cho Enemy
+                   EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.SetDataForEnemy();
+
+                   EnemyManager.Instance.EnemyController.Health.Init(EnemyManager.Instance.EnemyController);
+                   EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyIdleState(EnemyManager.Instance.EnemyController));
+
+                   CanvasManager.Instance.OnUpdateUIEnemy();
+                   CanvasManager.Instance.MoveEnemyToBattle();
+               });
 
             // Wallet
             WalletManager.Instance.OnMoneyChange(EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Reward);

@@ -350,6 +350,47 @@ public class CanvasManager : Singleton<CanvasManager>
     }
     #endregion
 
+    #region Dark Canvas 
+
+    [SerializeField] private GameObject darkCanvasObj;
+    [SerializeField] private Image darkCanvasImg;
+    [SerializeField] private TextMeshProUGUI dayTxt; 
+
+    public Tween DarkPanelActive()
+    {
+        darkCanvasObj.SetActive(true);
+
+        Color color = darkCanvasImg.color;
+        color.a = 0; 
+        darkCanvasImg.color = color;
+
+        return darkCanvasImg.DOFade(1f, 1f).SetEase(Ease.Linear);
+    }
+
+    public Tween DarkPanelUnActive()
+    {
+        return darkCanvasImg.DOFade(0f, 1f).SetEase(Ease.Linear).OnComplete(() => darkCanvasObj.SetActive(false));
+    }
+
+    public Tween ShowDayText()
+    {
+        dayTxt.text = $"DAY {DayManager.Instance.CurrentDay}";
+        dayTxt.alpha = 0;
+        dayTxt.transform.localScale = Vector3.zero;
+        dayTxt.gameObject.SetActive(true);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(dayTxt.DOFade(1f, 1f));
+        seq.Join(dayTxt.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack));
+        seq.AppendInterval(1.2f);
+        seq.Append(dayTxt.DOFade(0f, 1f));
+        seq.AppendCallback(() => dayTxt.gameObject.SetActive(false));
+
+        return seq;
+    }
+
+    #endregion
+
     private void OnEnable()
     {
         DayManager.Instance.OnNextDay += OnNextDay;

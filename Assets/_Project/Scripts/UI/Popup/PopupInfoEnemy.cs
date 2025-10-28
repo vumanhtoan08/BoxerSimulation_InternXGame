@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +19,18 @@ public class PopupInfoEnemy : PopupBase
         fightButton.onClick.RemoveAllListeners();
         fightButton.onClick.AddListener(() =>
         {
-            CanvasManager.Instance.MovePlayerToBattle();
             Hide();
-            GameManager.Instance.ChangeGameState(Game_State.Battle);
+
+            Sequence seq = DOTween.Sequence();
+
+            seq.Append(CanvasManager.Instance.DarkPanelActive())
+                .AppendCallback(() =>
+                {
+                    GameManager.Instance.ChangeGameState(Game_State.Battle);
+                    CanvasManager.Instance.MovePlayerToBattle();
+                })
+               .Append(CanvasManager.Instance.DarkPanelUnActive());
+
             PlayerController.Instance.Health.OnSettingHealthBeforeBattle();
             CanvasManager.Instance.OnUpdateUIPlayer();
         });

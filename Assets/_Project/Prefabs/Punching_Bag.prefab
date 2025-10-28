@@ -54,7 +54,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.24
   m_Height: 1.68
   m_Direction: 1
   m_Center: {x: 0, y: 0.91, z: 0.66}
@@ -94,6 +94,9 @@ MonoBehaviour:
     Level: 0
     Value: 0
     Cost: 0
+  playerPosition: {x: 8, y: 0, z: 7.5}
+  playerRotation: {x: 0, y: 90, z: 0}
+  playerLook: {x: 20, y: 90, z: 0}
 --- !u!1 &2775017441764948018
 GameObject:
   m_ObjectHideFlags: 0

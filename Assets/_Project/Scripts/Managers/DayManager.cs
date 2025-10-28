@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class DayManager : Singleton<DayManager>
@@ -52,6 +53,13 @@ public class DayManager : Singleton<DayManager>
 
         currentDay = dataRuntime.currentDay;
         Debug.Log("🌅 Sang ngày mới: " + currentDay);
+
+        // Dark Panel
+        Sequence seq = DOTween.Sequence();
+        seq.Append(CanvasManager.Instance.DarkPanelActive())
+            .Append(CanvasManager.Instance.ShowDayText())
+            .Append(CanvasManager.Instance.DarkPanelUnActive());
+
         OnNextDay?.Invoke();
     }
 }

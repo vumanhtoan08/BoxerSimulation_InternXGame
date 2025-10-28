@@ -218,41 +218,61 @@ public class Outline : MonoBehaviour {
     }
   }
 
-  List<Vector3> SmoothNormals(Mesh mesh) {
+    private static List<Vector3> SmoothNormals(Mesh mesh)
+    {
+        if (mesh == null) return new List<Vector3>();
 
-    // Group vertices by location
-    var groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);
+        // Đảm bảo mesh có đủ normals
+        if (mesh.normals == null || mesh.normals.Length < mesh.vertexCount)
+        {
+            mesh.RecalculateNormals();
+        }
 
-    // Copy normals to a new list
-    var smoothNormals = new List<Vector3>(mesh.normals);
+        // Group vertices by location
+        var groups = mesh.vertices
+            .Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index))
+            .GroupBy(pair => pair.Key);
 
-    // Average normals for grouped vertices
-    foreach (var group in groups) {
+        // Copy normals sang list mới
+        var baseNormals = mesh.normals.ToList();
+        var smoothNormals = new List<Vector3>(baseNormals);
 
-      // Skip single vertices
-      if (group.Count() == 1) {
-        continue;
-      }
+        // Đảm bảo list đủ phần tử (tránh index out of range)
+        if (smoothNormals.Count < mesh.vertexCount)
+        {
+            int missing = mesh.vertexCount - smoothNormals.Count;
+            for (int i = 0; i < missing; i++)
+                smoothNormals.Add(Vector3.up);
+        }
 
-      // Calculate the average normal
-      var smoothNormal = Vector3.zero;
+        // Average normals for grouped vertices
+        foreach (var group in groups)
+        {
+            if (group.Count() == 1)
+                continue;
 
-      foreach (var pair in group) {
-        smoothNormal += smoothNormals[pair.Value];
-      }
+            // Tính trung bình
+            Vector3 smoothNormal = Vector3.zero;
+            foreach (var pair in group)
+            {
+                if (pair.Value >= 0 && pair.Value < smoothNormals.Count)
+                    smoothNormal += smoothNormals[pair.Value];
+            }
 
-      smoothNormal.Normalize();
+            smoothNormal.Normalize();
 
-      // Assign smooth normal to each vertex
-      foreach (var pair in group) {
-        smoothNormals[pair.Value] = smoothNormal;
-      }
+            // Gán lại cho từng vertex
+            foreach (var pair in group)
+            {
+                if (pair.Value >= 0 && pair.Value < smoothNormals.Count)
+                    smoothNormals[pair.Value] = smoothNormal;
+            }
+        }
+
+        return smoothNormals;
     }
 
-    return smoothNormals;
-  }
-
-  void CombineSubmeshes(Mesh mesh, Material[] materials) {
+    void CombineSubmeshes(Mesh mesh, Material[] materials) {
 
     // Skip meshes with a single submesh
     if (mesh.subMeshCount == 1) {

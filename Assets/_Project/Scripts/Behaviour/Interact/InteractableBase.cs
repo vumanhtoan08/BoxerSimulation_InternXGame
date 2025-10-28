@@ -47,6 +47,11 @@ public class InteractableBase : MonoBehaviour, IInteractable
     {
         outline.enabled = false;
     }
+
+    protected virtual void SetPlayerPositionToIteractable()
+    {
+
+    }
 }
 
 public enum TYPE_TRAINING
