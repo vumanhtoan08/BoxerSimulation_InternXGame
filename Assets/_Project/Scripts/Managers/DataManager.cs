@@ -12,6 +12,7 @@ public class DataManager : Singleton<DataManager>
     private const string WalletDataKey = "WalletData";
     private const string InteractableDataKey = "InteractableData";
     private const string DayDataKey = "DayData";
+    private const string EnemyDataKey = "EnemyData";
 
     [SerializeField] private ListStatLevelTable statLevelTables;
     [SerializeField] private ListSkillLevelTable skillLevelTables;
@@ -26,8 +27,8 @@ public class DataManager : Singleton<DataManager>
     public DataSaveForPlayer CurrentPlayerData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
     public DataSaveForWallet CurrentWalletData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
     public DataSaveForInteractable CurrentInteractableData { get; private set; }           // 3 cái này lấy từ PlayerPrebs
-
     public DataSaveForDay CurrentDayData { get; private set; }
+    public DataSaveForEnemy CurrentEnemyData { get; private set; }
 
     #region Unity Methods
 
@@ -118,11 +119,29 @@ public class DataManager : Singleton<DataManager>
             Debug.Log("⚙️ No day data found. Created default values.");
         }
 
+        // --- ENEMY ---
+        if (PlayerPrefs.HasKey(EnemyDataKey))
+        {
+            string json = PlayerPrefs.GetString(EnemyDataKey);
+            if (!string.IsNullOrEmpty(json))
+                CurrentEnemyData = JsonUtility.FromJson<DataSaveForEnemy>(json);
+            else
+                CurrentEnemyData = new DataSaveForEnemy();
+
+            Debug.Log("✅ Enemy data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentEnemyData = new DataSaveForEnemy();
+            Debug.Log("⚙️ No enemy data found. Created default values.");
+        }
+
         // 🔥 Đảm bảo tất cả đã được khởi tạo trước khi SaveData()
         if (CurrentPlayerData == null) CurrentPlayerData = new DataSaveForPlayer();
         if (CurrentWalletData == null) CurrentWalletData = new DataSaveForWallet();
         if (CurrentInteractableData == null) CurrentInteractableData = new DataSaveForInteractable();
         if (CurrentDayData == null) CurrentDayData = new DataSaveForDay();
+        if (CurrentEnemyData == null) CurrentEnemyData = new DataSaveForEnemy();
 
         SaveData(); // ✅ Gọi 1 lần duy nhất, sau khi tất cả có dữ liệu
     }
@@ -134,13 +153,16 @@ public class DataManager : Singleton<DataManager>
         PlayerPrefs.SetString(PlayerDataKey, jsonPlayerData);
 
         string jsonWalletData = JsonUtility.ToJson(CurrentWalletData);
-        PlayerPrefs.SetString(WalletDataKey,jsonWalletData);
+        PlayerPrefs.SetString(WalletDataKey, jsonWalletData);
 
         string jsonInteractableData = JsonUtility.ToJson(CurrentInteractableData);
         PlayerPrefs.SetString(InteractableDataKey, jsonInteractableData);
 
         string jsonDayData = JsonUtility.ToJson(CurrentDayData);
         PlayerPrefs.SetString(DayDataKey, jsonDayData);
+
+        string jsonEnemyData = JsonUtility.ToJson(CurrentEnemyData);
+        PlayerPrefs.SetString(EnemyDataKey, jsonEnemyData);
 
         PlayerPrefs.Save();
         Debug.Log("💾 Data saved to PlayerPrefs");
@@ -372,7 +394,7 @@ public class PlayerData
 
 public enum STATE_TYPE
 {
-    Attack, 
+    Attack,
     Health,
     Stamina,
 }
@@ -423,13 +445,23 @@ public class EnemyData
     public string Name;
     public float Attack;
     public float Health;
+    public int Reward;
 
     public void SetDataForEnemy()
     {
-        Name = DataManager.Instance.EnemyStatDatabase.Enemies[0].Name;
-        Attack = DataManager.Instance.EnemyStatDatabase.Enemies[0].Attack; // Ve sau thay 0 = level luu trong Prefabs
-        Health = DataManager.Instance.EnemyStatDatabase.Enemies[0].Defense;
+        Name = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Name;
+        Attack = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Attack; // Ve sau thay 0 = level luu trong Prefabs
+        Health = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Defense;
+        Reward = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Money;
     }
+}
+
+[Serializable]
+public class DataSaveForEnemy
+{
+    public int Level;
+
+    public DataSaveForEnemy() { Level = 0; }
 }
 
 #endregion
@@ -465,7 +497,7 @@ public class DataSaveForWallet
 [Serializable]
 public class DayData
 {
-    public int currentDay; 
+    public int currentDay;
 
     public void SetDataForDay()
     {
@@ -477,7 +509,7 @@ public class DayData
 public class DataSaveForDay
 {
     public int currentDay;
-    
+
     public DataSaveForDay()
     {
         currentDay = 1;

@@ -12,6 +12,9 @@ public class EnemyStatData : ScriptableObject
     [Header("Enemy Stats")]
     public float Attack;       // Chỉ số tấn công
     public float Defense;      // Chỉ số phòng thủ
+
+    [Header("Enemy Reward")]
+    public int Money;          // Tiền nhận được khi chiến thắng 
 }
 
 [CreateAssetMenu(fileName = "NewEnemyDatabase", menuName = "Database/Enemy Database")]

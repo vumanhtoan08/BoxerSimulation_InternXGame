@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class WalletManager : Singleton<WalletManager>
@@ -33,6 +34,23 @@ public class WalletManager : Singleton<WalletManager>
         DataManager.Instance.SaveData();
 
         OnDataChange?.Invoke();
+    }
+
+    public bool OnCheckMoneyForBuy(int value)
+    {
+        bool hasEnough = dataRuntime.currentMoney < value ? false : true;
+        return hasEnough;
+    }
+
+    #endregion
+
+    #region Update UI For Money When ChangeMoney
+
+    [SerializeField] private TextMeshProUGUI currentMoneyTxt; 
+
+    public void OnUpdateUIForCurrentMoney()
+    {
+        currentMoneyTxt.text = $"{dataRuntime.currentMoney}";
     }
 
     #endregion

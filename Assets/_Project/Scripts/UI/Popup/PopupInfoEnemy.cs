@@ -13,8 +13,6 @@ public class PopupInfoEnemy : PopupBase
     public override void Init()
     {   
         base.Init();
-        // 
-        UpdateInfoEnemy(); 
 
         // setup for fight button 
         fightButton.onClick.RemoveAllListeners();
@@ -35,6 +33,7 @@ public class PopupInfoEnemy : PopupBase
     public override void Show()
     {
         base.Show();
+        UpdateInfoEnemy();
     }
 
     public override void Hide()

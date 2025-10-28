@@ -156,6 +156,9 @@ public class CanvasManager : Singleton<CanvasManager>
 
     #region Update UI 
 
+    [SerializeField] private GameObject interactIconImg; 
+    [SerializeField] private GameObject punchIconImg; 
+
     public void UpdateInfoEnemy()
     {
         EnemyRuntimeData enemyData = EnemyManager.Instance.EnemyController.RuntimeData;
@@ -166,9 +169,12 @@ public class CanvasManager : Singleton<CanvasManager>
     private void SetStateForCounterAndBlockButton(bool value)
     {
         playerInfor.SetActive(!value);
+        interactIconImg.SetActive(!value);
+
         playerInforBattle.SetActive(value);
         counterButton.gameObject.SetActive(value);
         blockButton.gameObject.SetActive(value);
+        punchIconImg.SetActive(value);
     }
 
     // Hiển thị nút, thay đổi icon

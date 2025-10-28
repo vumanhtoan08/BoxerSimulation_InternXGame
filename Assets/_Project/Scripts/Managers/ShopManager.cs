@@ -66,6 +66,12 @@ public class ShopManager : Singleton<ShopManager>
         List<InteractableBase> interactables = InteractableManager.Instance.InteractableLists
             .FindAll(i => i.Type == type);
 
+        if (!WalletManager.Instance.OnCheckMoneyForBuy(interactables[0].Data.Cost))
+        {
+            Debug.Log($"Không đủ tiền để nâng cấp {interactables[0].Type.ToString()}");
+            return; 
+        }
+
         if (interactables.Count == 0)
         {
             Debug.LogWarning($"⚠️ Không tìm thấy interactable nào thuộc loại {type} trong scene!");
@@ -73,6 +79,7 @@ public class ShopManager : Singleton<ShopManager>
         }
 
         interactables[0].Data.UpgradeInteractable(type);
+        WalletManager.Instance.OnMoneyChange(-interactables[0].Data.Cost);
 
         foreach (var item in interactables)
         {
