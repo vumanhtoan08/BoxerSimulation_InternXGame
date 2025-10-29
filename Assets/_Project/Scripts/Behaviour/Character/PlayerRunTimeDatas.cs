@@ -17,7 +17,7 @@ public class PlayerRunTimeDatas : MonoBehaviour
 
     public void OnStart()
     {
-        currentEnergy = maxEnergy;
+        currentEnergy = DataManager.Instance.CurrentDayData.currentEnergy;
         dataRuntime.SetDataForPlayer();
         currentStamina = dataRuntime.Stamina;
     }
@@ -29,6 +29,10 @@ public class PlayerRunTimeDatas : MonoBehaviour
         Debug.Log("Su dung Energy'");
         currentEnergy -= amount;
         currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
+
+        DataManager.Instance.CurrentDayData.currentEnergy = currentEnergy;
+        DataManager.Instance.SaveData();
+
         bool isHasEnergy = currentEnergy <= 0 ? true : false;
         return isHasEnergy;
     }
@@ -36,6 +40,10 @@ public class PlayerRunTimeDatas : MonoBehaviour
     public void EnergyRegen()
     {
         currentEnergy = maxEnergy;
+
+        DataManager.Instance.CurrentDayData.currentEnergy = currentEnergy;
+        DataManager.Instance.SaveData();
+
         Debug.Log("Hoi phuc the luc");
     }
 

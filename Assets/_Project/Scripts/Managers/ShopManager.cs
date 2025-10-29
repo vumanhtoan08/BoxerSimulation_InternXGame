@@ -68,7 +68,7 @@ public class ShopManager : Singleton<ShopManager>
 
         if (!WalletManager.Instance.OnCheckMoneyForBuy(interactables[0].Data.Cost))
         {
-            Debug.Log($"Không đủ tiền để nâng cấp {interactables[0].Type.ToString()}");
+            Debug.Log($"Không đủ tiền để nâng cấp {interactables[0].Type.ToString()} == Số tiền {interactables[0].Data.Cost}");
             return; 
         }
 
@@ -79,8 +79,8 @@ public class ShopManager : Singleton<ShopManager>
         }
 
         SoundManager.Instance.PlaySound(SoundKey.Cash, 0.7f, 0.7f);
-        interactables[0].Data.UpgradeInteractable(type);
         WalletManager.Instance.OnMoneyChange(-interactables[0].Data.Cost);
+        interactables[0].Data.UpgradeInteractable(type);
 
         foreach (var item in interactables)
         {

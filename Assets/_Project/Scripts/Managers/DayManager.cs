@@ -63,9 +63,8 @@ public class DayManager : Singleton<DayManager>
                 PlayerController.Instance.transform.position = new Vector3(1, 0, 9);
                 PlayerController.Instance.transform.rotation = Quaternion.Euler(0, 180, 0);
                 PlayerController.Instance.CameraForInteract.transform.rotation = Quaternion.Euler(Vector3.zero);
+                OnNextDay?.Invoke();
             })
             .Append(CanvasManager.Instance.DarkPanelUnActive());
-
-        OnNextDay?.Invoke();
     }
 }

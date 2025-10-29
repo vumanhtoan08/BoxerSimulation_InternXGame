@@ -497,10 +497,12 @@ public class DayData
 public class DataSaveForDay
 {
     public int currentDay;
+    public int currentEnergy; 
 
     public DataSaveForDay()
     {
         currentDay = 1;
+        currentEnergy = 3;
     }
 }
 

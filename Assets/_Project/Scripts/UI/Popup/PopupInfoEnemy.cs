@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,6 +48,7 @@ public class PopupInfoEnemy : PopupBase
     {
         base.Show();
         SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.3f, 0.5f);
+        UpdateInfoEnemy();
     }
 
     public override void Hide()
