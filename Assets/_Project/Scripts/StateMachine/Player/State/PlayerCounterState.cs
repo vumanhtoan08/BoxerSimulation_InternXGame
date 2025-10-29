@@ -72,6 +72,7 @@ public class PlayerCounterState : IState
             if (health != null || stateMachine.CurrentState.ToString() == "EnemyBlockState")
             {
                 health.ChangeHealth(-attack);
+                SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
             }
         }
     }

@@ -10,6 +10,16 @@ public class PopupNotEnoughEnergy : PopupBase
         base.Init();
 
         acceptBtn.onClick.RemoveAllListeners();
-        acceptBtn.onClick.AddListener(Hide);
+        acceptBtn.onClick.AddListener(() => 
+        {
+            SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f); 
+            Hide(); 
+        });
+    }
+
+    public override void Show()
+    {
+        base.Show();
+        SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.3f, 0.5f);
     }
 }

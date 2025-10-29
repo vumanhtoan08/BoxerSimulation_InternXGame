@@ -10,7 +10,7 @@ public class PlayerController : Singleton<PlayerController>
     private CharacterController character;
     private StateMachinePlayer stateMachine;
     private PlayerRunTimeDatas data;
-    private PlayerHealth health; 
+    private PlayerHealth health;
 
     [SerializeField] private Transform playerEyes;
     private CameraForInteract cameraForInteract;
@@ -30,11 +30,11 @@ public class PlayerController : Singleton<PlayerController>
     #endregion
 
     [Header("Attack Collider")]
-    [SerializeField] private Transform rightHand; 
+    [SerializeField] private Transform rightHand;
     [SerializeField] private Transform leftHand;
     [SerializeField] private LayerMask enemyMask;
-    private bool isPunch = false; 
-    private bool isCounter = false; 
+    private bool isPunch = false;
+    private bool isCounter = false;
     private bool isBlock = false;
 
     #region GETSET 
@@ -89,7 +89,7 @@ public class PlayerController : Singleton<PlayerController>
         data?.OnStart();
         cameraForInteract?.OnStart();
         touchController?.OnStart();
-        
+
         health?.Init(this);
     }
 
@@ -99,4 +99,34 @@ public class PlayerController : Singleton<PlayerController>
         cameraForInteract?.OnUpdate();
         touchController?.OnUpdate();
     }
+
+    #region Sound
+
+    private float randomPitch;
+
+    public void PlayerFootStep()
+    {
+        randomPitch = Random.Range(0.6f, 0.8f);
+        SoundManager.Instance.PlaySound(SoundKey.FootStep, 0.7f, randomPitch);
+    }
+
+    public void PlayerRun()
+    {
+        randomPitch = Random.Range(1f, 1.2f);
+        SoundManager.Instance.PlaySound(SoundKey.FootStep, 0.7f, randomPitch);
+    }
+
+    public void PlayerBreath()
+    {
+        randomPitch = Random.Range(1f, 1.2f);
+        SoundManager.Instance.PlaySound(SoundKey.Breath, 2f, randomPitch);
+    }
+
+    public void PlayerPunch()
+    {
+        randomPitch = Random.Range(0.6f, 1f);
+        SoundManager.Instance.PlaySound(SoundKey.Punch, 0.7f, randomPitch);
+    }
+
+    #endregion
 }

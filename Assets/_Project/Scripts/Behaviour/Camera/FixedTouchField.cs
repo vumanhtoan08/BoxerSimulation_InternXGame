@@ -21,7 +21,7 @@ public class FixedTouchField : MonoBehaviour , IPointerDownHandler, IPointerUpHa
     }
 
     // Update is called once per frame
-    void Update()
+    public void OnUpdate()
     {
         if (Pressed)
         {

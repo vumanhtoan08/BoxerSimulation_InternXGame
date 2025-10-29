@@ -19,6 +19,7 @@ public class PopupInfoEnemy : PopupBase
         fightButton.onClick.RemoveAllListeners();
         fightButton.onClick.AddListener(() =>
         {
+            SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
             Sequence seq = DOTween.Sequence();
@@ -29,7 +30,9 @@ public class PopupInfoEnemy : PopupBase
                     GameManager.Instance.ChangeGameState(Game_State.Battle);
                     CanvasManager.Instance.MovePlayerToBattle();
                 })
-               .Append(CanvasManager.Instance.DarkPanelUnActive());
+               .Append(CanvasManager.Instance.DarkPanelUnActive())
+               .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f))
+               .AppendCallback(() => SoundManager.Instance.PlayBGM(SoundKey.BattleBGM, 0.4f));
 
             PlayerController.Instance.Health.OnSettingHealthBeforeBattle();
             CanvasManager.Instance.OnUpdateUIPlayer();
@@ -37,13 +40,13 @@ public class PopupInfoEnemy : PopupBase
 
         // setup for close button
         closePopup.onClick.RemoveAllListeners();
-        closePopup.onClick.AddListener(Hide);
+        closePopup.onClick.AddListener(() => { SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f); Hide(); });
     }
 
     public override void Show()
     {
         base.Show();
-        UpdateInfoEnemy();
+        SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.3f, 0.5f);
     }
 
     public override void Hide()

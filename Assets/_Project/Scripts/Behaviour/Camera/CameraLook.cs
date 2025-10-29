@@ -11,16 +11,13 @@ public class CameraLook : MonoBehaviour
     public Vector2 LockAxis;
     public float Sensivity = 40f;
 
-    [SerializeField] private PlayerController playerController;
-
     public void OnStart()
     {
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     public void OnUpdate()
     {
-        if (playerController.StateMachine.CurrentState.ToString() != "PlayerTrainingState")
+        if (PlayerController.Instance.StateMachine.CurrentState.ToString() != "PlayerTrainingState")
         {
             XMove = LockAxis.x * Sensivity * Time.deltaTime;
             YMove = LockAxis.y * Sensivity * Time.deltaTime;

@@ -70,6 +70,11 @@ public class PlayerPunchState : IState
             if (health != null && stateMachine.CurrentState.ToString() != "EnemyBlockState")
             {
                 health.ChangeHealth(-attack);
+                SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
+            }
+            else
+            {
+                SoundManager.Instance.PlaySound(SoundKey.Block, 1, 1);
             }
         }
     }

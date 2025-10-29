@@ -7,6 +7,8 @@ public class StateMachineEnemy : MonoBehaviour
 
     public IState CurrentState => currentState;
 
+    public string CurrentStateString; 
+
     public void ChangeState(IState newState)
     {
         if (currentState != null && newState == currentState)
@@ -21,6 +23,11 @@ public class StateMachineEnemy : MonoBehaviour
 
     public void OnUpdate()
     {
+        if (CurrentStateString != currentState.ToString())
+        {
+            CurrentStateString = currentState.ToString();
+        }
+
         currentState?.Excute();
     }
 }

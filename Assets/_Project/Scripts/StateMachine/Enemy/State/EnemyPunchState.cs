@@ -57,8 +57,11 @@ public class EnemyPunchState : IState
             var playerController = hits[0].GetComponent<PlayerController>();
             if (playerController.StateMachine.CurrentState.ToString() == "PlayerBlockState")
             {
+                SoundManager.Instance.PlaySound(SoundKey.Block, 1, 1);
                 return;
             }
+
+            SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
             playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
         }
     }

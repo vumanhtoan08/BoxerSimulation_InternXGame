@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 public class EnemyCounterState : IState
 {
@@ -56,6 +57,7 @@ public class EnemyCounterState : IState
             Debug.Log($"Va cham vao {hits[0].name}");
             var playerController = hits[0].GetComponent<PlayerController>();
             playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+            SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
         }
     }
 }

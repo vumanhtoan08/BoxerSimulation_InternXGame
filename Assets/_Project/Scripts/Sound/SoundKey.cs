@@ -1,0 +1,20 @@
+public static class SoundKey
+{
+    public const string FootStep = "FootStep";
+    
+    public const string Punch = "Punch";
+    public const string Block = "Block";
+    public const string Counter = "Counter";
+
+    public const string Boxing = "Boxing";
+    public const string Breath = "Breath";
+    
+    public const string ButtonClick = "ButtonClick";
+    public const string Cash = "Cash";
+    public const string Bubble = "Bubble";
+    public const string FightStart = "FightStart";
+    public const string BattleBGM = "BattleBGM";
+    
+    public const string Win = "Win";
+    public const string Lose = "Lose";
+}

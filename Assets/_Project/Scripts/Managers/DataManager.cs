@@ -211,25 +211,28 @@ public class PlayerData
 
     public void SetDataForPlayer()
     {
+        
         Attack = DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Value;
+        Stamina = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].Value; 
         Health = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Value;
-        Stamina = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].Value;
 
         AttackLevel = DataManager.Instance.CurrentPlayerData.AttackLevel;
-        HealthLevel = DataManager.Instance.CurrentPlayerData.HealthLevel;
         StaminaLevel = DataManager.Instance.CurrentPlayerData.StaminaLevel;
+        HealthLevel = DataManager.Instance.CurrentPlayerData.HealthLevel;
 
         CurrentAttackProcess = DataManager.Instance.CurrentPlayerData.AttackProcess;
-        CurrentHealthProcess = DataManager.Instance.CurrentPlayerData.HealthProcess;
         CurrentStaminaProcess = DataManager.Instance.CurrentPlayerData.StaminaProcess;
+        CurrentHealthProcess = DataManager.Instance.CurrentPlayerData.HealthProcess;
 
         MaxAttackProcess = DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].ProgressToNext;
-        MaxHealthProcess = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].ProgressToNext;
         MaxStaminaProcess = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].ProgressToNext;
+        MaxHealthProcess = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].ProgressToNext;
 
         PunchCost = DataManager.Instance.SkillLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Cost;
         CounterCost = DataManager.Instance.SkillLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Cost;
         BlockCost = DataManager.Instance.SkillLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Cost;
+
+        Debug.Log($"{Attack} == {Stamina} == {Health} == {AttackLevel} == {StaminaLevel} == {HealthLevel} == {CurrentAttackProcess}");
     }
 
     public void UpgradeState(STATE_TYPE type)
@@ -312,7 +315,7 @@ public class PlayerData
                         return;
                     }
 
-                    playerData.AttackProcess++;
+                    playerData.AttackProcess += DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value;
                     DataManager.Instance.CurrentPlayerData.AttackProcess = playerData.AttackProcess;
                     Debug.Log($"➡️ Process Boxing: {playerData.AttackProcess}/{MaxAttackProcess} == {DataManager.Instance.CurrentPlayerData.AttackProcess}");
 
@@ -340,7 +343,7 @@ public class PlayerData
                         return;
                     }
 
-                    playerData.StaminaProcess++;
+                    playerData.StaminaProcess += DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value;
                     DataManager.Instance.CurrentPlayerData.StaminaProcess = playerData.StaminaProcess;
                     Debug.Log($"➡️ Process Running: {playerData.StaminaProcess}/{MaxStaminaProcess}");
 
@@ -368,7 +371,7 @@ public class PlayerData
                         return;
                     }
 
-                    playerData.HealthProcess++;
+                    playerData.HealthProcess += DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value;
                     DataManager.Instance.CurrentPlayerData.HealthProcess = playerData.HealthProcess;
                     Debug.Log($"➡️ Process Squat: {playerData.HealthProcess}/{MaxHealthProcess}");
 
@@ -418,21 +421,6 @@ public class DataSaveForPlayer
         HealthProcess = 0;
         StaminaProcess = 0;
     }
-}
-
-#endregion
-
-#region Stat Data 
-[CreateAssetMenu(fileName = "NewStatLevelTable", menuName = "Database/ListStat")]
-public class ListStatLevelTable : ScriptableObject
-{
-    public List<StatLevelTable> StatLevelTables = new List<StatLevelTable>();
-}
-
-[CreateAssetMenu(fileName = "NewSkillLevelTable", menuName = "Database/ListSkill")]
-public class ListSkillLevelTable : ScriptableObject
-{
-    public List<SkillLevelTable> StatLevelTables = new List<SkillLevelTable>();
 }
 
 #endregion
@@ -519,28 +507,6 @@ public class DataSaveForDay
 #endregion
 
 #region InteractableData
-
-[CreateAssetMenu(fileName = "NewInteractableTable", menuName = "Database/Interactable Table")]
-public class InteractableTable : ScriptableObject
-{
-    public string ID;
-    public string Name;
-    public List<InteractableLevelData> Levels = new List<InteractableLevelData>();
-
-    [System.Serializable]
-    public class InteractableLevelData
-    {
-        public int Level;
-        public int Value;
-        public int Cost;
-    }
-}
-
-[CreateAssetMenu(fileName = "NewInteractableTable", menuName = "Database/Interactable List")]
-public class ListInteractableTable : ScriptableObject
-{
-    public List<InteractableTable> InteractableTables = new List<InteractableTable>();
-}
 
 [SerializeField]
 public class DataSaveForInteractable

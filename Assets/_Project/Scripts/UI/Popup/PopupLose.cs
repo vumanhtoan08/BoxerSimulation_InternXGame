@@ -13,6 +13,7 @@ public class PopupLose : PopupBase
         closeBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.AddListener(() =>
         {
+            SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
             Sequence seq = DOTween.Sequence();
@@ -22,6 +23,8 @@ public class PopupLose : PopupBase
                {
                    GameManager.Instance.ChangeGameState(Game_State.Training);
                    CanvasManager.Instance.MovePlayerToTraining();
+
+                   SoundManager.Instance.StopBGM();
                })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() =>
@@ -33,5 +36,11 @@ public class PopupLose : PopupBase
                    CanvasManager.Instance.MoveEnemyToBattle();
                });
         });
+    }
+
+    public override void Show()
+    {
+        base.Show();
+        SoundManager.Instance.PlaySound(SoundKey.Lose, 0.3f, 0.5f);
     }
 }

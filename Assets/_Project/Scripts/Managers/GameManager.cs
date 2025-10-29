@@ -1,9 +1,7 @@
 ﻿using DG.Tweening;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
@@ -20,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private ShopManager shopManager;
 
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private FixedTouchField fixedTouchField; 
 
     [Header("Parameters")]
     private Game_State gameState;
@@ -29,6 +28,8 @@ public class GameManager : Singleton<GameManager>
     {
         base.Awake();
         dataManager?.OnAwake();
+
+        soundManager?.OnAwake();
 
         playerController?.OnAwake();
     }
@@ -40,9 +41,10 @@ public class GameManager : Singleton<GameManager>
 
         //
         StartState();
-        StartingSetupForSplashScreen();
+       
 
         dataManager?.OnStart();
+        playerController?.OnStart();
         soundManager?.OnStart();
         dayManager?.OnStart();
         interactableManager?.OnStart();
@@ -50,17 +52,15 @@ public class GameManager : Singleton<GameManager>
         popupManager?.OnStart();
         walletManager?.OnStart();
         shopManager?.OnStart();
-
-        playerController?.OnStart();
-
         canvasManager?.OnStart();
 
+        StartingSetupForSplashScreen();
         ChangeGameState(Game_State.Training);
     }
 
     private void Update()
     {
-        UpdateFillImage();
+        fixedTouchField.OnUpdate();
 
         //dataManager?.OnUpdate();
         soundManager?.OnUpdate();
@@ -123,35 +123,30 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private GameObject splashScreen;
     [SerializeField] private Image fillImage;
     [SerializeField] private float duration = 2f;
-    
-    private float timer;
-    private bool isRunning = true;
+
+    private Tween fillTween;
 
     private void StartingSetupForSplashScreen()
     {
-        if (fillImage != null)
-            fillImage.fillAmount = 0f;
+        if (fillImage == null) return;
 
-        timer = 0f;
-        isRunning = true;
-    }
+        // Reset trạng thái
+        fillImage.fillAmount = 0f;
+        splashScreen.SetActive(true);
 
-    private void UpdateFillImage()
-    {
-        if (!isRunning) return;
+        // Dừng tween cũ nếu còn chạy
+        fillTween?.Kill();
 
-        timer += Time.deltaTime;
-        float progress = Mathf.Clamp01(timer / duration);
-
-        if (fillImage != null)
-            fillImage.fillAmount = progress;
-
-        // Khi đầy thì tắt splash
-        if (progress >= 1f)
-        {
-            isRunning = false;
-            splashScreen.SetActive(false); // Tắt canvas splash
-        }
+        // Tạo tween tăng fillAmount từ 0 → 1 trong duration
+        fillTween = fillImage.DOFillAmount(1f, duration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() =>
+            {
+                splashScreen.SetActive(false);
+                Debug.Log("Splash done!");
+            
+                CanvasManager.Instance.DarkPanelUnActive();
+            });
     }
 
     #endregion

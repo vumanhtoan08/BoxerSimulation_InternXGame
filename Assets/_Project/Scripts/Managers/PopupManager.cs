@@ -46,5 +46,6 @@ public enum Type_Popup
     Lose, 
     Shop, 
     WarningEnergy,
-    NotEnoughEnergy
+    NotEnoughEnergy,
+    Setting
 }

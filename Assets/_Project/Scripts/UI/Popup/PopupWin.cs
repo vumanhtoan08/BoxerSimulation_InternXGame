@@ -16,6 +16,7 @@ public class PopupWin : PopupBase
         rewardButton.onClick.RemoveAllListeners();
         rewardButton.onClick.AddListener(() =>
         {
+            SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
             Sequence seq = DOTween.Sequence();
@@ -25,6 +26,8 @@ public class PopupWin : PopupBase
                {
                    GameManager.Instance.ChangeGameState(Game_State.Training);
                    CanvasManager.Instance.MovePlayerToTraining();
+
+                   SoundManager.Instance.StopBGM();
                })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() => 
@@ -40,6 +43,7 @@ public class PopupWin : PopupBase
 
                    CanvasManager.Instance.OnUpdateUIEnemy();
                    CanvasManager.Instance.MoveEnemyToBattle();
+
                });
 
             // Wallet
@@ -51,6 +55,7 @@ public class PopupWin : PopupBase
     {
         base.Show();
         rewardValue.text = $"{EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Reward}";
+        SoundManager.Instance.PlaySound(SoundKey.Win, 0.3f, 0.5f);
     }
 
     public override void Hide()

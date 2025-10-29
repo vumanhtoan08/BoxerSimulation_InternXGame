@@ -12,7 +12,7 @@ public class DayManager : Singleton<DayManager>
     public int CurrentDay => currentDay;
 
     public event Action OnNextDay;
-    
+
     #region Unity Methods
 
     public void OnStart()
@@ -58,6 +58,12 @@ public class DayManager : Singleton<DayManager>
         Sequence seq = DOTween.Sequence();
         seq.Append(CanvasManager.Instance.DarkPanelActive())
             .Append(CanvasManager.Instance.ShowDayText())
+            .AppendCallback(() =>
+            {
+                PlayerController.Instance.transform.position = new Vector3(1, 0, 9);
+                PlayerController.Instance.transform.rotation = Quaternion.Euler(0, 180, 0);
+                PlayerController.Instance.CameraForInteract.transform.rotation = Quaternion.Euler(Vector3.zero);
+            })
             .Append(CanvasManager.Instance.DarkPanelUnActive());
 
         OnNextDay?.Invoke();

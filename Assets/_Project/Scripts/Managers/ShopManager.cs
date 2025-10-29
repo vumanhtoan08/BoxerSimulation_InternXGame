@@ -78,6 +78,7 @@ public class ShopManager : Singleton<ShopManager>
             return;
         }
 
+        SoundManager.Instance.PlaySound(SoundKey.Cash, 0.7f, 0.7f);
         interactables[0].Data.UpgradeInteractable(type);
         WalletManager.Instance.OnMoneyChange(-interactables[0].Data.Cost);
 
