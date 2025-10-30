@@ -44,6 +44,8 @@ public class PlayerRunTimeDatas : MonoBehaviour
         DataManager.Instance.CurrentDayData.currentEnergy = currentEnergy;
         DataManager.Instance.SaveData();
 
+        CanvasManager.Instance.OnEnergyChange();
+
         Debug.Log("Hoi phuc the luc");
     }
 
