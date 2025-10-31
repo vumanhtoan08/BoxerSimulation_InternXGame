@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class PlayerPunchState : IState
 {
@@ -72,6 +73,12 @@ public class PlayerPunchState : IState
             {
                 health.ChangeHealth(-attack);
                 SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
+                Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.hitEffect, playerController.RightHand.position);
+
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    ObjectPooling.ReturnObject(effect);
+                });
             }
             else
             {
