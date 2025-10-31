@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class EnemyPunchState : IState
 {
@@ -56,14 +57,26 @@ public class EnemyPunchState : IState
         {
             Debug.Log($"Enemy hit {hits[0].name}");
             var playerController = hits[0].GetComponent<PlayerController>();
+            Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.enemyHitEffect, enemyController.RightHand.position);
+
             if (playerController.StateMachine.CurrentState.ToString() == "PlayerBlockState")
             {
                 SoundManager.Instance.PlaySound(SoundKey.Block, 1, 1);
+
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    ObjectPooling.ReturnObject(effect);
+                });
                 return;
             }
 
             SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
             playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                ObjectPooling.ReturnObject(effect);
+            });
         }
     }
 }

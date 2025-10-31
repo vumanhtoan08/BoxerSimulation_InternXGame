@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerCounterState : IState
@@ -74,6 +75,12 @@ public class PlayerCounterState : IState
             {
                 health.ChangeHealth(-attack);
                 SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
+                Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.hitEffect, playerController.LeftHand.position);
+
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    ObjectPooling.ReturnObject(effect);
+                });
             }
         }
     }

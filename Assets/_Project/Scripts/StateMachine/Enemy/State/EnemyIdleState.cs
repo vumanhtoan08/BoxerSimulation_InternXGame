@@ -56,9 +56,9 @@ public class EnemyIdleState : IState
         if (healthRatio > dangerHealthRatio)
         {
             if (randomDecision < 100)
-                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
-            else
                 enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
+            else
+                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
         }
         else
         {
