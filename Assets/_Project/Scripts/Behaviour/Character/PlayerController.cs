@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CharacterController))]
@@ -6,15 +6,14 @@ using UnityEngine;
 public class PlayerController : Singleton<PlayerController>
 {
     [Header("Reference")]
-    private Animator animator;
-    private CharacterController character;
-    private StateMachinePlayer stateMachine;
-    private PlayerRunTimeDatas data;
-    private PlayerHealth health;
+    [SerializeField] private Animator animator;
+    [SerializeField] private CharacterController character;
+    [SerializeField] private StateMachinePlayer stateMachine;
+    [SerializeField] private PlayerRunTimeDatas data;
+    [SerializeField] private PlayerHealth health;
 
-    [SerializeField] private Transform playerEyes;
-    private CameraForInteract cameraForInteract;
-    private CameraLook cameraLook;
+    [SerializeField] private CameraForInteract cameraForInteract;  // kéo thả
+    [SerializeField] private CameraLook cameraLook;                 // kéo thả
     private TouchController touchController;
 
     #region Moving
@@ -76,8 +75,6 @@ public class PlayerController : Singleton<PlayerController>
         character = GetComponent<CharacterController>();
         stateMachine = GetComponent<StateMachinePlayer>();
         data = GetComponent<PlayerRunTimeDatas>();
-        cameraForInteract = playerEyes.GetComponent<CameraForInteract>();
-        cameraLook = playerEyes.GetComponent<CameraLook>();
         touchController = GetComponent<TouchController>();
         health = GetComponent<PlayerHealth>();
     }

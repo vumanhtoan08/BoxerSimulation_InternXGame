@@ -19,6 +19,7 @@ public class EnemyIdleState : IState
 
     public void Enter()
     {
+        //enemyController.Animator.ResetTrigger("isPunch");
         enemyController.Animator.SetTrigger("isIdle");
         decisionCooldown = Random.Range(0.05f, 0.1f);
         decisionTimer = 0f;
@@ -54,12 +55,10 @@ public class EnemyIdleState : IState
 
         if (healthRatio > dangerHealthRatio)
         {
-            if (randomDecision < 50)
+            if (randomDecision < 100)
                 enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
-            else if (randomDecision < 80)
-                enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
             else
-                enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
+                enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
         }
         else
         {

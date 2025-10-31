@@ -5,6 +5,7 @@ public class EnemyMoveState : IState
     private EnemyController enemyController;
     private Transform enemyTransform;
     private Transform playerTransform;
+    private Rigidbody enemyRb; 
 
     private float currentHealth;
     private float maxHealth;
@@ -14,11 +15,14 @@ public class EnemyMoveState : IState
     private float retreatTimer;
     private float retreatDuration;
 
+    private float speed = 1f;
+
     public EnemyMoveState(EnemyController enemyController)
     {
         this.enemyController = enemyController;
         enemyTransform = enemyController.transform;
         playerTransform = enemyController.PlayerTransform;
+        enemyRb = enemyController.Rigidbody;
 
         currentHealth = enemyController.Health.CurrentHealth;
         maxHealth = enemyController.Health.MaxHealth;
@@ -59,6 +63,7 @@ public class EnemyMoveState : IState
     public void Exit()
     {
         enemyController.Animator.SetBool("isMoving", false);
+        enemyRb.linearVelocity = Vector3.zero;
     }
 
     private float CheckDistanceToPlayer()
@@ -69,10 +74,14 @@ public class EnemyMoveState : IState
     private void MoveToward()
     {
         enemyController.Animator.SetFloat("moveValue", 0);
+        Vector3 direction = (playerTransform.position - enemyTransform.position).normalized;
+        enemyRb.linearVelocity = direction * speed;
     }
 
     private void StepBack()
     {
         enemyController.Animator.SetFloat("moveValue", 1);
+        Vector3 direction = (enemyTransform.position - playerTransform.position).normalized;
+        enemyRb.linearVelocity = direction * speed;
     }
 }

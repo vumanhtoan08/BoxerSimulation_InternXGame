@@ -4,12 +4,11 @@ using UnityEngine;
 public class EnemyCounterState : IState
 {
     private EnemyController enemyController;
-    AnimatorStateInfo info;
+    private AnimatorStateInfo info;
     private bool hasDealtDamage;
 
     private readonly string animStateName = "Counter";
-
-    private const float damageTriggerPercent = 0.4f;
+    private const float damageTriggerPercent = 0.32f;
 
     public EnemyCounterState(EnemyController enemyController)
     {
@@ -19,12 +18,14 @@ public class EnemyCounterState : IState
     public void Enter()
     {
         hasDealtDamage = false;
-        enemyController.Animator.SetTrigger("isCounter");
+        enemyController.Animator.ResetTrigger("isIdle");
+        enemyController.Animator.CrossFade(animStateName, 0.05f);
     }
 
     public void Excute()
     {
         info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
+        Debug.Log($"[Punch] State={info.IsName(animStateName)} | Time={info.normalizedTime}");
 
         if (info.IsName(animStateName) && info.normalizedTime >= damageTriggerPercent && !hasDealtDamage)
         {
@@ -32,7 +33,7 @@ public class EnemyCounterState : IState
             DealDamageToPlayer();
         }
 
-        if (info.IsName(animStateName) && info.normalizedTime >= 0.95f)
+        if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
         {
             enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
         }
@@ -40,13 +41,13 @@ public class EnemyCounterState : IState
 
     public void Exit()
     {
-        enemyController.Animator.ResetTrigger("isCounter");
+        //enemyController.Animator.ResetTrigger("isCounter");
     }
 
     private void DealDamageToPlayer()
     {
         Transform hitPoint = enemyController.LeftHand;
-        float radius = 0.3f;
+        float radius = 1f;
 
         LayerMask playerLayerMask = enemyController.LayerPlayer; // <-- nhớ đặt Player vào Layer
 

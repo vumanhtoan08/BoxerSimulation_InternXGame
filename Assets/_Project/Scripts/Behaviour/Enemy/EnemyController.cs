@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class EnemyController : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private StateMachineEnemy stateMachine;
     private Transform playerTransform;
     private EnemyRuntimeData runtimeData;
+    private Rigidbody rb;
 
     [Header("For Attack")]
     [SerializeField, Range(1f, 10f)] private float detectedRange;
@@ -30,6 +32,8 @@ public class EnemyController : MonoBehaviour
 
     public Collider DynamicCollider => dynamicCollider;
 
+    public Rigidbody Rigidbody => rb;
+
     #endregion
 
     #region Unity Methods
@@ -40,6 +44,7 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         stateMachine = GetComponent<StateMachineEnemy>();
         runtimeData = GetComponent<EnemyRuntimeData>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public void OnStart()
@@ -58,14 +63,16 @@ public class EnemyController : MonoBehaviour
         if (!health.IsDead)
             LookToPlayer();
     }
+    [SerializeField, Range(0, 10)] private float leftHandRadius; 
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectedRange);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(RightHand.position, 0.2f);
-        Gizmos.DrawWireSphere(LeftHand.position, 0.2f);
+        Gizmos.DrawWireSphere(RightHand.position, 0.3f);
+        Gizmos.DrawWireSphere(LeftHand.position, leftHandRadius);
     }
 
     #endregion

@@ -31,15 +31,15 @@ public class PlayerCounterState : IState
         playerController.SetCounter(true);
         hasDealtDamage = false;
         //playerController.Animator.CrossFade("Counter", 0f);
-        playerController.Animator.ResetTrigger("isCounter");
         playerController.Animator.SetTrigger("isCounter");
-    }   
+    }
 
     public void Excute()
     {
         info = playerController.Animator.GetCurrentAnimatorStateInfo(0);
+        var next = playerController.Animator.GetNextAnimatorStateInfo(0);
 
-        if (info.IsName("Counter"))
+        if (info.IsName("Counter") || next.IsName("Counter"))
         {
             float t = info.normalizedTime;
 
@@ -49,8 +49,10 @@ public class PlayerCounterState : IState
                 DealtDamage();
             }
 
-            if (t >= 0.95f)
+            if (t >= 0.95f || (!info.IsName("Counter") && next.IsName("Idle")))
             {
+                // Ép Animator về Idle luôn để tránh stuck
+                playerController.Animator.Play("Idle", 0, 0f);
                 playerController.StateMachine.ChangeState(new PlayerBattleState(playerController));
             }
         }
@@ -63,13 +65,13 @@ public class PlayerCounterState : IState
 
     private void DealtDamage()
     {
-        Collider[] hits = Physics.OverlapSphere(playerController.LeftHand.position, 0.2f, playerController.EnemyMask);
+        Collider[] hits = Physics.OverlapSphere(playerController.LeftHand.position, 0.4f, playerController.EnemyMask);
 
         foreach (var hit in hits)
         {
             StateMachineEnemy stateMachine = hit.GetComponent<StateMachineEnemy>();
             IHealth health = hit.GetComponent<IHealth>();
-            if (health != null || stateMachine.CurrentState.ToString() == "EnemyBlockState")
+            if (health != null)
             {
                 health.ChangeHealth(-attack);
                 SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
