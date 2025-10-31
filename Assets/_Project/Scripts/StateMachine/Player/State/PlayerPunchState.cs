@@ -12,7 +12,7 @@ public class PlayerPunchState : IState
     private float attack;
 
     private const float hitFrame = 40f;
-    private const float totalFrames = 104f;
+    private const float totalFrames = 131f;
     private readonly float hitTimeNormalized = hitFrame / totalFrames;
 
     public PlayerPunchState(PlayerController playerController)
@@ -29,15 +29,15 @@ public class PlayerPunchState : IState
 
         playerController.SetPunch(true);
         hasDealtDamage = false;
-        playerController.Animator.ResetTrigger("isPunch");
         playerController.Animator.SetTrigger("isPunch");
     }
 
     public void Excute()
     {
         info = playerController.Animator.GetCurrentAnimatorStateInfo(0);
+        var next = playerController.Animator.GetNextAnimatorStateInfo(0);
 
-        if (info.IsName("Punch"))
+        if (info.IsName("Punch") && !playerController.Animator.IsInTransition(0))
         {
             float t = info.normalizedTime;
 
@@ -47,8 +47,9 @@ public class PlayerPunchState : IState
                 DealtDamage();
             }
 
-            if (t >= 0.95f)
+            if (t >= 0.6f)
             {
+                playerController.Animator.Play("IdleBattle", 0, 0f);
                 playerController.StateMachine.ChangeState(new PlayerBattleState(playerController));
             }
         }

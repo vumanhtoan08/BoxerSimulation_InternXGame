@@ -91,7 +91,7 @@ Transform:
   m_GameObject: {fileID: 89022872285133702}
   serializedVersion: 2
   m_LocalRotation: {x: 0.50384676, y: -0.49612343, z: -0.50384676, w: 0.49612343}
-  m_LocalPosition: {x: -2.4601933e-17, y: 0.5805972, z: -0.017717207}
+  m_LocalPosition: {x: 0, y: 0.5805972, z: -0.017717207}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1543,7 +1543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a5511733647bb41981d9952bc2a110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerBody: {fileID: 0}
+  PlayerBody: {fileID: 4572288392538007066}
   LockAxis: {x: 0, y: 0}
   Sensivity: 10
 --- !u!114 &4101770623571623259
@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactorSource: {fileID: 906443078886132392}
   interactRange: 3
-  playerController: {fileID: 0}
+  playerController: {fileID: 2575137948466925344}
 --- !u!1 &4895190196188739113
 GameObject:
   m_ObjectHideFlags: 0
@@ -2456,14 +2456,14 @@ GameObject:
   - component: {fileID: 4572288392538007066}
   - component: {fileID: 8208552805984292757}
   - component: {fileID: 6309949982173421709}
-  - component: {fileID: 7005880913693335111}
   - component: {fileID: 2575137948466925344}
   - component: {fileID: 2879094279862642977}
+  - component: {fileID: 7005880913693335111}
   - component: {fileID: 1457520430138748019}
   - component: {fileID: 6988227129798368723}
   m_Layer: 0
   m_Name: PlayerMinecraft
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2515,7 +2515,7 @@ CharacterController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7475469071559318506}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3f1e0d6d79b1b6c49a9fe2528ccc2d08, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2533,19 +2533,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7005880913693335111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7475469071559318506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61aab4510d1acae498013060aa7e55b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blockButton: {fileID: 0}
 --- !u!114 &2575137948466925344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2558,8 +2545,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87f030fc130cba949a37ecdb40996fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraForInteract: {fileID: 0}
-  cameraLook: {fileID: 0}
+  animator: {fileID: 0}
+  character: {fileID: 0}
+  stateMachine: {fileID: 0}
+  data: {fileID: 0}
+  health: {fileID: 0}
+  cameraForInteract: {fileID: 4101770623571623259}
+  cameraLook: {fileID: 1025957542276701281}
+  touchController: {fileID: 0}
   joystick: {fileID: 0}
   speed: 3
   gravity: -9.81
@@ -2567,8 +2560,8 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
-  rightHand: {fileID: 0}
-  leftHand: {fileID: 0}
+  rightHand: {fileID: 8749551698253393003}
+  leftHand: {fileID: 1721740898481982304}
   enemyMask:
     serializedVersion: 2
     m_Bits: 8
@@ -2585,7 +2578,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fixedTouchField: {fileID: 0}
-  cameraLook: {fileID: 0}
+  cameraLook: {fileID: 1025957542276701281}
+--- !u!114 &7005880913693335111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7475469071559318506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61aab4510d1acae498013060aa7e55b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStateString: 
+  blockButton: {fileID: 0}
 --- !u!114 &1457520430138748019
 MonoBehaviour:
   m_ObjectHideFlags: 0

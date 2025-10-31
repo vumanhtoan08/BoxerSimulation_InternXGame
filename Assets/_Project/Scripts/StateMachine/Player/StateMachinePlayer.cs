@@ -7,6 +7,8 @@ public class StateMachinePlayer : MonoBehaviour
 
     public IState CurrentState => currentState;
 
+    [SerializeField] private string currentStateString; 
+
     public void ChangeState(IState newState)
     {
         if (currentState != null && newState == currentState)
@@ -21,6 +23,8 @@ public class StateMachinePlayer : MonoBehaviour
 
     public void OnUpdate()
     {
+        currentStateString = currentState.ToString();
+
         currentState?.Excute();
     }
 

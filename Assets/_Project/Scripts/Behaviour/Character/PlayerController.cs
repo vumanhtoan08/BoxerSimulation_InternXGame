@@ -14,7 +14,7 @@ public class PlayerController : Singleton<PlayerController>
 
     [SerializeField] private CameraForInteract cameraForInteract;  // kéo thả
     [SerializeField] private CameraLook cameraLook;                 // kéo thả
-    private TouchController touchController;
+    [SerializeField] private TouchController touchController;
 
     #region Moving
     [Header("Ref")]

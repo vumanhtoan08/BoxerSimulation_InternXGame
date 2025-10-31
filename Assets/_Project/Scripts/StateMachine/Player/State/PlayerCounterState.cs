@@ -12,8 +12,8 @@ public class PlayerCounterState : IState
     private float staminaCost;
     private float attack;
 
-    private const float hitFrame = 40f;
-    private const float totalFrames = 135f;
+    private const float hitFrame = 26f;
+    private const float totalFrames = 78f;
     private readonly float hitTimeNormalized = hitFrame / totalFrames;
 
     public PlayerCounterState(PlayerController playerController)
@@ -39,7 +39,7 @@ public class PlayerCounterState : IState
         info = playerController.Animator.GetCurrentAnimatorStateInfo(0);
         var next = playerController.Animator.GetNextAnimatorStateInfo(0);
 
-        if (info.IsName("Counter") || next.IsName("Counter"))
+        if (info.IsName("Counter") && !playerController.Animator.IsInTransition(0))
         {
             float t = info.normalizedTime;
 
@@ -49,10 +49,9 @@ public class PlayerCounterState : IState
                 DealtDamage();
             }
 
-            if (t >= 0.95f || (!info.IsName("Counter") && next.IsName("Idle")))
+            if (t >= 0.8f)
             {
-                // Ép Animator về Idle luôn để tránh stuck
-                playerController.Animator.Play("Idle", 0, 0f);
+                playerController.Animator.Play("IdleBattle", 0, 0f);
                 playerController.StateMachine.ChangeState(new PlayerBattleState(playerController));
             }
         }
@@ -65,7 +64,7 @@ public class PlayerCounterState : IState
 
     private void DealtDamage()
     {
-        Collider[] hits = Physics.OverlapSphere(playerController.LeftHand.position, 0.4f, playerController.EnemyMask);
+        Collider[] hits = Physics.OverlapSphere(playerController.LeftHand.position, 0.5f, playerController.EnemyMask);
 
         foreach (var hit in hits)
         {
