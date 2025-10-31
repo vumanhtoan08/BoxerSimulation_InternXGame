@@ -1,0 +1,257 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987597c2091d927458446e28e678f4b5, type: 3}
+  m_Name: MountsData
+  m_EditorClassIdentifier: 
+  mountsInfos:
+  - ID: 0
+    buyType: 1
+    mountsType: 1
+    priceType: 1
+    price: 50
+    name: Witch's Broom
+    icon: {fileID: 21300000, guid: 08d5202cba0b76b42a43b0140418c91d, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 326354846849225409, guid: e62bfdcdfa1ed05448305e8f16b55b95, type: 3}
+    offset: {x: 0, y: -0.55, z: 0}
+    rootBone: choilow
+  - ID: 1
+    buyType: 3
+    mountsType: 1
+    priceType: 1
+    price: 15
+    name: Jade Kingdra
+    icon: {fileID: 21300000, guid: 596d401b729b44f46a8a8d435cea4539, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 3497333241276439730, guid: 02927bb68548ac443aa3a2092bacf3ca, type: 3}
+    offset: {x: 0, y: 0.2, z: 0}
+    rootBone: Root_M/Spine1_M/Chest_M
+  - ID: 2
+    buyType: 1
+    mountsType: 1
+    priceType: 1
+    price: 50
+    name: Earth Kingdra
+    icon: {fileID: 21300000, guid: 0d11a9d535084bd44905168313f11648, type: 3}
+    texture: {fileID: 2800000, guid: a0f4ab7499bbbe04295a3ee6966eec48, type: 3}
+    prefab: {fileID: 3497333241276439730, guid: 02927bb68548ac443aa3a2092bacf3ca, type: 3}
+    offset: {x: 0, y: 0.2, z: 0}
+    rootBone: Root_M/Spine1_M/Chest_M
+  - ID: 3
+    buyType: 1
+    mountsType: 1
+    priceType: 1
+    price: 50
+    name: BlooodStone Kingdra
+    icon: {fileID: 21300000, guid: a1716b7fd88d5954589bd497fa64aad9, type: 3}
+    texture: {fileID: 2800000, guid: f48dce37797d850498d6b754bb5c29e1, type: 3}
+    prefab: {fileID: 3497333241276439730, guid: 02927bb68548ac443aa3a2092bacf3ca, type: 3}
+    offset: {x: 0, y: 0.2, z: 0}
+    rootBone: Root_M/Spine1_M/Chest_M
+  - ID: 4
+    buyType: 1
+    mountsType: 1
+    priceType: 1
+    price: 50
+    name: Dark Dragon
+    icon: {fileID: 21300000, guid: 65b89a4b56c77674a8080b620f406ef8, type: 3}
+    texture: {fileID: 2800000, guid: 46044289e1defd54aaf3e7975157f4fa, type: 3}
+    prefab: {fileID: 4084154662396238040, guid: f464bd0b3924e6f42812cd0612676819, type: 3}
+    offset: {x: 1.226, y: 0.328, z: 0}
+    rootBone: Root_M
+  - ID: 5
+    buyType: 1
+    mountsType: 1
+    priceType: 1
+    price: 50
+    name: Fire Dragon
+    icon: {fileID: 21300000, guid: 081e89c0a8b4ca248a18e3da3f3bda5e, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 4084154662396238040, guid: f464bd0b3924e6f42812cd0612676819, type: 3}
+    offset: {x: 1.226, y: 0.328, z: 0}
+    rootBone: Root_M
+  - ID: 6
+    buyType: 3
+    mountsType: 1
+    priceType: 0
+    price: 3
+    name: Pegasus
+    icon: {fileID: 21300000, guid: 9246a0969a24eda419cec3572aa118cd, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 2865435511458227044, guid: 6fa8d55663cfb5c4c8d9a8d294cc98e8, type: 3}
+    offset: {x: 0.15, y: -0.25, z: 0}
+    rootBone: Root_M
+  - ID: 7
+    buyType: 1
+    mountsType: 1
+    priceType: 0
+    price: 3000
+    name: Tulpar
+    icon: {fileID: 21300000, guid: 9077b3e796394354f8e8fe350f474e27, type: 3}
+    texture: {fileID: 2800000, guid: fb3fd76dd6d1852439efd7e045acda99, type: 3}
+    prefab: {fileID: 2865435511458227044, guid: 6fa8d55663cfb5c4c8d9a8d294cc98e8, type: 3}
+    offset: {x: 0.15, y: -0.25, z: 0}
+    rootBone: Root_M
+  - ID: 8
+    buyType: 1
+    mountsType: 1
+    priceType: 0
+    price: 3000
+    name: Chollima
+    icon: {fileID: 21300000, guid: c01e830543b9609478345fcfcbbbe027, type: 3}
+    texture: {fileID: 2800000, guid: c1e1e666feb741444a540ce3885299c9, type: 3}
+    prefab: {fileID: 2865435511458227044, guid: 6fa8d55663cfb5c4c8d9a8d294cc98e8, type: 3}
+    offset: {x: 0.15, y: -0.25, z: 0}
+    rootBone: Root_M
+  - ID: 9
+    buyType: 1
+    mountsType: 2
+    priceType: 0
+    price: 1000
+    name: Desert Camel
+    icon: {fileID: 21300000, guid: 16ab75db813815741ac947c8ccf4b91f, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 3904037388255451818, guid: 738c4c64a43f741459edddbc416da94e, type: 3}
+    offset: {x: 1.156, y: -0.75, z: 0.056}
+    rootBone: Root_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M
+  - ID: 10
+    buyType: 1
+    mountsType: 2
+    priceType: 0
+    price: 1000
+    name: Zombie Camel
+    icon: {fileID: 21300000, guid: 9f45a458cadbb814ca38f2c4a36165a2, type: 3}
+    texture: {fileID: 2800000, guid: 7471e342e33ca114cb063d2e89c80edb, type: 3}
+    prefab: {fileID: 3904037388255451818, guid: 738c4c64a43f741459edddbc416da94e, type: 3}
+    offset: {x: 1.156, y: -0.35, z: 0.056}
+    rootBone: Root_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M
+  - ID: 11
+    buyType: 1
+    mountsType: 2
+    priceType: 0
+    price: 1000
+    name: Terracota Camel
+    icon: {fileID: 21300000, guid: 4760da3cd33d8b2499f3bbea85a12196, type: 3}
+    texture: {fileID: 2800000, guid: 44eb05e5d83629e449d5e0735f5fc9f7, type: 3}
+    prefab: {fileID: 3904037388255451818, guid: 738c4c64a43f741459edddbc416da94e, type: 3}
+    offset: {x: 1.156, y: -0.35, z: 0.056}
+    rootBone: Root_M/Spine1_M/Spine1Part1_M/Spine1Part2_M/Chest_M
+  - ID: 12
+    buyType: 3
+    mountsType: 2
+    priceType: 0
+    price: 3
+    name: WoodenHorse
+    icon: {fileID: 21300000, guid: 9851c35e934833a4d9cb3794cb1389a2, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 551270140362741816, guid: aa82e05a8d3af574eb8f7c75b3151563, type: 3}
+    offset: {x: 0.1, y: -0.22, z: 0}
+    rootBone: Root_M
+  - ID: 13
+    buyType: 1
+    mountsType: 2
+    priceType: 0
+    price: 3500
+    name: Brown Horse
+    icon: {fileID: 21300000, guid: 4ab32c950f105614ca338ef5bcf2c1ef, type: 3}
+    texture: {fileID: 2800000, guid: 4a9ca111932d9554eb59e95a99758ecb, type: 3}
+    prefab: {fileID: 551270140362741816, guid: aa82e05a8d3af574eb8f7c75b3151563, type: 3}
+    offset: {x: 0.1, y: -0.22, z: 0}
+    rootBone: Root_M
+  - ID: 14
+    buyType: 1
+    mountsType: 2
+    priceType: 0
+    price: 3500
+    name: White Horse
+    icon: {fileID: 21300000, guid: 71467c12556aede47866a94e51f71a76, type: 3}
+    texture: {fileID: 2800000, guid: 35cb906973ee188408057047c0f52955, type: 3}
+    prefab: {fileID: 551270140362741816, guid: aa82e05a8d3af574eb8f7c75b3151563, type: 3}
+    offset: {x: 0.1, y: -0.22, z: 0}
+    rootBone: Root_M
+  - ID: 15
+    buyType: 1
+    mountsType: 2
+    priceType: 1
+    price: 30
+    name: Catoblepas
+    icon: {fileID: 21300000, guid: 6188ca5e10a95cf4c9a9bcf95222dd53, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 8781128047463496900, guid: e8f3408c3865dc64093b71fb88d81108, type: 3}
+    offset: {x: -0.2, y: 0.15, z: 0}
+    rootBone: Root_M
+  - ID: 16
+    buyType: 1
+    mountsType: 2
+    priceType: 1
+    price: 30
+    name: The King Bull
+    icon: {fileID: 21300000, guid: ccf5372abc195b5449cdcda814b256aa, type: 3}
+    texture: {fileID: 2800000, guid: 10f2ad7b09aaa5d4dbf970abd500bb9b, type: 3}
+    prefab: {fileID: 8781128047463496900, guid: e8f3408c3865dc64093b71fb88d81108, type: 3}
+    offset: {x: -0.2, y: 0.15, z: 0}
+    rootBone: Root_M
+  - ID: 17
+    buyType: 1
+    mountsType: 2
+    priceType: 1
+    price: 30
+    name: Minotaur
+    icon: {fileID: 21300000, guid: 1810daf7617ed9a4f9a60062d9c58730, type: 3}
+    texture: {fileID: 2800000, guid: 49a5684d1352c984791a7a8c2760acce, type: 3}
+    prefab: {fileID: 8781128047463496900, guid: e8f3408c3865dc64093b71fb88d81108, type: 3}
+    offset: {x: -0.2, y: 0.15, z: 0}
+    rootBone: Root_M
+  - ID: 18
+    buyType: 3
+    mountsType: 2
+    priceType: 0
+    price: 5
+    name: Lion King
+    icon: {fileID: 21300000, guid: 2608fc86d8e27ab47ba1ddcabf97adb2, type: 3}
+    texture: {fileID: 0}
+    prefab: {fileID: 4535474966471694372, guid: dba108bc9dd9621438b1a595cbbf7821, type: 3}
+    offset: {x: 0, y: -0.85, z: -0.6}
+    rootBone: Root_M
+  - ID: 19
+    buyType: 1
+    mountsType: 2
+    priceType: 1
+    price: 30
+    name: Mutant Lion
+    icon: {fileID: 21300000, guid: 00679bd9fde942548b7ec63cefaa30d3, type: 3}
+    texture: {fileID: 2800000, guid: e707d609b48a36045b3a571a00697e2b, type: 3}
+    prefab: {fileID: 4535474966471694372, guid: dba108bc9dd9621438b1a595cbbf7821, type: 3}
+    offset: {x: 0, y: 0.5, z: 0}
+    rootBone: Root_M
+  - ID: 20
+    buyType: 1
+    mountsType: 2
+    priceType: 1
+    price: 30
+    name: Hell Lion
+    icon: {fileID: 21300000, guid: 664dadff81edda54f95493eec3863aa3, type: 3}
+    texture: {fileID: 2800000, guid: 4621528d3be7f634e931828c596e8db8, type: 3}
+    prefab: {fileID: 4535474966471694372, guid: dba108bc9dd9621438b1a595cbbf7821, type: 3}
+    offset: {x: 0, y: 0.5, z: 0}
+    rootBone: Root_M
+  - ID: 21
+    buyType: 1
+    mountsType: 2
+    priceType: 1
+    price: 30
+    name: Panthera Lion
+    icon: {fileID: 21300000, guid: 229368cf9498f1f41b7cc576999905b4, type: 3}
+    texture: {fileID: 2800000, guid: 41b582fb6f58d074fa61e215c98c4575, type: 3}
+    prefab: {fileID: 4535474966471694372, guid: dba108bc9dd9621438b1a595cbbf7821, type: 3}
+    offset: {x: 0, y: 0.5, z: 0}
+    rootBone: Root_M

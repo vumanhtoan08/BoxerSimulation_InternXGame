@@ -1,0 +1,903 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e61678d17d0a349bb6a8fe713269f0, type: 3}
+  m_Name: EquipmentData
+  m_EditorClassIdentifier: 
+  allEquipments:
+  - keySave: head_18
+    id: 18
+    equipType: 0
+    sex: 0
+    buyType: 0
+    priceType: -1
+    price: 0
+    subObjects: []
+    name: 
+    mesh: {fileID: -4829073570792422983, guid: 2ba3b3d5ee0f1b44f8b28908f2ac8387, type: 3}
+    icon: {fileID: 21300000, guid: 1635ff39e2f793a4889e94bc450ba38a, type: 3}
+    texture: {fileID: 2800000, guid: 1e31f68bb37e21e488e91f7883fd50ac, type: 3}
+  - keySave: head_23
+    id: 23
+    equipType: 0
+    sex: 1
+    buyType: 0
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -4172375244245752585, guid: 5eca064afe7275e4eb856c2f939919e4, type: 3}
+    icon: {fileID: 21300000, guid: b9cc60afa0a7d594c961b2a5518c7701, type: 3}
+    texture: {fileID: 2800000, guid: a9b3718c8ef4dac4482447f45ba9044d, type: 3}
+  - keySave: head_01
+    id: 1
+    equipType: 0
+    sex: 0
+    buyType: 0
+    priceType: -1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 3523943582105887178, guid: 6edc4b81dec6d0c4a96bf469d6887db2, type: 3}
+    icon: {fileID: 21300000, guid: 67c76efcd5d7cf644aa9e1b4473336e0, type: 3}
+    texture: {fileID: 2800000, guid: 19188951fc512f84fa85a432f1991400, type: 3}
+  - keySave: head_25
+    id: 25
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 25
+    subObjects: []
+    name: 
+    mesh: {fileID: 9087433914924533890, guid: 351d48b44abdcb846a6fe0657ec5473d, type: 3}
+    icon: {fileID: 21300000, guid: a8373636ff013954bb8df169f495996f, type: 3}
+    texture: {fileID: 2800000, guid: b0f2dc05e0737284190bc27b35e81e1b, type: 3}
+  - keySave: head_21
+    id: 21
+    equipType: 0
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 3928689377449195129, guid: a216801f5cc16ef4caa5606ff2765ba6, type: 3}
+    icon: {fileID: 21300000, guid: 534efc6e1bf24214f8f931f9bcbdf8cc, type: 3}
+    texture: {fileID: 2800000, guid: 76d2478a66283e54e93459c4bac878ee, type: 3}
+  - keySave: head_22
+    id: 22
+    equipType: 0
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -8405202163171639954, guid: 36aeaeb1332ef0d4f886493d0b25af72, type: 3}
+    icon: {fileID: 21300000, guid: ad987f58c5716be4bbb025fe16933b9c, type: 3}
+    texture: {fileID: 2800000, guid: c66515b1683fe4d4ebc7604000c0b1af, type: 3}
+  - keySave: head_24
+    id: 24
+    equipType: 0
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -2598057154052213192, guid: 06f07b2ed50c1ee4aa2b82a39603ad02, type: 3}
+    icon: {fileID: 21300000, guid: 997ce99739919234c88b398754693b42, type: 3}
+    texture: {fileID: 2800000, guid: 789f462a5c2cf5746bbb8974036fc9ab, type: 3}
+  - keySave: head_03
+    id: 3
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 6549979966144507533, guid: 6edc4b81dec6d0c4a96bf469d6887db2, type: 3}
+    icon: {fileID: 21300000, guid: 7ae66af7f1fab724ca7f2b1303c80d42, type: 3}
+    texture: {fileID: 2800000, guid: 19188951fc512f84fa85a432f1991400, type: 3}
+  - keySave: head_04
+    id: 4
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -2108588005084370874, guid: 6edc4b81dec6d0c4a96bf469d6887db2, type: 3}
+    icon: {fileID: 21300000, guid: cd79ecd568134144ea00a410d74b2a18, type: 3}
+    texture: {fileID: 2800000, guid: 19188951fc512f84fa85a432f1991400, type: 3}
+  - keySave: head_05
+    id: 5
+    equipType: 0
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: -6089018402422873561, guid: 6edc4b81dec6d0c4a96bf469d6887db2, type: 3}
+    icon: {fileID: 21300000, guid: 6c77dcb02a651e64287412be8adfa57c, type: 3}
+    texture: {fileID: 2800000, guid: 19188951fc512f84fa85a432f1991400, type: 3}
+  - keySave: head_06
+    id: 6
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 5302568919011541938, guid: 85e54643d1e08024082e552033e8a058, type: 3}
+    icon: {fileID: 21300000, guid: a1566be40f77b7e42b5343b955944b16, type: 3}
+    texture: {fileID: 2800000, guid: e3b73304df941a74a96bcd49f371f9e8, type: 3}
+  - keySave: head_07
+    id: 7
+    equipType: 0
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: -7434549690534084444, guid: 85e54643d1e08024082e552033e8a058, type: 3}
+    icon: {fileID: 21300000, guid: d4b9d4b972e3fb9469aaf6738da69cff, type: 3}
+    texture: {fileID: 2800000, guid: ded77802df02251468b714a2c901352d, type: 3}
+  - keySave: head_08
+    id: 8
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 5303923085450066343, guid: 85e54643d1e08024082e552033e8a058, type: 3}
+    icon: {fileID: 21300000, guid: 7f8ed648f07739b44a6c0da3dc318924, type: 3}
+    texture: {fileID: 2800000, guid: 58155a11b1f7d3c48a1f32b2249bdfe0, type: 3}
+  - keySave: head_9
+    id: 9
+    equipType: 0
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 8632993429437876281, guid: 85e54643d1e08024082e552033e8a058, type: 3}
+    icon: {fileID: 21300000, guid: a3472f6d9c6023445a8ce154cd3295ff, type: 3}
+    texture: {fileID: 2800000, guid: 6f5655e9aa6d0e54baecb5f93f20a995, type: 3}
+  - keySave: head_10
+    id: 10
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 4710480338504232382, guid: 6ca25e92ee368c14f906f62cdf0f1b86, type: 3}
+    icon: {fileID: 21300000, guid: 158899db2cc0e5e4593af0f5748592ea, type: 3}
+    texture: {fileID: 2800000, guid: 88ccaa0c89b8afd4b8d14af28856d881, type: 3}
+  - keySave: head_11
+    id: 11
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 3084095068753435726, guid: 6ca25e92ee368c14f906f62cdf0f1b86, type: 3}
+    icon: {fileID: 21300000, guid: 23ea934257f746d4ea6eb711fa6b5912, type: 3}
+    texture: {fileID: 2800000, guid: 40ec6561d20597d4e9774bf29db0d196, type: 3}
+  - keySave: head_12
+    id: 12
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 5284997912651842386, guid: 6ca25e92ee368c14f906f62cdf0f1b86, type: 3}
+    icon: {fileID: 21300000, guid: c502004dc5be64347b1d5f1a54ea0349, type: 3}
+    texture: {fileID: 2800000, guid: 3cfca28745563d74f81921b07a2b3dc3, type: 3}
+  - keySave: head_13
+    id: 13
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -6781135168784722589, guid: 6ca25e92ee368c14f906f62cdf0f1b86, type: 3}
+    icon: {fileID: 21300000, guid: 731c24920412a724a8b665c5d9f1a35c, type: 3}
+    texture: {fileID: 2800000, guid: 6249eb1fd4dfac543a9c4e378c00a1d9, type: 3}
+  - keySave: head_14
+    id: 14
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 2903993984647362187, guid: 6ca25e92ee368c14f906f62cdf0f1b86, type: 3}
+    icon: {fileID: 21300000, guid: 1d8310a83d6d74348bfed8e1f861634b, type: 3}
+    texture: {fileID: 2800000, guid: 82ba486268c856946bfff2574379d695, type: 3}
+  - keySave: head_15
+    id: 15
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 6693321577081776069, guid: 6ca25e92ee368c14f906f62cdf0f1b86, type: 3}
+    icon: {fileID: 21300000, guid: dc2b9e35b6f7d9e46aa6f4a5b8f56225, type: 3}
+    texture: {fileID: 2800000, guid: 0432741c813c8334ca08d93f11330018, type: 3}
+  - keySave: head_16
+    id: 16
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -6369018600301727163, guid: 1be5d6bd6ace6db42966195ab9aa7c8d, type: 3}
+    icon: {fileID: 21300000, guid: 124b4937e69b74241a08d04a418abbb5, type: 3}
+    texture: {fileID: 2800000, guid: 305d3a9e2c99fbb4493012b2aea347d1, type: 3}
+  - keySave: head_17
+    id: 17
+    equipType: 0
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 6473865900951292033, guid: 22f0338d18ed78a48ba2c53e4f7c62b0, type: 3}
+    icon: {fileID: 21300000, guid: 0e18cfa861912bb4997f2bcdb539be0c, type: 3}
+    texture: {fileID: 2800000, guid: 222bf5e56aefdde42bff6969a01d90d4, type: 3}
+  - keySave: head_19
+    id: 19
+    equipType: 0
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -744652436743236120, guid: e104b93d92d063e42b099406b82add63, type: 3}
+    icon: {fileID: 21300000, guid: 197b7fe90e83e7b42a1fc41e468d51f1, type: 3}
+    texture: {fileID: 2800000, guid: 6849c3465e9f21d419cb726b159033c2, type: 3}
+  - keySave: head_20
+    id: 20
+    equipType: 0
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -4689240125024555604, guid: a83728d5b8d10654fbde461f82c82440, type: 3}
+    icon: {fileID: 21300000, guid: 9a7f4577ee2f38544a8a30652f209e26, type: 3}
+    texture: {fileID: 2800000, guid: a186e0ab4b8914a4fba232bb4326912a, type: 3}
+  - keySave: bag_01
+    id: 16
+    equipType: 3
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 7435227895392311072, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: b48dd3097c9ee13469699915c20de92c, type: 3}
+    texture: {fileID: 2800000, guid: 2ec48b5079546b949a9a19664fd11065, type: 3}
+  - keySave: bag_02
+    id: 17
+    equipType: 3
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 3049848443614864229, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: 515fe92a0d83bd845aa770f8cae93744, type: 3}
+    texture: {fileID: 2800000, guid: e54ee7f33e2564f488b2fb4ecf023296, type: 3}
+  - keySave: bag_03
+    id: 18
+    equipType: 3
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -3757050867859761918, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: 351eb9c1be9542247b548728c0f4f75d, type: 3}
+    texture: {fileID: 2800000, guid: 7367b4e9475d28142a38ca97f3d5ab63, type: 3}
+  - keySave: bag_04
+    id: 19
+    equipType: 3
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 3856495619278248561, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: c2724e1e778e48945b91bac7c32f97ea, type: 3}
+    texture: {fileID: 2800000, guid: 61b4abf619765a947ad60e5b890d3f9c, type: 3}
+  - keySave: bag_05
+    id: 20
+    equipType: 3
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: -4483814594822317219, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: c7fd97e03c2ebb248afd36cfb5970454, type: 3}
+    texture: {fileID: 2800000, guid: 4f361b24a8973e54fa1d0e2b0be51fa3, type: 3}
+  - keySave: bag_06
+    id: 21
+    equipType: 3
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 702012152734773140, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: be8185b5744538a4c8a03e7b523eab74, type: 3}
+    texture: {fileID: 2800000, guid: 49bc1b45d73a70f459baae29c16ee011, type: 3}
+  - keySave: bag_07
+    id: 22
+    equipType: 3
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 4020694689186273284, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: 50ff28429682c2a41bceac3ec17505cf, type: 3}
+    texture: {fileID: 2800000, guid: 792e22d6a5e4fa848a585a2550ac8b6e, type: 3}
+  - keySave: bag_08
+    id: 23
+    equipType: 3
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 3680370294821348663, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: 2a4909d6180087748b3ff2d371eef915, type: 3}
+    texture: {fileID: 2800000, guid: d4a1200e112f21f4297e397168ada296, type: 3}
+  - keySave: bag_09
+    id: 24
+    equipType: 3
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 1858708066246420860, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: 50bf6cbdd2e74e741988315dc0b06daf, type: 3}
+    texture: {fileID: 2800000, guid: 32226722ae074bb40aaa195bdd887e58, type: 3}
+  - keySave: bag_10
+    id: 25
+    equipType: 3
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: -6011657598417743042, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: c33bf366d3864c84fbf647029069baa0, type: 3}
+    texture: {fileID: 2800000, guid: ddc8ebc245619104e9a502981677a4cf, type: 3}
+  - keySave: bag_11
+    id: 26
+    equipType: 3
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 5117211990394621950, guid: 392da01887275c947b0b2be5ab1b1e27, type: 3}
+    icon: {fileID: 21300000, guid: af1b633e78dc2664fa15b60ea8588f95, type: 3}
+    texture: {fileID: 2800000, guid: 2d4b357fc9e44ec4193659ebc4dec9ce, type: 3}
+  - keySave: clothes_19
+    id: 45
+    equipType: 1
+    sex: 0
+    buyType: 0
+    priceType: -1
+    price: 0
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: c16046440408f284880b2b3490f7e7d2, type: 3}
+    texture: {fileID: 2800000, guid: e735315920a79dd4f8e1b32c35be50b2, type: 3}
+  - keySave: clothes_21
+    id: 47
+    equipType: 1
+    sex: 1
+    buyType: 0
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 51e182da808c37b44bd74f6a8ab67d65, type: 3}
+    texture: {fileID: 2800000, guid: 164218a3b64bde24891f67e92b73655b, type: 3}
+  - keySave: clothes_01
+    id: 27
+    equipType: 1
+    sex: 0
+    buyType: 0
+    priceType: -1
+    price: 0
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 2a1b70caaa9079f42b967c7c28ba1edd, type: 3}
+    texture: {fileID: 2800000, guid: eb3344f720be73a46be2a5d85b76ce73, type: 3}
+  - keySave: clothes_25
+    id: 51
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 35
+    subObjects:
+    - path: Root_M/Spine1_M/Chest_M/Scapula_L/Shoulder_L
+      obj: {fileID: 2023350638516995786, guid: ec98d99399931a642b2e9afd3abbb64d, type: 3}
+      offset: {x: -0.0025, y: 0, z: -0.012}
+      angles: {x: 90.85, y: -3.49, z: 85.94}
+    - path: Root_M/Spine1_M/Chest_M/Scapula_R/Shoulder_R
+      obj: {fileID: 3040711083956100560, guid: e51fceb4d28e1c844a7bf810cf958c98, type: 3}
+      offset: {x: 0.0025, y: 0, z: 0.012}
+      angles: {x: -89.15, y: -3.49, z: -85.94}
+    - path: Root_M/Spine1_M
+      obj: {fileID: 8810044903638013525, guid: fd9371dd32f85084aa15f5d913b4adce, type: 3}
+      offset: {x: 0.0245, y: 0.017, z: 0}
+      angles: {x: -90, y: 90, z: 0}
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: dac2b456efa98274795aa55a7ad72715, type: 3}
+    texture: {fileID: 2800000, guid: eb8c28a73a9a0604fbbc223f09ccc9fa, type: 3}
+  - keySave: clothes_22
+    id: 48
+    equipType: 1
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: eb933becbbca25c4cbceb4b6e198dfbe, type: 3}
+    texture: {fileID: 2800000, guid: 8bafaf6090701fb478e0c51c46246303, type: 3}
+  - keySave: clothes_23
+    id: 49
+    equipType: 1
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 022afdfa55d8c4d42a57f7c83dd1961a, type: 3}
+    texture: {fileID: 2800000, guid: 46c0c6f49c757fd478137944a7cbe641, type: 3}
+  - keySave: clothes_24
+    id: 50
+    equipType: 1
+    sex: 1
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 47a22e8bcd36b9c43bdb574eaa1e2e12, type: 3}
+    texture: {fileID: 2800000, guid: 7a13d6109759d634a9c1d3344be5a1d4, type: 3}
+  - keySave: clothes_02
+    id: 28
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 6620bfec1bdbfef4ba636b5c93bf301d, type: 3}
+    texture: {fileID: 2800000, guid: ec5c8cc915f9caa45afa2f03b895e1cf, type: 3}
+  - keySave: clothes_03
+    id: 29
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 45eec222d6895b940b8516c764c0f1a4, type: 3}
+    texture: {fileID: 2800000, guid: db3b665d75db9704799866184606b179, type: 3}
+  - keySave: clothes_04
+    id: 30
+    equipType: 1
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 38012b10dda449b47a3b3215c2ebc4ef, type: 3}
+    texture: {fileID: 2800000, guid: e2ac83ab0fd840a4b8bb19989742d22b, type: 3}
+  - keySave: clothes_05
+    id: 31
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: a16376bb0555af14d9139b2d86fd0e43, type: 3}
+    texture: {fileID: 2800000, guid: 88ca2d43a782606439864fa1311ccefa, type: 3}
+  - keySave: clothes_06
+    id: 32
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 2c6fb237221fc9c4693dc681b130ac6d, type: 3}
+    texture: {fileID: 2800000, guid: 8d7fdd57a90b92440aa83a52bbfd4581, type: 3}
+  - keySave: clothes_07
+    id: 33
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: aa35f14954606b444b1a947ff2d33818, type: 3}
+    texture: {fileID: 2800000, guid: 6b0e2db507a050f46bed5e1f7f176729, type: 3}
+  - keySave: clothes_08
+    id: 34
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 361b14dcf8839c646be5973a458eba70, type: 3}
+    texture: {fileID: 2800000, guid: de2d355cfd6cf5542bfeca1d03852d6a, type: 3}
+  - keySave: clothes_09
+    id: 35
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 4186afdf0bec6d94292a09ccaf7c30a0, type: 3}
+    texture: {fileID: 2800000, guid: e7f56dfa0c4b65e48993458c7047f8d6, type: 3}
+  - keySave: clothes_10
+    id: 36
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: c6ef631cdb794f14ba43ea847bfc7708, type: 3}
+    texture: {fileID: 2800000, guid: 4a6d3cf204fcb7e449c05165d335c0b5, type: 3}
+  - keySave: clothes_11
+    id: 37
+    equipType: 1
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 22d909309450434499dc091e32775f0e, type: 3}
+    texture: {fileID: 2800000, guid: 12cd1c3e4e1d35d4fa6c0190057305c6, type: 3}
+  - keySave: clothes_12
+    id: 38
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 62262e533220d67468504e9fdfad675a, type: 3}
+    texture: {fileID: 2800000, guid: d2925ce4e342d024ea939a17789d4a9b, type: 3}
+  - keySave: clothes_13
+    id: 39
+    equipType: 1
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: dd9c80b853ee6de429a58b38d4110a15, type: 3}
+    texture: {fileID: 2800000, guid: 71fb60dddeb0ca14295c2800a0aaa0e0, type: 3}
+  - keySave: clothes_14
+    id: 40
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: ef496da378aa7224ea5499dfb99ad936, type: 3}
+    texture: {fileID: 2800000, guid: 058e4664f7dc2784c9f06af73a28861f, type: 3}
+  - keySave: clothes_15
+    id: 41
+    equipType: 1
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: a558f5c5973c4c040afe8b6cf4a65366, type: 3}
+    texture: {fileID: 2800000, guid: f63c91f631d78fd47b5b7def7ceb400e, type: 3}
+  - keySave: clothes_16
+    id: 42
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 260ca511936f1da49a2285d35fbb70da, type: 3}
+    texture: {fileID: 2800000, guid: bae42ed122d516240a64b84face1150a, type: 3}
+  - keySave: clothes_17
+    id: 43
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: e7ee8e99d38a7f84cb22319f57a13402, type: 3}
+    texture: {fileID: 2800000, guid: e8b36b78ab3dace4aad1708459ac36dc, type: 3}
+  - keySave: clothes_18
+    id: 44
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 54d0a0b36a8591a41ad3a61b02a62283, type: 3}
+    texture: {fileID: 2800000, guid: ff636b6bfc56056429b20ab9342652d6, type: 3}
+  - keySave: clothes_20
+    id: 46
+    equipType: 1
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 6755de46e06b43b40b4496c4b22253da, type: 3}
+    texture: {fileID: 2800000, guid: a1dc08bf2f2f4f74eb9be8727edf943e, type: 3}
+  - keySave: Shoes_01
+    id: 43
+    equipType: 2
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: cdbfe3da0112f554d90ed07abb3c1e80, type: 3}
+    texture: {fileID: 2800000, guid: bd11930a2233d88429293cdba9e3b2a5, type: 3}
+  - keySave: Shoes_02
+    id: 44
+    equipType: 2
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 847e9768234a7a4468c6557966cb5de2, type: 3}
+    texture: {fileID: 2800000, guid: 101578e082e8aec46ba2accb0b5ebd61, type: 3}
+  - keySave: Shoes_03
+    id: 45
+    equipType: 2
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 52737a0b7110cb942af67dda38eb83a7, type: 3}
+    texture: {fileID: 2800000, guid: c98c61f2b54c49942bbaf0148f734789, type: 3}
+  - keySave: Shoes_04
+    id: 46
+    equipType: 2
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: adbf8511ecfbbe34db25d2f938799cd7, type: 3}
+    texture: {fileID: 2800000, guid: b76fdee988fa69f4a8cce62dd902d1e0, type: 3}
+  - keySave: Shoes_05
+    id: 47
+    equipType: 2
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 85a6b0c2a02f11b4ea94362cbf42a465, type: 3}
+    texture: {fileID: 2800000, guid: 802fbc5e61919424b91cc2c59e6b866f, type: 3}
+  - keySave: Shoes_06
+    id: 48
+    equipType: 2
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 20
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 39f85b79ea838394b84fcbfe6e8aba5c, type: 3}
+    texture: {fileID: 2800000, guid: 549799effaabe7e4f97ab64a607687cb, type: 3}
+  - keySave: Shoes_07
+    id: 49
+    equipType: 2
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: 0}
+    icon: {fileID: 21300000, guid: 41deec7ad6c25e040804b53fa736c63c, type: 3}
+    texture: {fileID: 2800000, guid: 97fded848dcf1a44b903bc2bd080cdf7, type: 3}
+  - keySave: Gun_01
+    id: 50
+    equipType: 4
+    sex: 0
+    buyType: 0
+    priceType: -1
+    price: 10
+    subObjects: []
+    name: 
+    mesh: {fileID: -5252962375936171389, guid: 0a347d42e8835be4395cdac722086bda, type: 3}
+    icon: {fileID: 21300000, guid: 9c3cec783f4597e4e90ddc720ef6393e, type: 3}
+    texture: {fileID: 2800000, guid: 36d920cb55bf34a49bdfe897090300b2, type: 3}
+  - keySave: Gun_02
+    id: 51
+    equipType: 4
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 50
+    subObjects: []
+    name: 
+    mesh: {fileID: 7144824850286886966, guid: 0a347d42e8835be4395cdac722086bda, type: 3}
+    icon: {fileID: 21300000, guid: a118b6e5678f4cf4b955a8c93612840d, type: 3}
+    texture: {fileID: 2800000, guid: 322c38c4e9098a147ba6880fb3a7d8d9, type: 3}
+  - keySave: Gun_03
+    id: 52
+    equipType: 4
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 50
+    subObjects: []
+    name: 
+    mesh: {fileID: -4254738273099078601, guid: 0a347d42e8835be4395cdac722086bda, type: 3}
+    icon: {fileID: 21300000, guid: 86e585d47ee0aa64ab31a36d4d57bcea, type: 3}
+    texture: {fileID: 2800000, guid: 91de640e870c5f84ba968b7cdf3d5ead, type: 3}
+  - keySave: Gun_04
+    id: 53
+    equipType: 4
+    sex: 0
+    buyType: 1
+    priceType: 1
+    price: 50
+    subObjects: []
+    name: 
+    mesh: {fileID: -5754468244022006902, guid: 0a347d42e8835be4395cdac722086bda, type: 3}
+    icon: {fileID: 21300000, guid: f8f566feacfa8bc42ae5f7ed400c10a9, type: 3}
+    texture: {fileID: 2800000, guid: 28ef2fc25af38a3479093f0a0ca109bc, type: 3}
+  - keySave: Gun_05
+    id: 54
+    equipType: 4
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: -7803735329929094560, guid: 0a347d42e8835be4395cdac722086bda, type: 3}
+    icon: {fileID: 21300000, guid: 7fb9a868989fcdd4093ee257188541a4, type: 3}
+    texture: {fileID: 2800000, guid: e7788266c35bcec45b07f22d22d45ee3, type: 3}
+  - keySave: Gun_06
+    id: 55
+    equipType: 4
+    sex: 0
+    buyType: 3
+    priceType: 1
+    price: 1
+    subObjects: []
+    name: 
+    mesh: {fileID: -801127310106005293, guid: 0a347d42e8835be4395cdac722086bda, type: 3}
+    icon: {fileID: 21300000, guid: fbce2a1ee81f05c40b54f39c0ccbc9b1, type: 3}
+    texture: {fileID: 2800000, guid: 732634cfca2c28f4bab9123392b12ef0, type: 3}
