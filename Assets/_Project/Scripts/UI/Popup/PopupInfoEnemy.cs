@@ -6,9 +6,18 @@ using UnityEngine.UI;
 
 public class PopupInfoEnemy : PopupBase
 {
+    [Header("Enemy")]
+    [SerializeField] private TextMeshProUGUI enemyName; 
     [SerializeField] private TextMeshProUGUI enemyAttack; 
     [SerializeField] private TextMeshProUGUI enemyHealth; 
+    [SerializeField] private TextMeshProUGUI enemyReward; 
     [SerializeField] private Image image;
+
+    [Header("Player")]
+    [SerializeField] private TextMeshProUGUI playerAttack;
+    [SerializeField] private TextMeshProUGUI playerHealth;
+    [SerializeField] private TextMeshProUGUI playerStamina;
+
     [SerializeField] private Button fightButton;
     [SerializeField] private Button closePopup; 
 
@@ -49,6 +58,7 @@ public class PopupInfoEnemy : PopupBase
         base.Show();
         SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.3f, 0.5f);
         UpdateInfoEnemy();
+        UpdateInfoPlayer();
     }
 
     public override void Hide()
@@ -59,7 +69,17 @@ public class PopupInfoEnemy : PopupBase
     public void UpdateInfoEnemy()
     {
         EnemyRuntimeData enemyData = EnemyManager.Instance.EnemyController.RuntimeData;
+        enemyName.text = enemyData.EnemyData.Name;
         enemyAttack.text = enemyData.EnemyData.Attack.ToString();
         enemyHealth.text = enemyData.EnemyData.Health.ToString();
+        enemyReward.text = enemyData.EnemyData.Reward.ToString();
+    }
+
+    public void UpdateInfoPlayer()
+    {
+        PlayerRunTimeDatas playerData = PlayerController.Instance.Data;
+        playerAttack.text = playerData.DataRuntime.Attack.ToString();
+        playerHealth.text = playerData.DataRuntime.Health.ToString();
+        playerStamina.text = playerData.DataRuntime.Stamina.ToString();
     }
 }
