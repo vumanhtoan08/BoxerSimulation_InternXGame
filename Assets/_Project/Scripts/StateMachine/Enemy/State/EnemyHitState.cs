@@ -15,7 +15,7 @@ public class EnemyHitState : IState
     public void Enter()
     {
         Debug.Log("Enter Hit");
-        CanvasManager.Instance.OnEnemyHealthChange();
+        CanvasManager.Instance.OnUpdateUIEnemy();
         enemyController.Animator.ResetTrigger("isIdle");
         enemyController.Animator.CrossFade(animStateName, 0.05f);
     }

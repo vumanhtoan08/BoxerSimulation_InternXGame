@@ -13,7 +13,7 @@ public class EnemyDeadState : IState
     public void Enter()
     {
         GameManager.Instance.ChangeGameState(Game_State.Win);
-        CanvasManager.Instance.OnEnemyHealthChange();
+        CanvasManager.Instance.OnUpdateUIEnemy();
 
         Debug.Log("Enter Dead");
         enemyController.Animator.SetTrigger("isDead");

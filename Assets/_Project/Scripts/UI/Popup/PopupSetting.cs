@@ -73,7 +73,10 @@ public class PopupSetting : PopupBase
         });
 
         closeBtn.onClick.RemoveAllListeners();
-        closeBtn.onClick.AddListener(() => Hide());
+        closeBtn.onClick.AddListener(() =>
+        {
+            Hide();
+        });
     }
 
     [SerializeField] private Game_State previourGameState; 
@@ -89,6 +92,7 @@ public class PopupSetting : PopupBase
         if (GameManager.Instance.GameState == Game_State.Battle)
         {
             OnHomeButtonShow(true);
+            EnemyManager.Instance.EnemyController.Rigidbody.isKinematic = true;
         }
         else
         {
@@ -97,6 +101,7 @@ public class PopupSetting : PopupBase
 
         GameManager.Instance.ChangeGameState(Game_State.Pause);
         EnemyManager.Instance.EnemyController.Animator.speed = 0f;
+        PlayerController.Instance.Animator.speed = 0f;
     }
 
     public override void Hide()
@@ -104,6 +109,8 @@ public class PopupSetting : PopupBase
         base.Hide();
         GameManager.Instance.ChangeGameState(previourGameState);
         EnemyManager.Instance.EnemyController.Animator.speed = 1f;
+        PlayerController.Instance.Animator.speed = 1f;
+        EnemyManager.Instance.EnemyController.Rigidbody.isKinematic = false;
     }
 
     public void OnHomeButtonShow(bool isShow)

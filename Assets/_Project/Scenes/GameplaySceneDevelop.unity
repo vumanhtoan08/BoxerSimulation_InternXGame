@@ -621,17 +621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &167427776 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5485897714781734377, guid: c121300f1068ddf45800971095a2ede7, type: 3}
-  m_PrefabInstance: {fileID: 5094558768142221338}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &196177602 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3095137965588968372, guid: 6e3d570042061154b97eee8d11cff5af, type: 3}
@@ -1966,17 +1955,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353350087}
   m_CullTransparentMesh: 1
---- !u!114 &384010936 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3686872823970266586, guid: c121300f1068ddf45800971095a2ede7, type: 3}
-  m_PrefabInstance: {fileID: 5094558768142221338}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &401667446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,17 +2208,6 @@ MonoBehaviour:
   boxingUpgradeCost: {fileID: 146578659}
   runningUpgradeCost: {fileID: 1630130567}
   squatUpgradeCost: {fileID: 1495700483}
---- !u!114 &430201682 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8326777891015312129, guid: c121300f1068ddf45800971095a2ede7, type: 3}
-  m_PrefabInstance: {fileID: 5094558768142221338}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &450785278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,7 +2583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &524333518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5776,17 +5743,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1044020276 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3135340439125834226, guid: c121300f1068ddf45800971095a2ede7, type: 3}
-  m_PrefabInstance: {fileID: 5094558768142221338}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1066106383
 GameObject:
   m_ObjectHideFlags: 0
@@ -7887,7 +7843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1428523922
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10039,10 +9995,6 @@ MonoBehaviour:
   attackButton: {fileID: 353350089}
   counterButton: {fileID: 1206933255}
   blockButton: {fileID: 967980168}
-  enemyAttackTxt: {fileID: 167427776}
-  enemyHealthTxt: {fileID: 384010936}
-  enemyAvatarTmg: {fileID: 1044020276}
-  fightButton: {fileID: 430201682}
   interactIconImg: {fileID: 1120100226}
   punchIconImg: {fileID: 1896779111}
   playerBattlePositon: {x: 2, y: 0.5, z: 98}
@@ -10051,8 +10003,10 @@ MonoBehaviour:
   enemyHealthImg: {fileID: 2127569540}
   enemyAvaterImg: {fileID: 239524684}
   enemyName: {fileID: 864099524}
+  enemyBattleHealth: {fileID: 1858867176}
   playerHealthImg: {fileID: 1084159006}
   playerStaminaImg: {fileID: 302356152}
+  playerBattleHealth: {fileID: 450785280}
   textDay: {fileID: 746109}
   textEnergy: {fileID: 1937559564}
   textMoney: {fileID: 1891331854}

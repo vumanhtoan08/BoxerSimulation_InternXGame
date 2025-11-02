@@ -180,23 +180,12 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] private Button counterButton;          // Ẩn khi training 
     [SerializeField] private Button blockButton;            // Ẩn khi training
 
-    [Header("Enemy Stats")]
-    [SerializeField] private TextMeshProUGUI enemyAttackTxt;
-    [SerializeField] private TextMeshProUGUI enemyHealthTxt;
-    [SerializeField] private Image enemyAvatarTmg;
-    [SerializeField] private Button fightButton;
 
     #region Update UI 
 
+    [Header("For button action")]
     [SerializeField] private GameObject interactIconImg; 
     [SerializeField] private GameObject punchIconImg; 
-
-    public void UpdateInfoEnemy()
-    {
-        EnemyRuntimeData enemyData = EnemyManager.Instance.EnemyController.RuntimeData;
-        enemyAttackTxt.text = enemyData.EnemyData.Attack.ToString();
-        enemyHealthTxt.text = enemyData.EnemyData.Health.ToString();
-    }
 
     private void SetStateForCounterAndBlockButton(bool value)
     {
@@ -310,27 +299,41 @@ public class CanvasManager : Singleton<CanvasManager>
     [Header("Enemy Health, name, avatar")]
     [SerializeField] private Image enemyHealthImg;
     [SerializeField] private Image enemyAvaterImg;
-    [SerializeField] private TextMeshProUGUI enemyName; 
+    [SerializeField] private TextMeshProUGUI enemyName;
+    [SerializeField] private TextMeshProUGUI enemyBattleHealth;
+
+    public void SetupUIBeforeBattle()
+    {
+        // Enemy 
+        EnemyRuntimeData enemyRuntimeData = EnemyManager.Instance.EnemyController.RuntimeData;
+        EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
+
+        enemyAvaterImg.sprite =  enemyRuntimeData.EnemyData.Avatar;
+        enemyName.text = enemyRuntimeData.EnemyData.Name;
+        enemyBattleHealth.text = $"{enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
+        enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
+
+        // Player
+        PlayerRunTimeDatas data = PlayerController.Instance.Data;
+        PlayerHealth health = PlayerController.Instance.Health;
+
+        playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
+        playerStaminaImg.fillAmount = data.CurrentStamina / data.DataRuntime.Stamina;
+        playerBattleHealth.text = $"{health.CurrentHealth} / {health.MaxHealth}";
+    }
 
     public void OnUpdateUIEnemy()
     {
-        EnemyController enemyController = EnemyManager.Instance.EnemyController;
-        EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
-
-        enemyName.text = $"{enemyController.RuntimeData.EnemyData.Name}";
-        enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
-    }
-
-    public void OnEnemyHealthChange()
-    {
         EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
 
         enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
+        enemyBattleHealth.text = $"{enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
     }
 
     [Header("Player Health and Stamina")]
     [SerializeField] private Image playerHealthImg;
     [SerializeField] private Image playerStaminaImg;
+    [SerializeField] private TextMeshProUGUI playerBattleHealth;
 
     public void OnUpdateUIPlayer()
     {
@@ -339,12 +342,14 @@ public class CanvasManager : Singleton<CanvasManager>
 
         playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
         playerStaminaImg.fillAmount = data.CurrentStamina / data.DataRuntime.Stamina;
+        playerBattleHealth.text = $"{health.CurrentHealth} / {health.MaxHealth}";
     }
 
     public void OnPlayerHealthChange()
     {
         PlayerHealth health = PlayerController.Instance.Health;
         playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
+        playerBattleHealth.text = $"{health.CurrentHealth} / {health.MaxHealth}";
     }
     
     public void OnPlayerStaminaChange()

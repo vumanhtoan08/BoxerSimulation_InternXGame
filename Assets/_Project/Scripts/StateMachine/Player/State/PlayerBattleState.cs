@@ -53,6 +53,8 @@ public class PlayerBattleState : IState
 
     private void RegenerateStamina()
     {
+        if (GameManager.Instance.GameState != Game_State.Battle) return;
+
         float current = playerController.Data.CurrentStamina;
         float max = playerController.Data.DataRuntime.Stamina;
 

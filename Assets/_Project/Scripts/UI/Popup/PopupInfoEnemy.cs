@@ -39,13 +39,16 @@ public class PopupInfoEnemy : PopupBase
                 {
                     GameManager.Instance.ChangeGameState(Game_State.Battle);
                     CanvasManager.Instance.MovePlayerToBattle();
+
+                    PlayerController.Instance.Health.OnSettingHealthBeforeBattle();
+                    CanvasManager.Instance.SetupUIBeforeBattle();
+                    CanvasManager.Instance.OnUpdateUIPlayer();
                 })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f))
                .AppendCallback(() => SoundManager.Instance.PlayBGM(SoundKey.BattleBGM, 0.4f));
 
-            PlayerController.Instance.Health.OnSettingHealthBeforeBattle();
-            CanvasManager.Instance.OnUpdateUIPlayer();
+            
         });
 
         // setup for close button
