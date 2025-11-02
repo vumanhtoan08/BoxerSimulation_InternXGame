@@ -14,7 +14,7 @@ public class EnemyBlockState : IState
 
     public void Enter()
     {
-        blockDuration = Random.Range(1f, 2f);
+        blockDuration = Random.Range(0.5f, 1f);
         blockTimer = 0f;
 
         enemyController.Animator.SetBool("isBlock", true);

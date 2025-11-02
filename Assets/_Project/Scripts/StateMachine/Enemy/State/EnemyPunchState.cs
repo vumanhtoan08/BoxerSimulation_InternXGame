@@ -35,7 +35,16 @@ public class EnemyPunchState : IState
 
         if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
         {
-            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            switch (enemyController.RuntimeData.Enemy_Difficult)
+            {
+                case Enemy_Difficult.Easy:
+                    break;
+                case Enemy_Difficult.Med:
+                    DecideNextActionMedEnemy();
+                    break;
+                case Enemy_Difficult.Hard:
+                    break;
+            }
         }
     }
 
@@ -48,7 +57,7 @@ public class EnemyPunchState : IState
     private void DealDamageToPlayer()
     {
         Transform hitPoint = enemyController.RightHand;
-        float radius = 0.4f;
+        float radius = 0.5f;
         LayerMask playerLayerMask = enemyController.LayerPlayer;
 
         Collider[] hits = Physics.OverlapSphere(hitPoint.position, radius, playerLayerMask);
@@ -78,6 +87,19 @@ public class EnemyPunchState : IState
             {
                 ObjectPooling.ReturnObject(effect);
             });
+        }
+    }
+
+    private void DecideNextActionMedEnemy()
+    {
+        float rand = Random.value; // 0 → 1
+        if (rand < 0.5f)
+        {
+            enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+        }
+        else
+        {
+            enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
         }
     }
 }

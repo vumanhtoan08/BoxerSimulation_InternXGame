@@ -38,28 +38,20 @@ public class EnemyMoveState : IState
 
     public void Excute()
     {
-        healthRatio = currentHealth / maxHealth;
-
-        if (healthRatio > dangerHealthRatio)
+        switch (enemyController.RuntimeData.Enemy_Difficult)
         {
-            MoveToward();
-        }
-        else
-        {
-            StepBack();
-            retreatTimer += Time.deltaTime;
-            if (retreatTimer >= retreatDuration)
-            {
-                enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
-                return;
-            }
-        }
-
-        if (CheckDistanceToPlayer() <= enemyController.DetectedRange && healthRatio > dangerHealthRatio)
-        {
-            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            case Enemy_Difficult.Easy:
+                EnemyEasyBehaviour();
+                break;
+            case Enemy_Difficult.Med:
+                EnemyMedBehaviour();
+                break;
+            case Enemy_Difficult.Hard:
+                EnemyMedBehaviour();
+                break;
         }
     }
+
     public void Exit()
     {
         enemyController.Animator.SetBool("isMoving", false);
@@ -83,5 +75,40 @@ public class EnemyMoveState : IState
         enemyController.Animator.SetFloat("moveValue", 1);
         Vector3 direction = (enemyTransform.position - playerTransform.position).normalized;
         enemyRb.linearVelocity = direction * speed;
+    }
+
+    private void EnemyEasyBehaviour()
+    {
+        healthRatio = currentHealth / maxHealth;
+
+        if (healthRatio > dangerHealthRatio)
+        {
+            MoveToward();
+        }
+        else
+        {
+            StepBack();
+            retreatTimer += Time.deltaTime;
+            if (retreatTimer >= retreatDuration)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+                return;
+            }
+        }
+
+        if (CheckDistanceToPlayer() <= enemyController.DetectedRange && healthRatio > dangerHealthRatio)
+        {
+            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+        }
+    }
+    
+    private void EnemyMedBehaviour()
+    {
+        MoveToward();
+
+        if (CheckDistanceToPlayer() <= enemyController.DetectedRange)
+        {
+            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+        }
     }
 }

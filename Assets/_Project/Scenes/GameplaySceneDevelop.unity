@@ -6817,6 +6817,10 @@ PrefabInstance:
       value: 90.37877
       objectReference: {fileID: 0}
     - target: {fileID: 969810043844721988, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: enemy_Difficult
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 969810043844721988, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
       propertyPath: enemyMaterials.legSkin
       value: 
       objectReference: {fileID: 1331042775}
@@ -7960,6 +7964,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1517624905}
   - component: {fileID: 1517624906}
+  - component: {fileID: 1517624907}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -7996,6 +8001,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitEffect: {fileID: 5024009746357069193, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   enemyHitEffect: {fileID: 5024009746357069193, guid: 5d8016d19f8d6014fb8e87eb99b0ceda, type: 3}
+--- !u!114 &1517624907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517624904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6747ba40dd017d34e8b0deb700f929ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1518408753
 GameObject:
   m_ObjectHideFlags: 0

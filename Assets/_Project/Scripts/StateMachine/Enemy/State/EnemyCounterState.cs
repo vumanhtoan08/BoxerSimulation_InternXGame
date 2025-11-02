@@ -37,7 +37,18 @@ public class EnemyCounterState : IState
 
         if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
         {
-            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            switch (enemyController.RuntimeData.Enemy_Difficult)
+            {
+                case Enemy_Difficult.Easy:
+                    break;
+                case Enemy_Difficult.Med:
+                    DecideNextActionMedEnemy();
+                    break;
+                case Enemy_Difficult.Hard:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -69,6 +80,19 @@ public class EnemyCounterState : IState
             {
                 ObjectPooling.ReturnObject(effect);
             });
+        }
+    }
+
+    private void DecideNextActionMedEnemy()
+    {
+        float rand = Random.value; // 0 → 1
+        if (rand < 0.5f)
+        {
+            enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+        }
+        else
+        {
+            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
         }
     }
 }

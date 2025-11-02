@@ -47,27 +47,58 @@ public class EnemyIdleState : IState
         float healthRatio = enemyController.Health.CurrentHealth / enemyController.Health.MaxHealth;
         int randomDecision = Random.Range(0, 100);
 
-        if (currentDistance > enemyController.DetectedRange && healthRatio > dangerHealthRatio)
+        switch (enemyController.RuntimeData.Enemy_Difficult)
         {
-            enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
-            return;
+            case Enemy_Difficult.Easy:
+                if (currentDistance > enemyController.DetectedRange && healthRatio > dangerHealthRatio)
+                {
+                    enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
+                    return;
+                }
+
+                if (healthRatio > dangerHealthRatio)
+                {
+                    if (randomDecision < 70)
+                        enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+                    else
+                        enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
+                }
+                else
+                {
+                    if (randomDecision < 35)
+                        enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
+                    else if (randomDecision < 70)
+                        enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
+                    else
+                        enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+                }
+                break;
+            case Enemy_Difficult.Med:
+                if (currentDistance > enemyController.DetectedRange)
+                {
+                    enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
+                    return;
+                }
+
+                if (randomDecision < 70)
+                    enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+                else
+                    enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
+                break;
+            case Enemy_Difficult.Hard:
+                if (currentDistance > enemyController.DetectedRange)
+                {
+                    enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
+                    return;
+                }
+
+                if (randomDecision < 70)
+                    enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+                else
+                    enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
+                break;
         }
 
-        if (healthRatio > dangerHealthRatio)
-        {
-            if (randomDecision < 100)
-                enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
-            else
-                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
-        }
-        else
-        {
-            if (randomDecision < 45)
-                enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
-            else if (randomDecision < 90)
-                enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
-            else
-                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
-        }
+
     }
 }
