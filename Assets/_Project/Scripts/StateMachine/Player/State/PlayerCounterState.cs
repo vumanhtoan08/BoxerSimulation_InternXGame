@@ -76,6 +76,7 @@ public class PlayerCounterState : IState
                 health.ChangeHealth(-attack);
                 SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
                 Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.hitEffect, playerController.LeftHand.position);
+                TimeEffect.HitTimeEffect();
 
                 DOVirtual.DelayedCall(1f, () =>
                 {

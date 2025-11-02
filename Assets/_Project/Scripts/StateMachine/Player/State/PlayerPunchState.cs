@@ -74,6 +74,7 @@ public class PlayerPunchState : IState
                 health.ChangeHealth(-attack);
                 SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
                 Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.hitEffect, playerController.RightHand.position);
+                TimeEffect.HitTimeEffect();
 
                 DOVirtual.DelayedCall(1f, () =>
                 {

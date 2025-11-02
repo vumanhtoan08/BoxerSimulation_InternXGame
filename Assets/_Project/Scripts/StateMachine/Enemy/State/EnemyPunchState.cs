@@ -72,6 +72,7 @@ public class EnemyPunchState : IState
 
             SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
             playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+            TimeEffect.HitTimeEffect();
 
             DOVirtual.DelayedCall(1f, () =>
             {

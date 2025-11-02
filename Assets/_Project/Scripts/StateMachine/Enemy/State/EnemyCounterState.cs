@@ -58,7 +58,9 @@ public class EnemyCounterState : IState
         {
             Debug.Log($"Va cham vao {hits[0].name}");
             var playerController = hits[0].GetComponent<PlayerController>();
+
             Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.enemyHitEffect, hitPoint.position);
+            TimeEffect.HitTimeEffect();
 
             SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
             playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
