@@ -73,6 +73,10 @@ public class PopupInfoEnemy : PopupBase
         enemyAttack.text = enemyData.EnemyData.Attack.ToString();
         enemyHealth.text = enemyData.EnemyData.Health.ToString();
         enemyReward.text = enemyData.EnemyData.Reward.ToString();
+
+        // Thay Materials
+        image.sprite = enemyData.EnemyData.Avatar;
+        enemyData.EnemyMaterials.ChangMaterialForEnemy(enemyData.EnemyData.Material);
     }
 
     public void UpdateInfoPlayer()

@@ -15,4 +15,8 @@ public class EnemyStatData : ScriptableObject
 
     [Header("Enemy Reward")]
     public int Money;          // Tiền nhận được khi chiến thắng 
+
+    [Header("UI and Material")]
+    public Sprite iconEnemy;
+    public Material materialEnemy;
 }

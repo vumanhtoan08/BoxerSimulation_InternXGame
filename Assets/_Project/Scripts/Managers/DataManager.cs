@@ -434,6 +434,8 @@ public class EnemyData
     public float Attack;
     public float Health;
     public int Reward;
+    public Sprite Avatar; 
+    public Material Material;
 
     public void SetDataForEnemy()
     {
@@ -441,6 +443,9 @@ public class EnemyData
         Attack = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Attack; // Ve sau thay 0 = level luu trong Prefabs
         Health = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Defense;
         Reward = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Money;
+
+        Avatar = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].iconEnemy;
+        Material = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].materialEnemy;
     }
 }
 
