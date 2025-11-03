@@ -30,4 +30,26 @@ public class StateMachineEnemy : MonoBehaviour
 
         currentState?.Excute();
     }
+
+    private EnemyRuntimeData data;
+
+    public void OnPlayerPunch()
+    {
+        data = EnemyManager.Instance.EnemyController.RuntimeData;
+
+        switch (data.Enemy_Difficult)
+        {
+            case Enemy_Difficult.Easy:
+                break;
+            case Enemy_Difficult.Med:
+                break;
+            case Enemy_Difficult.Hard:
+                break;
+        }
+    }
+
+    public void OnPlayerCounter()
+    {
+
+    }
 }

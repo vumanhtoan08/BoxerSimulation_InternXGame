@@ -69,7 +69,7 @@ public class ShopManager : Singleton<ShopManager>
         if (!WalletManager.Instance.OnCheckMoneyForBuy(interactables[0].Data.Cost))
         {
             Debug.Log($"Không đủ tiền để nâng cấp {interactables[0].Type.ToString()} == Số tiền {interactables[0].Data.Cost}");
-            return; 
+            return;
         }
 
         if (interactables.Count == 0)
@@ -98,9 +98,13 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private Image runningFill;
     [SerializeField] private Image squatFill;
 
-    [SerializeField] private TextMeshProUGUI boxingUpgradeCost;
-    [SerializeField] private TextMeshProUGUI runningUpgradeCost;
-    [SerializeField] private TextMeshProUGUI squatUpgradeCost;
+    [SerializeField] private Text boxingUpgradeCost;
+    [SerializeField] private Text runningUpgradeCost;
+    [SerializeField] private Text squatUpgradeCost;
+
+    [SerializeField] private Text boxingLevel;
+    [SerializeField] private Text runningLevel;
+    [SerializeField] private Text squatLevel;
 
     private DataManager dataManager;
 
@@ -110,9 +114,15 @@ public class ShopManager : Singleton<ShopManager>
 
         //
         if (dataManager.CurrentInteractableData.BoxingLevel != dataManager.ListInteractableTable.InteractableTables[0].Levels.Count - 1)
+        {
             boxingUpgradeCost.text = dataManager.ListInteractableTable.InteractableTables[0].Levels[dataManager.CurrentInteractableData.BoxingLevel].Cost.ToString();
+            boxingLevel.text = $"Level {dataManager.CurrentInteractableData.BoxingLevel}";
+        }
         else
+        {
             boxingUpgradeCost.text = $"Max Level";
+            boxingLevel.text = $"Level {dataManager.CurrentInteractableData.BoxingLevel}";
+        }
     }
 
     private void UpdateUIForRunning()
@@ -121,9 +131,15 @@ public class ShopManager : Singleton<ShopManager>
 
         //
         if (dataManager.CurrentInteractableData.RunningLevel != dataManager.ListInteractableTable.InteractableTables[1].Levels.Count - 1)
+        {
             runningUpgradeCost.text = dataManager.ListInteractableTable.InteractableTables[1].Levels[dataManager.CurrentInteractableData.RunningLevel].Cost.ToString();
+            runningLevel.text = $"Level {dataManager.CurrentInteractableData.RunningLevel}";
+        }
         else
+        {
             runningUpgradeCost.text = $"Max Level";
+            runningLevel.text = $"Level {dataManager.CurrentInteractableData.RunningLevel}";
+        }
     }
 
     private void UpdateUIForSquat()
@@ -132,34 +148,22 @@ public class ShopManager : Singleton<ShopManager>
 
         //
         if (dataManager.CurrentInteractableData.SquatLevel != dataManager.ListInteractableTable.InteractableTables[2].Levels.Count - 1)
+        {
             squatUpgradeCost.text = dataManager.ListInteractableTable.InteractableTables[2].Levels[dataManager.CurrentInteractableData.SquatLevel].Cost.ToString();
+            squatLevel.text = $"Level {dataManager.CurrentInteractableData.SquatLevel}";
+        }
         else
+        {
             squatUpgradeCost.text = $"Max Level";
+            squatLevel.text = $"Level {dataManager.CurrentInteractableData.SquatLevel}";
+        }
     }
 
     private void UpdateUIForShop()
     {
-        boxingFill.fillAmount = (float)dataManager.CurrentInteractableData.BoxingLevel / (dataManager.ListInteractableTable.InteractableTables[0].Levels.Count - 1);
-        runningFill.fillAmount = (float)dataManager.CurrentInteractableData.RunningLevel / (dataManager.ListInteractableTable.InteractableTables[1].Levels.Count - 1);
-        squatFill.fillAmount = (float)dataManager.CurrentInteractableData.SquatLevel / (dataManager.ListInteractableTable.InteractableTables[2].Levels.Count - 1);
-
-        //
-        if (dataManager.CurrentInteractableData.BoxingLevel != dataManager.ListInteractableTable.InteractableTables[0].Levels.Count - 1)
-            boxingUpgradeCost.text = dataManager.ListInteractableTable.InteractableTables[0].Levels[dataManager.CurrentInteractableData.BoxingLevel].Cost.ToString();
-        else
-            boxingUpgradeCost.text = $"Max Level";
-
-        //
-        if (dataManager.CurrentInteractableData.RunningLevel != dataManager.ListInteractableTable.InteractableTables[1].Levels.Count - 1)
-            runningUpgradeCost.text = dataManager.ListInteractableTable.InteractableTables[1].Levels[dataManager.CurrentInteractableData.RunningLevel].Cost.ToString();
-        else
-            runningUpgradeCost.text = $"Max Level";
-
-        //
-        if (dataManager.CurrentInteractableData.SquatLevel != dataManager.ListInteractableTable.InteractableTables[2].Levels.Count - 1)
-            squatUpgradeCost.text = dataManager.ListInteractableTable.InteractableTables[2].Levels[dataManager.CurrentInteractableData.SquatLevel].Cost.ToString();
-        else
-            squatUpgradeCost.text = $"Max Level";
+        UpdateUIForBoxing();
+        UpdateUIForRunning();
+        UpdateUIForSquat();
     }
 
     #endregion

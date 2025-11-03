@@ -1,5 +1,4 @@
-﻿
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,28 +6,30 @@ using UnityEngine.UI;
 public class PopupInfoEnemy : PopupBase
 {
     [Header("Enemy")]
-    [SerializeField] private TextMeshProUGUI enemyName; 
-    [SerializeField] private TextMeshProUGUI enemyAttack; 
-    [SerializeField] private TextMeshProUGUI enemyHealth; 
-    [SerializeField] private TextMeshProUGUI enemyReward; 
+    [SerializeField] private Text enemyName;
+    [SerializeField] private Text enemyAttack;
+    [SerializeField] private Text enemyHealth;
+    [SerializeField] private Text enemyReward;
     [SerializeField] private Image image;
 
     [Header("Player")]
-    [SerializeField] private TextMeshProUGUI playerAttack;
-    [SerializeField] private TextMeshProUGUI playerHealth;
-    [SerializeField] private TextMeshProUGUI playerStamina;
+    [SerializeField] private Text playerAttack;
+    [SerializeField] private Text playerHealth;
+    [SerializeField] private Text playerStamina;
 
     [SerializeField] private Button fightButton;
-    [SerializeField] private Button closePopup; 
+    [SerializeField] private Button closePopup;
 
     public override void Init()
-    {   
+    {
         base.Init();
 
         // setup for fight button 
         fightButton.onClick.RemoveAllListeners();
         fightButton.onClick.AddListener(() =>
         {
+            AnimateButton(fightButton.transform); // 🔹 thêm tween scale
+
             SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
@@ -47,13 +48,17 @@ public class PopupInfoEnemy : PopupBase
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f))
                .AppendCallback(() => SoundManager.Instance.PlayBGM(SoundKey.BattleBGM, 0.4f));
-
-            
         });
 
         // setup for close button
         closePopup.onClick.RemoveAllListeners();
-        closePopup.onClick.AddListener(() => { SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f); Hide(); });
+        closePopup.onClick.AddListener(() =>
+        {
+            AnimateButton(closePopup.transform); // 🔹 thêm tween scale
+
+            SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
+            Hide();
+        });
     }
 
     public override void Show()
@@ -88,5 +93,17 @@ public class PopupInfoEnemy : PopupBase
         playerAttack.text = playerData.DataRuntime.Attack.ToString();
         playerHealth.text = playerData.DataRuntime.Health.ToString();
         playerStamina.text = playerData.DataRuntime.Stamina.ToString();
+    }
+
+    /// <summary>
+    /// 🔹 Làm hiệu ứng scale 1 → 1.1 → 1 trong 0.1s
+    /// </summary>
+    private void AnimateButton(Transform target)
+    {
+        target.DOKill();
+        target.localScale = Vector3.one;
+        target.DOScale(1.1f, 0.05f)
+              .SetEase(Ease.OutQuad)
+              .OnComplete(() => target.DOScale(1f, 0.05f).SetEase(Ease.InQuad));
     }
 }

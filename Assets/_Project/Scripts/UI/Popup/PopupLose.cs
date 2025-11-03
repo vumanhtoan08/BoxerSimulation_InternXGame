@@ -13,6 +13,8 @@ public class PopupLose : PopupBase
         closeBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.AddListener(() =>
         {
+            AnimateButton(closeBtn.transform); // 🔹 hiệu ứng scale
+
             SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
@@ -42,5 +44,17 @@ public class PopupLose : PopupBase
     {
         base.Show();
         SoundManager.Instance.PlaySound(SoundKey.Lose, 0.3f, 0.5f);
+    }
+
+    /// <summary>
+    /// 🔹 Làm hiệu ứng scale 1 → 1.1 → 1 trong 0.1s
+    /// </summary>
+    private void AnimateButton(Transform target)
+    {
+        target.DOKill();
+        target.localScale = Vector3.one;
+        target.DOScale(1.1f, 0.05f)
+              .SetEase(Ease.OutQuad)
+              .OnComplete(() => target.DOScale(1f, 0.05f).SetEase(Ease.InQuad));
     }
 }

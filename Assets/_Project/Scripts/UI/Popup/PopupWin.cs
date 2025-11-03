@@ -5,17 +5,18 @@ using UnityEngine.UI;
 
 public class PopupWin : PopupBase
 {
-    [SerializeField] private TextMeshProUGUI rewardValue; 
+    [SerializeField] private Text rewardValue;
     [SerializeField] private Button rewardButton;
 
     public override void Init()
     {
         base.Init();
 
-        // setup for rewardButton
         rewardButton.onClick.RemoveAllListeners();
         rewardButton.onClick.AddListener(() =>
         {
+            AnimateButton(rewardButton.transform); // 🔹 hiệu ứng scale click
+
             SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
@@ -30,24 +31,26 @@ public class PopupWin : PopupBase
                    SoundManager.Instance.StopBGM();
                })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
-               .AppendCallback(() => 
+               .AppendCallback(() =>
                {
-                   // Enemy
+                   // Enemy level up
                    DataManager.Instance.CurrentEnemyData.Level++;
                    DataManager.Instance.SaveData();
-                   // SetData mới cho Enemy
-                   EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.SetDataForEnemy();
 
+                   // Refresh Enemy Data
+                   EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.SetDataForEnemy();
                    EnemyManager.Instance.EnemyController.Health.Init(EnemyManager.Instance.EnemyController);
                    EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyIdleState(EnemyManager.Instance.EnemyController));
 
+                   // Update UI & position
                    CanvasManager.Instance.OnUpdateUIEnemy();
                    CanvasManager.Instance.MoveEnemyToBattle();
-
                });
 
-            // Wallet
-            WalletManager.Instance.OnMoneyChange(EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Reward);
+            // Reward player
+            WalletManager.Instance.OnMoneyChange(
+                EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Reward
+            );
         });
     }
 
@@ -61,5 +64,17 @@ public class PopupWin : PopupBase
     public override void Hide()
     {
         base.Hide();
+    }
+
+    /// <summary>
+    /// 🔹 Làm hiệu ứng scale 1 → 1.1 → 1 trong 0.1s
+    /// </summary>
+    private void AnimateButton(Transform target)
+    {
+        target.DOKill();
+        target.localScale = Vector3.one;
+        target.DOScale(1.1f, 0.05f)
+              .SetEase(Ease.OutQuad)
+              .OnComplete(() => target.DOScale(1f, 0.05f).SetEase(Ease.InQuad));
     }
 }

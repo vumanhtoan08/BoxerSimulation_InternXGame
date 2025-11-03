@@ -4,18 +4,34 @@ using UnityEngine.UI;
 
 public class PopupSetting : PopupBase
 {
-    [SerializeField] private Button soundBtn; 
-    [SerializeField] private Button musicBtn; 
-    [SerializeField] private Image activeSoundImg;  
-    [SerializeField] private Image unActiveSoundImg;  
-    [SerializeField] private Image ActiveMusicImg;  
-    [SerializeField] private Image unActiveMusicImg;  
+    [Header("Sound")]
+    [SerializeField] private Button soundBtn;
+    [SerializeField] private Image activeSoundImg;
+    [SerializeField] private Image unActiveSoundImg;
+    [SerializeField] private Image soundContainImg;
+    [SerializeField] private Sprite activeContainSound;
+    [SerializeField] private Sprite unActiveContainSound;
+    [SerializeField] private Text soundBtnTxt;
+
+    [Header("Music")]
+    [SerializeField] private Button musicBtn;
+    [SerializeField] private Image ActiveMusicImg;
+    [SerializeField] private Image unActiveMusicImg;
+    [SerializeField] private Image musicContainImg;
+    [SerializeField] private Sprite activeContainMusic;
+    [SerializeField] private Sprite unActiveContainMusic;
+    [SerializeField] private Text musicBtnTxt;
 
     [SerializeField] private Button homeBtn;
     [SerializeField] private Button closeBtn;
 
     [SerializeField] private Button settingTrainingBtn;
     [SerializeField] private Button settingBattleBtn;
+
+    private bool isSoundMute = false;
+    private bool isMusicMute = false;
+
+    [SerializeField] private Game_State previourGameState;
 
     public override void Init()
     {
@@ -24,18 +40,21 @@ public class PopupSetting : PopupBase
         soundBtn.onClick.RemoveAllListeners();
         soundBtn.onClick.AddListener(() =>
         {
+            AnimateButton(soundBtn.transform);
             OnSoundButtonClick();
         });
 
         musicBtn.onClick.RemoveAllListeners();
         musicBtn.onClick.AddListener(() =>
         {
+            AnimateButton(musicBtn.transform);
             OnMusicButtonClick();
         });
 
         homeBtn.onClick.RemoveAllListeners();
         homeBtn.onClick.AddListener(() =>
         {
+            AnimateButton(homeBtn.transform);
             SoundManager.Instance.PlaySound(SoundKey.ButtonClick, 0.7f, 0.7f);
             Hide();
 
@@ -46,7 +65,6 @@ public class PopupSetting : PopupBase
                {
                    GameManager.Instance.ChangeGameState(Game_State.Training);
                    CanvasManager.Instance.MovePlayerToTraining();
-
                    SoundManager.Instance.StopBGM();
                })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
@@ -63,29 +81,28 @@ public class PopupSetting : PopupBase
         settingBattleBtn.onClick.RemoveAllListeners();
         settingBattleBtn.onClick.AddListener(() =>
         {
+            AnimateButton(settingBattleBtn.transform);
             Show();
         });
 
         settingTrainingBtn.onClick.RemoveAllListeners();
         settingTrainingBtn.onClick.AddListener(() =>
         {
+            AnimateButton(settingTrainingBtn.transform);
             Show();
         });
 
         closeBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.AddListener(() =>
         {
+            AnimateButton(closeBtn.transform);
             Hide();
         });
     }
 
-    [SerializeField] private Game_State previourGameState; 
-
     public override void Show()
     {
         base.Show();
-        Debug.Log("Show setitng");
-
         previourGameState = GameManager.Instance.GameState;
 
         SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.7f, 0.7f);
@@ -118,22 +135,37 @@ public class PopupSetting : PopupBase
         homeBtn.gameObject.SetActive(isShow);
     }
 
-
-    bool isSoundMute = false; 
     public void OnSoundButtonClick()
     {
         isSoundMute = !isSoundMute;
         SoundManager.Instance.MuteSound(isSoundMute);
         activeSoundImg.gameObject.SetActive(!isSoundMute);
         unActiveSoundImg.gameObject.SetActive(isSoundMute);
+
+        soundContainImg.sprite = isSoundMute ? unActiveContainSound : activeContainSound;
+        soundBtnTxt.text = isSoundMute ? "OFF" : "ON";
     }
 
-    bool isMusicMute = false;
     public void OnMusicButtonClick()
     {
         isMusicMute = !isMusicMute;
         SoundManager.Instance.MuteBGM(isMusicMute);
         ActiveMusicImg.gameObject.SetActive(!isMusicMute);
         unActiveMusicImg.gameObject.SetActive(isMusicMute);
+
+        musicContainImg.sprite = isMusicMute ? unActiveContainMusic : activeContainMusic;
+        musicBtnTxt.text = isMusicMute ? "OFF" : "ON";
+    }
+
+    /// <summary>
+    /// 🔹 Làm hiệu ứng scale cho nút khi bấm (1.0 → 1.2 → 1.0 trong 0.1s)
+    /// </summary>
+    private void AnimateButton(Transform target)
+    {
+        target.DOKill(); // hủy tween cũ nếu có
+        target.localScale = Vector3.one;
+        target.DOScale(1.1f, 0.05f)
+              .SetEase(Ease.OutQuad)
+              .OnComplete(() => target.DOScale(1f, 0.05f).SetEase(Ease.InQuad));
     }
 }
