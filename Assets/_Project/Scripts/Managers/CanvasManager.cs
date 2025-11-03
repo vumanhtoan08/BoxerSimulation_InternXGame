@@ -299,8 +299,8 @@ public class CanvasManager : Singleton<CanvasManager>
     [Header("Enemy Health, name, avatar")]
     [SerializeField] private Image enemyHealthImg;
     [SerializeField] private Image enemyAvaterImg;
-    [SerializeField] private TextMeshProUGUI enemyName;
-    [SerializeField] private TextMeshProUGUI enemyBattleHealth;
+    [SerializeField] private Text enemyName;
+    [SerializeField] private Text enemyBattleHealth;
 
     public void SetupUIBeforeBattle()
     {
@@ -333,7 +333,7 @@ public class CanvasManager : Singleton<CanvasManager>
     [Header("Player Health and Stamina")]
     [SerializeField] private Image playerHealthImg;
     [SerializeField] private Image playerStaminaImg;
-    [SerializeField] private TextMeshProUGUI playerBattleHealth;
+    [SerializeField] private Text playerBattleHealth;
 
     public void OnUpdateUIPlayer()
     {
@@ -365,11 +365,12 @@ public class CanvasManager : Singleton<CanvasManager>
     #region UI Player Info
 
     [Header("Information Day")]
-    [SerializeField] private TextMeshProUGUI textDay;
+    [SerializeField] private Text textDay;
     [Header("Infomation Energy")]
-    [SerializeField] private TextMeshProUGUI textEnergy;
+    [SerializeField] private Text textEnergy;
     [Header("Infomation Money")]
-    [SerializeField] private TextMeshProUGUI textMoney; 
+    [SerializeField] private Text textMoney; 
+    [SerializeField] private Text textMoneyPopupShop; 
 
     public void OnNextDay()
     {
@@ -384,6 +385,7 @@ public class CanvasManager : Singleton<CanvasManager>
     public void OnUpdateUIMoney()
     {
         textMoney.text = $"{WalletManager.Instance.DataRuntime.currentMoney}";
+        textMoneyPopupShop.text = $"{WalletManager.Instance.DataRuntime.currentMoney}";
     }
     #endregion
 
@@ -391,7 +393,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     [SerializeField] private GameObject darkCanvasObj;
     [SerializeField] private Image darkCanvasImg;
-    [SerializeField] private TextMeshProUGUI dayTxt; 
+    [SerializeField] private Text dayTxt; 
 
     public Tween DarkPanelActive()
     {
@@ -412,7 +414,12 @@ public class CanvasManager : Singleton<CanvasManager>
     public Tween ShowDayText()
     {
         dayTxt.text = $"DAY {DayManager.Instance.CurrentDay}";
-        dayTxt.alpha = 0;
+
+        // Set alpha = 0 thủ công vì Text UI không có thuộc tính .alpha
+        Color c = dayTxt.color;
+        c.a = 0f;
+        dayTxt.color = c;
+
         dayTxt.transform.localScale = Vector3.zero;
         dayTxt.gameObject.SetActive(true);
 
@@ -425,6 +432,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
         return seq;
     }
+
 
     #endregion
 
