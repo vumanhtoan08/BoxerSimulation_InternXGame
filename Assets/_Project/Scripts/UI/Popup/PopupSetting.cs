@@ -144,6 +144,8 @@ public class PopupSetting : PopupBase
 
         soundContainImg.sprite = isSoundMute ? unActiveContainSound : activeContainSound;
         soundBtnTxt.text = isSoundMute ? "OFF" : "ON";
+
+        SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.7f, 0.7f);
     }
 
     public void OnMusicButtonClick()
@@ -155,6 +157,8 @@ public class PopupSetting : PopupBase
 
         musicContainImg.sprite = isMusicMute ? unActiveContainMusic : activeContainMusic;
         musicBtnTxt.text = isMusicMute ? "OFF" : "ON";
+
+        SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.7f, 0.7f);
     }
 
     /// <summary>

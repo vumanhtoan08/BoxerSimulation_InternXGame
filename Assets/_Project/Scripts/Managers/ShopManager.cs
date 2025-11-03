@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,15 +50,41 @@ public class ShopManager : Singleton<ShopManager>
 
     public void OnButtonBoxingClick()
     {
+        if (DataManager.Instance.CurrentInteractableData.BoxingLevel == DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels.Count - 1)
+        {
+            btnUpgradeBoxing.interactable = false;
+            return;
+        }
+        else
+        {
+            btnUpgradeBoxing.interactable = true;
+        }
+
         OnUpgradeInteractable(TYPE_TRAINING.BOXING);
     }
 
     public void OnButtonRunningClick()
     {
+        if (DataManager.Instance.CurrentInteractableData.RunningLevel == DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels.Count - 1)
+        {
+            btnUpgradeRunning.interactable = false;
+            return;
+        }
+        else
+            btnUpgradeRunning.interactable= true;
+
         OnUpgradeInteractable(TYPE_TRAINING.RUNING);
     }
     public void OnButtonSquatClick()
     {
+        if (DataManager.Instance.CurrentInteractableData.SquatLevel == DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels.Count - 1)
+        {
+            btnUpgradeSquat.interactable = false;
+            return;
+        }
+        else
+            btnUpgradeSquat.interactable = true;
+
         OnUpgradeInteractable(TYPE_TRAINING.SQUAT);
     }
 
