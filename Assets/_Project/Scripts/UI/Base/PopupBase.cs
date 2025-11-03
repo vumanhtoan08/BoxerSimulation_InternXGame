@@ -6,8 +6,8 @@ public class PopupBase : MonoBehaviour
 {
     [Header("Popup Settings")]
     [SerializeField] private Type_Popup popupType;
-    [SerializeField] private RectTransform popup; 
-    [SerializeField] private Image darkPanelImg; 
+    [SerializeField] private RectTransform popup;
+    [SerializeField] private Image darkPanelImg;
     public Type_Popup PopupType => popupType;
 
     protected bool isActive;
@@ -21,7 +21,7 @@ public class PopupBase : MonoBehaviour
     {
         // Setup 
         Color c = darkPanelImg.color;
-        c.a = 0; 
+        c.a = 0;
         darkPanelImg.color = c;
         popup.localScale = Vector3.zero;
 
@@ -30,7 +30,7 @@ public class PopupBase : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
 
-        sequence.Append(darkPanelImg.DOFade(0.392f, 0.2f).SetEase(Ease.Linear))
+        sequence.Append(darkPanelImg.DOFade((float)150 / 255, 0.2f).SetEase(Ease.Linear))
             .Append(popup.DOScale(1, 0.2f).SetEase(Ease.OutBack));
     }
 

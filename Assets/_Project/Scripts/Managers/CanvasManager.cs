@@ -29,10 +29,7 @@ public class CanvasManager : Singleton<CanvasManager>
         OnUpdateUIPlayer();
     }
 
-    public void OnUpdate()
-    {
-
-    }
+    public void OnUpdate() { }
     #endregion
 
     #region Training UI
@@ -43,11 +40,11 @@ public class CanvasManager : Singleton<CanvasManager>
     [SerializeField] private Button exitBtn;
 
     [Header("Energy Settings")]
-    [SerializeField] private float startFill = 0.5f;       // bắt đầu ở 0.5
-    [SerializeField] private float increaseAmount = 0.2f;  // mỗi lần bấm +0.2
-    [SerializeField] private float fillDuration = 0.5f;    // thời gian tween khi bấm
-    [SerializeField] private float cooldown = 0.75f;       // chống spam
-    [SerializeField] private float decayPerSecond = 0.25f; // tốc độ tụt mỗi giây
+    [SerializeField] private float startFill = 0.5f;
+    [SerializeField] private float increaseAmount = 0.2f;
+    [SerializeField] private float fillDuration = 0.5f;
+    [SerializeField] private float cooldown = 0.75f;
+    [SerializeField] private float decayPerSecond = 0.25f;
 
     private float currentFill = 0f;
     private float lastTapTime = -999f;
@@ -59,17 +56,17 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void OnActiveTrainingPanel()
     {
-        ResetEnergyToStart();    // set 0.5
+        ResetEnergyToStart();
         UpdateUI();
         trainingPanel?.SetActive(true);
 
-        // Bắt đầu decay theo thời gian
         if (decayCo != null) StopCoroutine(decayCo);
         decayCo = StartCoroutine(CoDecay());
 
         exitBtn.onClick.RemoveAllListeners();
         exitBtn.onClick.AddListener(() =>
         {
+            AnimateButton(exitBtn.transform); // 🔹 Tween
             OnUnActiveTrainingPanel();
             GameManager.Instance.ChangeGameState(Game_State.Training);
             OnResetAction();
@@ -84,7 +81,6 @@ public class CanvasManager : Singleton<CanvasManager>
             StopCoroutine(decayCo);
             decayCo = null;
         }
-        // Hủy mọi tween còn gắn lên thanh năng lượng để không leak
         DOTween.Kill(fillEnergyBar);
     }
 
@@ -93,40 +89,26 @@ public class CanvasManager : Singleton<CanvasManager>
         if (Time.time - lastTapTime < cooldown) return;
         lastTapTime = Time.time;
 
-        // Tính mục tiêu mới sau khi bấm
         float target = Mathf.Clamp01(currentFill + increaseAmount);
-
-        // Hủy tween cũ trên cùng target để tránh xung đột
         DOTween.Kill(fillEnergyBar);
 
-        // Tween UI lên target; currentFill sẽ được cập nhật trong OnUpdate của tween
         fillEnergyBar
             .DOFillAmount(target, fillDuration)
             .SetEase(Ease.OutQuad)
             .OnUpdate(() => currentFill = fillEnergyBar.fillAmount)
             .SetTarget(fillEnergyBar);
 
-        // Nếu đạt 1 thì hoàn tất sau khi tween kết thúc
         if (target >= 1f)
         {
             DOVirtual.DelayedCall(fillDuration, () =>
             {
-                // kết thúc: tắt panel, dừng decay
                 OnUnActiveTrainingPanel();
-
                 switch (playerController.CameraForInteract.CurrentInteractable.Type)
                 {
-                    case TYPE_TRAINING.BOXING:
-                        OnBoxingComplete?.Invoke();
-                        break;
-                    case TYPE_TRAINING.RUNING:
-                        OnRuningComplete?.Invoke();
-                        break;
-                    case TYPE_TRAINING.SQUAT:
-                        OnSquatComplete?.Invoke();
-                        break;
+                    case TYPE_TRAINING.BOXING: OnBoxingComplete?.Invoke(); break;
+                    case TYPE_TRAINING.RUNING: OnRuningComplete?.Invoke(); break;
+                    case TYPE_TRAINING.SQUAT: OnSquatComplete?.Invoke(); break;
                 }
-
                 OnResetAction();
             });
         }
@@ -134,29 +116,22 @@ public class CanvasManager : Singleton<CanvasManager>
 
     private IEnumerator CoDecay()
     {
-        // Decay liên tục mỗi frame khi panel đang bật
         while (trainingPanel != null && trainingPanel.activeSelf)
         {
-            // Trừ dần theo thời gian (giới hạn [0,1])
             currentFill = Mathf.Max(0f, currentFill - decayPerSecond * Time.deltaTime);
             fillEnergyBar.fillAmount = currentFill;
             yield return null;
         }
     }
 
-    // == Helpers ==
     private void ResetEnergyToStart()
     {
-        currentFill = Mathf.Clamp01(startFill); // 0.5
+        currentFill = Mathf.Clamp01(startFill);
         fillEnergyBar.fillAmount = currentFill;
         lastTapTime = -999f;
     }
 
-    private void UpdateUI()
-    {
-        fillEnergyBar.fillAmount = currentFill;
-    }
-
+    private void UpdateUI() => fillEnergyBar.fillAmount = currentFill;
 
     #region Action
 
@@ -171,21 +146,18 @@ public class CanvasManager : Singleton<CanvasManager>
 
     #endregion
 
-    #region Arena Infor
+    #region Arena Info
 
     [Header("Canvas For Arena")]
-    [SerializeField] private GameObject playerInfor;        // Ngày, thể lực, tiền, shop
-    [SerializeField] private GameObject playerInforBattle;  // thanh máu, thanh lực 
+    [SerializeField] private GameObject playerInfor;
+    [SerializeField] private GameObject playerInforBattle;
     [SerializeField] private Button attackButton;
-    [SerializeField] private Button counterButton;          // Ẩn khi training 
-    [SerializeField] private Button blockButton;            // Ẩn khi training
-
-
-    #region Update UI 
+    [SerializeField] private Button counterButton;
+    [SerializeField] private Button blockButton;
 
     [Header("For button action")]
-    [SerializeField] private GameObject interactIconImg; 
-    [SerializeField] private GameObject punchIconImg; 
+    [SerializeField] private GameObject interactIconImg;
+    [SerializeField] private GameObject punchIconImg;
 
     private void SetStateForCounterAndBlockButton(bool value)
     {
@@ -198,36 +170,23 @@ public class CanvasManager : Singleton<CanvasManager>
         punchIconImg.SetActive(value);
     }
 
-    // Hiển thị nút, thay đổi icon
     public void UpdateActionButtonsByGameState(Game_State state)
     {
         switch (state)
         {
-            case Game_State.Init:
-                break;
-            case Game_State.Pause:
-                break;
             case Game_State.Training:
-                SetStateForCounterAndBlockButton(false);
-                break;
             case Game_State.OnTraning:
                 SetStateForCounterAndBlockButton(false);
                 break;
             case Game_State.Battle:
                 SetStateForCounterAndBlockButton(true);
                 break;
-            case Game_State.Win:
-                break;
-            case Game_State.Lose:
-                break;
         }
 
         ChangeAbilityButtonInteract(state);
     }
 
-    #endregion
-
-    #region Set position 
+    #region Set position
 
     [Header("Setting Position")]
     [SerializeField] private Vector3 playerBattlePositon;
@@ -249,6 +208,7 @@ public class CanvasManager : Singleton<CanvasManager>
         playerController.transform.rotation = Quaternion.Euler(0, 180, 0);
         playerController.CharacterController.enabled = true;
     }
+
     public void MoveEnemyToBattle()
     {
         EnemyManager.Instance.EnemyController.transform.position = enemyBattlePositon;
@@ -257,33 +217,43 @@ public class CanvasManager : Singleton<CanvasManager>
 
     #endregion
 
-    // Thay đổi chức năng của button
     public void ChangeAbilityButtonInteract(Game_State state)
     {
+        attackButton.onClick.RemoveAllListeners();
+        counterButton.onClick.RemoveAllListeners();
+        blockButton.onClick.RemoveAllListeners();
+
         switch (state)
         {
-            case Game_State.Init:
-                break;
-            case Game_State.Pause:
-                break;
             case Game_State.Training:
-                attackButton.onClick.RemoveAllListeners();
-                attackButton.onClick.AddListener(playerController.CameraForInteract.OnInteractButtonClicked);
+                attackButton.onClick.AddListener(() =>
+                {
+                    AnimateButton(attackButton.transform); // 🔹 Tween
+                    playerController.CameraForInteract.OnInteractButtonClicked();
+                });
                 break;
             case Game_State.OnTraning:
-                attackButton.onClick.RemoveAllListeners();
-                attackButton.onClick.AddListener(OnTraining);
+                attackButton.onClick.AddListener(() =>
+                {
+                    AnimateButton(attackButton.transform); // 🔹 Tween
+                    OnTraining();
+                });
                 break;
             case Game_State.Battle:
-                attackButton.onClick.RemoveAllListeners();
-                attackButton.onClick.AddListener(playerController.StateMachine.OnPunchAction);
-
-                counterButton.onClick.RemoveAllListeners();
-                counterButton.onClick.AddListener(playerController.StateMachine.OnCounterAction);
-                break;
-            case Game_State.Win:
-                break;
-            case Game_State.Lose:
+                attackButton.onClick.AddListener(() =>
+                {
+                    AnimateButton(attackButton.transform);
+                    playerController.StateMachine.OnPunchAction();
+                });
+                counterButton.onClick.AddListener(() =>
+                {
+                    AnimateButton(counterButton.transform);
+                    playerController.StateMachine.OnCounterAction();
+                });
+                blockButton.onClick.AddListener(() =>
+                {
+                    AnimateButton(blockButton.transform);
+                });
                 break;
         }
     }
@@ -291,8 +261,14 @@ public class CanvasManager : Singleton<CanvasManager>
     private void OnStartForMainButton()
     {
         attackButton.onClick.RemoveAllListeners();
-        attackButton.onClick.AddListener(PlayerController.Instance.CameraForInteract.OnInteractButtonClicked);
+        attackButton.onClick.AddListener(() =>
+        {
+            AnimateButton(attackButton.transform);
+            PlayerController.Instance.CameraForInteract.OnInteractButtonClicked();
+        });
     }
+
+    #endregion
 
     #region UI Infor Player and Enemy In Battle
 
@@ -304,16 +280,14 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void SetupUIBeforeBattle()
     {
-        // Enemy 
         EnemyRuntimeData enemyRuntimeData = EnemyManager.Instance.EnemyController.RuntimeData;
         EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
 
-        enemyAvaterImg.sprite =  enemyRuntimeData.EnemyData.Avatar;
+        enemyAvaterImg.sprite = enemyRuntimeData.EnemyData.Avatar;
         enemyName.text = enemyRuntimeData.EnemyData.Name;
         enemyBattleHealth.text = $"{enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
         enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
 
-        // Player
         PlayerRunTimeDatas data = PlayerController.Instance.Data;
         PlayerHealth health = PlayerController.Instance.Health;
 
@@ -325,7 +299,6 @@ public class CanvasManager : Singleton<CanvasManager>
     public void OnUpdateUIEnemy()
     {
         EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
-
         enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
         enemyBattleHealth.text = $"{enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
     }
@@ -351,14 +324,12 @@ public class CanvasManager : Singleton<CanvasManager>
         playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
         playerBattleHealth.text = $"{health.CurrentHealth} / {health.MaxHealth}";
     }
-    
+
     public void OnPlayerStaminaChange()
     {
         PlayerRunTimeDatas data = PlayerController.Instance.Data;
         playerStaminaImg.fillAmount = data.CurrentStamina / data.DataRuntime.Stamina;
     }
-
-    #endregion
 
     #endregion
 
@@ -369,38 +340,32 @@ public class CanvasManager : Singleton<CanvasManager>
     [Header("Infomation Energy")]
     [SerializeField] private Text textEnergy;
     [Header("Infomation Money")]
-    [SerializeField] private Text textMoney; 
-    [SerializeField] private Text textMoneyPopupShop; 
+    [SerializeField] private Text textMoney;
+    [SerializeField] private Text textMoneyPopupShop;
 
-    public void OnNextDay()
-    {
-        textDay.text = $"DAY {DayManager.Instance.CurrentDay}";
-    }
-
-    public void OnEnergyChange()
-    {
-        textEnergy.text = playerController.Data.CurrentEnergy.ToString();
-    }
+    public void OnNextDay() => textDay.text = $"DAY {DayManager.Instance.CurrentDay}";
+    public void OnEnergyChange() => textEnergy.text = playerController.Data.CurrentEnergy.ToString();
 
     public void OnUpdateUIMoney()
     {
         textMoney.text = $"{WalletManager.Instance.DataRuntime.currentMoney}";
         textMoneyPopupShop.text = $"{WalletManager.Instance.DataRuntime.currentMoney}";
     }
+
     #endregion
 
-    #region Dark Canvas 
+    #region Dark Canvas
 
     [SerializeField] private GameObject darkCanvasObj;
     [SerializeField] private Image darkCanvasImg;
-    [SerializeField] private Text dayTxt; 
+    [SerializeField] private Text dayTxt;
 
     public Tween DarkPanelActive()
     {
         darkCanvasObj.SetActive(true);
 
         Color color = darkCanvasImg.color;
-        color.a = 0; 
+        color.a = 0;
         darkCanvasImg.color = color;
 
         return darkCanvasImg.DOFade(1f, 1f).SetEase(Ease.Linear);
@@ -408,18 +373,14 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public Tween DarkPanelUnActive()
     {
-        return darkCanvasImg.DOFade(0f, 1f).SetEase(Ease.Linear).OnComplete(() => darkCanvasObj.SetActive(false));
+        return darkCanvasImg.DOFade(0f, 1f).SetEase(Ease.Linear)
+            .OnComplete(() => darkCanvasObj.SetActive(false));
     }
 
     public Tween ShowDayText()
     {
         dayTxt.text = $"DAY {DayManager.Instance.CurrentDay}";
-
-        // Set alpha = 0 thủ công vì Text UI không có thuộc tính .alpha
-        Color c = dayTxt.color;
-        c.a = 0f;
-        dayTxt.color = c;
-
+        Color c = dayTxt.color; c.a = 0f; dayTxt.color = c;
         dayTxt.transform.localScale = Vector3.zero;
         dayTxt.gameObject.SetActive(true);
 
@@ -433,6 +394,22 @@ public class CanvasManager : Singleton<CanvasManager>
         return seq;
     }
 
+    #endregion
+
+    #region Tween Helper
+
+    /// <summary>
+    /// 🔹 Làm hiệu ứng scale 1 → 1.1 → 1 trong 0.05s
+    /// </summary>
+    private void AnimateButton(Transform target)
+    {
+        if (target == null) return;
+        target.DOKill();
+        target.localScale = Vector3.one;
+        target.DOScale(1.1f, 0.05f)
+              .SetEase(Ease.OutQuad)
+              .OnComplete(() => target.DOScale(1f, 0.05f).SetEase(Ease.InQuad));
+    }
 
     #endregion
 
@@ -440,7 +417,6 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         DayManager.Instance.OnNextDay += OnNextDay;
         DayManager.Instance.OnNextDay += OnEnergyChange;
-
         WalletManager.Instance.OnDataChange += OnUpdateUIMoney;
     }
 
@@ -448,7 +424,6 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         DayManager.Instance.OnNextDay -= OnNextDay;
         DayManager.Instance.OnNextDay -= OnEnergyChange;
-
         WalletManager.Instance.OnDataChange -= OnUpdateUIMoney;
     }
 }

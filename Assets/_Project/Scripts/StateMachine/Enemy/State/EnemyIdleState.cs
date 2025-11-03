@@ -21,7 +21,7 @@ public class EnemyIdleState : IState
     {
         //enemyController.Animator.ResetTrigger("isPunch");
         enemyController.Animator.SetTrigger("isIdle");
-        decisionCooldown = Random.Range(0.05f, 0.1f);
+        decisionCooldown = Random.Range(0.1f, 0.2f);
         decisionTimer = 0f;
     }
 
@@ -34,7 +34,7 @@ public class EnemyIdleState : IState
         CheckDistanceToDecide();
 
         decisionTimer = 0f;
-        decisionCooldown = Random.Range(0.05f, 0.1f);
+        decisionCooldown = Random.Range(0.1f, 0.2f);
     }
 
     public void Exit()
