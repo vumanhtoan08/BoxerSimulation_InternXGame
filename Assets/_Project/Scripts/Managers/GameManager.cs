@@ -92,7 +92,6 @@ public class GameManager : Singleton<GameManager>
         switch (gameState)
         {
             case Game_State.Init:
-
                 break;
             case Game_State.Pause:
                 break;

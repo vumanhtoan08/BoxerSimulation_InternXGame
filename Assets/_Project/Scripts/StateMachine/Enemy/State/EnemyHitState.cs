@@ -29,6 +29,7 @@ public class EnemyHitState : IState
         if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
         {
             enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            
         }
     }
 

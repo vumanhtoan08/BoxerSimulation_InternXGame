@@ -4,10 +4,12 @@ public class EnemyDeadState : IState
 {
     private EnemyController enemyController;
     AnimatorStateInfo info;
+    private EnemyAuraEffect effect;
 
     public EnemyDeadState(EnemyController enemyController)
     {
         this.enemyController = enemyController;
+        effect = enemyController.Health.EnemyAuraEffect;
     }
 
     public void Enter()
@@ -28,5 +30,6 @@ public class EnemyDeadState : IState
     {
         enemyController.Animator.ResetTrigger("isDead");
         enemyController.DynamicCollider.enabled = true;
+        effect.SetActiveAura(false);
     }
 }

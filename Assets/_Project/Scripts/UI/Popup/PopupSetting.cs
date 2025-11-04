@@ -96,6 +96,7 @@ public class PopupSetting : PopupBase
         closeBtn.onClick.AddListener(() =>
         {
             AnimateButton(closeBtn.transform);
+            EnemyManager.Instance.EnemyController.Health.EnemyAuraEffect.SetTimescaleEffect(0);
             Hide();
         });
     }
@@ -110,6 +111,7 @@ public class PopupSetting : PopupBase
         {
             OnHomeButtonShow(true);
             EnemyManager.Instance.EnemyController.Rigidbody.isKinematic = true;
+            EnemyManager.Instance.EnemyController.Health.EnemyAuraEffect.SetTimescaleEffect(0);
         }
         else
         {

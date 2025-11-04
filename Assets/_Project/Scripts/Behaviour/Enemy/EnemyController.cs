@@ -29,9 +29,7 @@ public class EnemyController : MonoBehaviour
     public Transform RightHand => rightHand;
     public Transform LeftHand => leftHand; 
     public LayerMask LayerPlayer => layerPlayer;
-
     public Collider DynamicCollider => dynamicCollider;
-
     public Rigidbody Rigidbody => rb;
 
     #endregion
@@ -65,7 +63,7 @@ public class EnemyController : MonoBehaviour
     }
     [SerializeField, Range(0, 10)] private float leftHandRadius; 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, detectedRange);

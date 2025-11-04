@@ -44,6 +44,8 @@ public class PopupInfoEnemy : PopupBase
                     PlayerController.Instance.Health.OnSettingHealthBeforeBattle();
                     CanvasManager.Instance.SetupUIBeforeBattle();
                     CanvasManager.Instance.OnUpdateUIPlayer();
+
+                    EnemyManager.Instance.EnemyController.Animator.speed = 1f;
                 })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f))

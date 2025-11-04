@@ -1185,6 +1185,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860611474}
   m_CullTransparentMesh: 1
+--- !u!198 &881298431 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6767894652350424978, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+  m_PrefabInstance: {fileID: 1331042772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &889072794 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1478951508489767424, guid: de120d94849689c44a6af40779fa1143, type: 3}
@@ -1678,6 +1683,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &1248108567 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6768035743594965207, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+  m_PrefabInstance: {fileID: 1331042772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1257842552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1764,7 +1774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1275990884
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1965,13 +1975,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 969810043844721988, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
-      propertyPath: enemy_Difficult
-      value: 2
-      objectReference: {fileID: 0}
+    - target: {fileID: 1613625838478310337, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: enemyAuraEffect.ef1
+      value: 
+      objectReference: {fileID: 1775277717}
+    - target: {fileID: 1613625838478310337, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: enemyAuraEffect.ef2
+      value: 
+      objectReference: {fileID: 1248108567}
+    - target: {fileID: 1613625838478310337, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: enemyAuraEffect.ef3
+      value: 
+      objectReference: {fileID: 881298431}
+    - target: {fileID: 1613625838478310337, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: enemyAuraEffect.ef4
+      value: 
+      objectReference: {fileID: 1932404434}
     - target: {fileID: 4807860844715522822, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
       propertyPath: m_Name
       value: EnemyMinecraft 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856820750352628536, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856996185691934823, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857743368304759370, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857809867536807801, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858589268232921470, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6960467350192277816, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2643,6 +2685,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &1775277717 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6767915274275195917, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+  m_PrefabInstance: {fileID: 1331042772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1800468708 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3061038747070806117, guid: de120d94849689c44a6af40779fa1143, type: 3}
@@ -2658,6 +2705,11 @@ MonoBehaviour:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2454770804821233254, guid: 19e8a53b10a02864ab466d1368135730, type: 3}
   m_PrefabInstance: {fileID: 718076661673780294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1932404434 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6768899915007006721, guid: 6b86e843ca7af0f4493dbe254afbc404, type: 3}
+  m_PrefabInstance: {fileID: 1331042772}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1937968701 stripped
 MonoBehaviour:
