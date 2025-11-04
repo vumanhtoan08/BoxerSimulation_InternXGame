@@ -110,6 +110,9 @@ public class GameManager : Singleton<GameManager>
                 CanvasManager.Instance.OnPlayerHealthChange();
                 PopupManager.Instance.ShowPopup(Type_Popup.Lose);
                 break;
+            case Game_State.Waitting:
+
+                break;
         }
 
         CanvasManager.Instance.UpdateActionButtonsByGameState(gameState);
@@ -160,4 +163,5 @@ public enum Game_State
     Battle,
     Win,
     Lose,
+    Waitting
 }

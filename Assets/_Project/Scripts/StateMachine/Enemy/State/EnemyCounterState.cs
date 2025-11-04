@@ -22,7 +22,7 @@ public class EnemyCounterState : IState
 
         hasDealtDamage = false;
         enemyController.Animator.ResetTrigger("isIdle");
-        enemyController.Animator.CrossFade(animStateName, 0.05f);
+        enemyController.Animator.SetTrigger("isCounter");
     }
 
     public void Excute()
@@ -35,7 +35,7 @@ public class EnemyCounterState : IState
             DealDamageToPlayer();
         }
 
-        if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
+        if (info.IsName(animStateName) && info.normalizedTime >= 1f)
         {
             switch (enemyController.RuntimeData.Enemy_Difficult)
             {
@@ -45,6 +45,7 @@ public class EnemyCounterState : IState
                     DecideNextActionMedEnemy();
                     break;
                 case Enemy_Difficult.Hard:
+                    DecideNextActionMedEnemy();
                     break;
                 default:
                     break;
@@ -54,7 +55,7 @@ public class EnemyCounterState : IState
 
     public void Exit()
     {
-        //enemyController.Animator.ResetTrigger("isCounter");
+        enemyController.Animator.SetTrigger("isIdle");
     }
 
     private void DealDamageToPlayer()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class EnemyDeadState : IState
 {
@@ -14,7 +15,6 @@ public class EnemyDeadState : IState
 
     public void Enter()
     {
-        GameManager.Instance.ChangeGameState(Game_State.Win);
         CanvasManager.Instance.OnUpdateUIEnemy();
 
         Debug.Log("Enter Dead");
@@ -24,11 +24,16 @@ public class EnemyDeadState : IState
 
     public void Excute()
     {
+        Debug.Log("Excute Dead");
+        var info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
 
+        if (info.IsName("Dead") && info.normalizedTime >= 1.5f)
+        {
+            GameManager.Instance.ChangeGameState(Game_State.Win);
+        }
     }
     public void Exit()
     {
-        enemyController.Animator.ResetTrigger("isDead");
         enemyController.DynamicCollider.enabled = true;
         effect.SetActiveAura(false);
     }

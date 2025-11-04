@@ -19,7 +19,7 @@ public class EnemyPunchState : IState
     {
         hasDealtDamage = false;
         enemyController.Animator.ResetTrigger("isIdle");
-        enemyController.Animator.CrossFade(animStateName, 0.05f);
+        enemyController.Animator.SetTrigger("isPunch");
     }
 
     public void Excute()
@@ -33,7 +33,7 @@ public class EnemyPunchState : IState
             DealDamageToPlayer();
         }
 
-        if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
+        if (info.IsName(animStateName) && info.normalizedTime >= 1f)
         {
             switch (enemyController.RuntimeData.Enemy_Difficult)
             {
@@ -43,6 +43,7 @@ public class EnemyPunchState : IState
                     DecideNextActionMedEnemy();
                     break;
                 case Enemy_Difficult.Hard:
+                    DecideNextActionMedEnemy();
                     break;
             }
         }
@@ -51,7 +52,7 @@ public class EnemyPunchState : IState
     public void Exit()
     {
         // Không reset trigger quá sớm, nếu muốn thì có thể reset sau delay
-        // enemyController.Animator.ResetTrigger("isPunch");
+        enemyController.Animator.SetTrigger("isIdle");
     }
 
     private void DealDamageToPlayer()
@@ -93,13 +94,27 @@ public class EnemyPunchState : IState
     private void DecideNextActionMedEnemy()
     {
         float rand = Random.value; // 0 → 1
-        if (rand < 0.5f)
+        if (enemyController.Health.IsAuraActive)
         {
-            enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+            if (rand < 0.5f)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+            }
+            else
+            {
+                enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
+            }
         }
         else
         {
-            enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
+            if (rand < 0.5f)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+            }
+            else
+            {
+                enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
+            }
         }
     }
 }

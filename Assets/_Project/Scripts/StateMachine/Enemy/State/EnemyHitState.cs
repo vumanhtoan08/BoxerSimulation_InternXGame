@@ -16,17 +16,26 @@ public class EnemyHitState : IState
     {
         Debug.Log("Enter Hit");
         CanvasManager.Instance.OnUpdateUIEnemy();
+
+        if (enemyController.Health.IsAuraActive)
+        {
+            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            return;
+        }
+        
         enemyController.Animator.ResetTrigger("isIdle");
-        enemyController.Animator.CrossFade(animStateName, 0.05f);
+        enemyController.Animator.SetTrigger("isHeadHit");
     }
 
     public void Excute()
     {
-        info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
+        if (enemyController.Health.IsAuraActive) return;
+
+            info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
         Debug.Log($"[Punch] State={info.IsName(animStateName)} | Time={info.normalizedTime}");
 
         // Khi animation HeadHit kết thúc (Animator đã tự chuyển sang Idle)
-        if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
+        if (info.IsName(animStateName) && info.normalizedTime >= 1f)
         {
             enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
             
@@ -35,6 +44,6 @@ public class EnemyHitState : IState
 
     public void Exit()
     {
-        //enemyController.Animator.ResetTrigger("isHeadHit");
+        enemyController.Animator.SetTrigger("isIdle");
     }
 }

@@ -36,5 +36,6 @@ public class EnemyTauntState : IState
     public void Exit()
     {
         enemyAuraEffect.SetActiveAura(true);
+        enemyController.Animator.speed = 1.5f;
     }
 }

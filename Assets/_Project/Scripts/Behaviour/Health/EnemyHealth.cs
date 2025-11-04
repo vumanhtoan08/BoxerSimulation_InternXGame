@@ -19,6 +19,8 @@ public class EnemyHealth : EntityHealth
         maxHealth = enemyController.RuntimeData.EnemyData.Health;
         currentHealth = maxHealth;
         isDead = false;
+        isAuraActive = false;
+        enemyAuraEffect.SetActiveAura(isAuraActive);
     }
 
     protected override void Dead()
@@ -41,11 +43,6 @@ public class EnemyHealth : EntityHealth
         {
             enemyController.StateMachine.ChangeState(new EnemyHitState(enemyController));
         }
-    }
-
-    private void IsTriggerAura()
-    {
-
     }
 }
 
