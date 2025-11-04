@@ -44,6 +44,6 @@ public class EnemyHitState : IState
 
     public void Exit()
     {
-        enemyController.Animator.SetTrigger("isIdle");
+        //enemyController.Animator.SetTrigger("isIdle");
     }
 }

@@ -27,15 +27,27 @@ public class EnemyTauntState : IState
     {
         info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
 
-        if (info.IsName(animStateName) && info.normalizedTime >= 0.9f)
+        if (info.IsName(animStateName))
         {
-            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            float normalizedTime = info.normalizedTime;
+
+            // Kích hoạt Aura ở frame 20/170
+            if (normalizedTime >= (20f / 170f))
+            {
+                enemyAuraEffect.SetActiveAura(true);
+            }
+
+            // Kết thúc animation => trở về Idle
+            if (normalizedTime >= 1f)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+            }
         }
     }
 
+
     public void Exit()
     {
-        enemyAuraEffect.SetActiveAura(true);
         enemyController.Animator.speed = 1.5f;
     }
 }

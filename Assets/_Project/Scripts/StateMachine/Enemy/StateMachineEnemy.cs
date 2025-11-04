@@ -32,7 +32,7 @@ public class StateMachineEnemy : MonoBehaviour
     {
         data = EnemyManager.Instance.EnemyController.RuntimeData;
 
-        switch (data.Enemy_Difficult)
+        switch (data.EnemyData.Difficult)
         {
             case Enemy_Difficult.Easy:
                 // Không block

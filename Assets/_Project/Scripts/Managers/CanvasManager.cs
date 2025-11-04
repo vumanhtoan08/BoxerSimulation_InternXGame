@@ -300,7 +300,7 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         EnemyHealth enemyHealth = EnemyManager.Instance.EnemyController.Health;
         enemyHealthImg.fillAmount = (float)enemyHealth.CurrentHealth / enemyHealth.MaxHealth;
-        enemyBattleHealth.text = $"{enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
+        enemyBattleHealth.text = $"{(int)enemyHealth.CurrentHealth} / {enemyHealth.MaxHealth}";
     }
 
     [Header("Player Health and Stamina")]
@@ -315,14 +315,14 @@ public class CanvasManager : Singleton<CanvasManager>
 
         playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
         playerStaminaImg.fillAmount = data.CurrentStamina / data.DataRuntime.Stamina;
-        playerBattleHealth.text = $"{health.CurrentHealth} / {health.MaxHealth}";
+        playerBattleHealth.text = $"{(int)health.CurrentHealth} / {health.MaxHealth}";
     }
 
     public void OnPlayerHealthChange()
     {
         PlayerHealth health = PlayerController.Instance.Health;
         playerHealthImg.fillAmount = health.CurrentHealth / health.MaxHealth;
-        playerBattleHealth.text = $"{health.CurrentHealth} / {health.MaxHealth}";
+        playerBattleHealth.text = $"{(int)health.CurrentHealth} / {health.MaxHealth}";
     }
 
     public void OnPlayerStaminaChange()

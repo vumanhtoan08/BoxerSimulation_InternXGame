@@ -5,7 +5,7 @@ public class EnemyMoveState : IState
     private EnemyController enemyController;
     private Transform enemyTransform;
     private Transform playerTransform;
-    private Rigidbody enemyRb; 
+    private Rigidbody enemyRb;
 
     private float currentHealth;
     private float maxHealth;
@@ -38,7 +38,7 @@ public class EnemyMoveState : IState
 
     public void Excute()
     {
-        switch (enemyController.RuntimeData.Enemy_Difficult)
+        switch (enemyController.RuntimeData.EnemyData.Difficult)
         {
             case Enemy_Difficult.Easy:
                 EnemyEasyBehaviour();
@@ -67,7 +67,16 @@ public class EnemyMoveState : IState
     {
         enemyController.Animator.SetFloat("moveValue", 0);
         Vector3 direction = (playerTransform.position - enemyTransform.position).normalized;
-        enemyRb.linearVelocity = direction * speed;
+
+
+        if (enemyController.Health.IsAuraActive)
+        {
+            enemyRb.linearVelocity = direction * speed * 2f;
+        }
+        else
+        {
+            enemyRb.linearVelocity = direction * speed;
+        }
     }
 
     private void StepBack()
@@ -101,7 +110,7 @@ public class EnemyMoveState : IState
             enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
         }
     }
-    
+
     private void EnemyMedBehaviour()
     {
         MoveToward();

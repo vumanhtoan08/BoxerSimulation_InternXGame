@@ -8,10 +8,6 @@ public class EnemyRuntimeData : MonoBehaviour
     [SerializeField] private EnemyMaterials enemyMaterials;
     public EnemyMaterials EnemyMaterials => enemyMaterials;
 
-    [SerializeField] private Enemy_Difficult enemy_Difficult; 
-    public Enemy_Difficult Enemy_Difficult => enemy_Difficult; 
-
-
     public void OnStart()
     {
         enemyData.SetDataForEnemy();
@@ -45,5 +41,7 @@ public class EnemyMaterials
 
 public enum Enemy_Difficult
 {
-    Easy, Med, Hard
+    Easy = 0, 
+    Med = 1, 
+    Hard = 2
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class EnemyDeadState : IState
 {
     private EnemyController enemyController;
-    AnimatorStateInfo info;
     private EnemyAuraEffect effect;
 
     public EnemyDeadState(EnemyController enemyController)
@@ -26,6 +25,8 @@ public class EnemyDeadState : IState
     {
         Debug.Log("Excute Dead");
         var info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
+        Debug.Log($"LayerWeight: {enemyController.Animator.GetLayerWeight(0)} | CurrentAnim: {info.IsName("Dead")} | Normalized: {info.normalizedTime}");
+
 
         if (info.IsName("Dead") && info.normalizedTime >= 1.5f)
         {

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-
-
 public class DataManager : Singleton<DataManager>
 {
     private const string PlayerDataKey = "PlayerData";
@@ -436,6 +434,7 @@ public class EnemyData
     public int Reward;
     public Sprite Avatar; 
     public Material Material;
+    public Enemy_Difficult Difficult;
 
     public void SetDataForEnemy()
     {
@@ -446,6 +445,7 @@ public class EnemyData
 
         Avatar = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].iconEnemy;
         Material = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].materialEnemy;
+        Difficult = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].difficult;
     }
 }
 

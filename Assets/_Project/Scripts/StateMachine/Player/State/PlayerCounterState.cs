@@ -73,7 +73,16 @@ public class PlayerCounterState : IState
             IHealth health = hit.GetComponent<IHealth>();
             if (health != null)
             {
-                health.ChangeHealth(-attack);
+                if (EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult != Enemy_Difficult.Easy 
+                    && EnemyManager.Instance.EnemyController.Health.IsAuraActive)
+                {
+                    health.ChangeHealth(-attack / (1 + (int)EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult * 0.5f));
+                }
+                else
+                {
+                    health.ChangeHealth(-attack);
+                }
+
                 SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
                 Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.hitEffect, playerController.LeftHand.position);
                 TimeEffect.HitTimeEffect();

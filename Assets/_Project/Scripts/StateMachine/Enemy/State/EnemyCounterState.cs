@@ -37,7 +37,7 @@ public class EnemyCounterState : IState
 
         if (info.IsName(animStateName) && info.normalizedTime >= 1f)
         {
-            switch (enemyController.RuntimeData.Enemy_Difficult)
+            switch (enemyController.RuntimeData.EnemyData.Difficult)
             {
                 case Enemy_Difficult.Easy:
                     break;
@@ -75,7 +75,15 @@ public class EnemyCounterState : IState
             TimeEffect.HitTimeEffect();
 
             SoundManager.Instance.PlaySound(SoundKey.Counter, 1, 1);
-            playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+            if (EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult != Enemy_Difficult.Easy
+                && EnemyManager.Instance.EnemyController.Health.IsAuraActive)
+            {
+                playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack * (1f + (int)EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult * 0.25f));
+            }
+            else
+            {
+                playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+            }
 
             DOVirtual.DelayedCall(1f, () =>
             {

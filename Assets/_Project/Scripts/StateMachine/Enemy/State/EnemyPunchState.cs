@@ -6,6 +6,8 @@ public class EnemyPunchState : IState
     private EnemyController enemyController;
     private AnimatorStateInfo info;
     private bool hasDealtDamage;
+    private Transform enemyTransform;
+    private Transform playerTransform;
 
     private readonly string animStateName = "Punch";
     private const float damageTriggerPercent = 0.3f;
@@ -13,6 +15,8 @@ public class EnemyPunchState : IState
     public EnemyPunchState(EnemyController enemyController)
     {
         this.enemyController = enemyController;
+        enemyTransform = enemyController.transform;
+        playerTransform = enemyController.PlayerTransform;
     }
 
     public void Enter()
@@ -35,9 +39,10 @@ public class EnemyPunchState : IState
 
         if (info.IsName(animStateName) && info.normalizedTime >= 1f)
         {
-            switch (enemyController.RuntimeData.Enemy_Difficult)
+            switch (enemyController.RuntimeData.EnemyData.Difficult)
             {
                 case Enemy_Difficult.Easy:
+                    enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
                     break;
                 case Enemy_Difficult.Med:
                     DecideNextActionMedEnemy();
@@ -81,9 +86,18 @@ public class EnemyPunchState : IState
             }
 
             SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
-            playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
-            TimeEffect.HitTimeEffect();
 
+            if (EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult != Enemy_Difficult.Easy
+                && EnemyManager.Instance.EnemyController.Health.IsAuraActive)
+            {
+                playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack * (1f + (int)EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult * 0.25f));
+            }
+            else
+            {
+                playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+            }
+
+            TimeEffect.HitTimeEffect();
             DOVirtual.DelayedCall(1f, () =>
             {
                 ObjectPooling.ReturnObject(effect);
@@ -91,9 +105,25 @@ public class EnemyPunchState : IState
         }
     }
 
+    private bool CheckDistanceToPlayer()
+    {
+        bool inRange;
+        float currentDistance = Vector3.Distance(enemyTransform.position, playerTransform.position);
+
+        inRange = currentDistance > enemyController.DetectedRange ? false : true;
+        return inRange;
+    }
+
     private void DecideNextActionMedEnemy()
     {
         float rand = Random.value; // 0 → 1
+
+        if (!CheckDistanceToPlayer())
+        {
+            enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
+            return;
+        }
+
         if (enemyController.Health.IsAuraActive)
         {
             if (rand < 0.5f)

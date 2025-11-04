@@ -8,6 +8,7 @@ public class EnemyStatData : ScriptableObject
     public string ID;          // Mã định danh của Enemy (ví dụ: "EN001")
     public string Name;        // Tên hiển thị của Enemy (ví dụ: "Demon Warrior")
     public int Level;          // Cấp độ của Enemy
+    public Enemy_Difficult difficult; // độ khó
 
     [Header("Enemy Stats")]
     public float Attack;       // Chỉ số tấn công

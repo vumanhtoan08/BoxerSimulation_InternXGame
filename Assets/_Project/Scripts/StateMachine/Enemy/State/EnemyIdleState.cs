@@ -47,7 +47,7 @@ public class EnemyIdleState : IState
         float healthRatio = enemyController.Health.CurrentHealth / enemyController.Health.MaxHealth;
         int randomDecision = Random.Range(0, 100);
 
-        switch (enemyController.RuntimeData.Enemy_Difficult)
+        switch (enemyController.RuntimeData.EnemyData.Difficult)
         {
             case Enemy_Difficult.Easy:
                 if (currentDistance > enemyController.DetectedRange && healthRatio > dangerHealthRatio)
