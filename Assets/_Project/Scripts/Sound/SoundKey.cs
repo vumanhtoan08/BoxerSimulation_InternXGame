@@ -17,4 +17,7 @@ public static class SoundKey
     
     public const string Win = "Win";
     public const string Lose = "Lose";
+
+    public const string Hurt_1 = "Hurt_1";
+    public const string Dead = "Dead";
 }

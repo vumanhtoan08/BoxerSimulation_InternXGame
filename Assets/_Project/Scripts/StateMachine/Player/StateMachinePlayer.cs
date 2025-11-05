@@ -9,7 +9,7 @@ public class StateMachinePlayer : MonoBehaviour
 
     [SerializeField] private string currentStateString;
 
-    [SerializeField] private GameObject weight_L; 
+    [SerializeField] private GameObject weight_L;
     [SerializeField] private GameObject weight_R;
 
     public void ChangeState(IState newState)
@@ -96,4 +96,40 @@ public class StateMachinePlayer : MonoBehaviour
         weight_L.SetActive(isActive);
         weight_R.SetActive(isActive);
     }
+
+    #region Sound
+
+    public void PlayPunchSound()
+    {
+        if (GameManager.Instance.GameState == Game_State.OnTraning)
+        {
+            var randomPitch = Random.Range(0.6f, 1f);
+            SoundManager.Instance.PlaySound(SoundKey.Punch, 0.7f, randomPitch);
+        }
+    }
+
+    public void PlayBreathSound()
+    {
+        if (GameManager.Instance.GameState == Game_State.OnTraning)
+        {
+            var randomPitch = Random.Range(1f, 1.2f);
+            SoundManager.Instance.PlaySound(SoundKey.Breath, 2f, randomPitch);
+        }
+    }
+
+    public void PlayerMoveSound()
+    {
+        if (GameManager.Instance.GameState == Game_State.OnTraning)
+        {
+            var randomPitch = Random.Range(1f, 1.2f);
+            SoundManager.Instance.PlaySound(SoundKey.FootStep, 1.2f, randomPitch);
+        }
+        else
+        {
+            var randomPitch = Random.Range(0.6f, 0.8f);
+            SoundManager.Instance.PlaySound(SoundKey.FootStep, 0.7f, randomPitch);
+        }
+    }
+
+    #endregion
 }

@@ -19,6 +19,8 @@ public class EnemyDeadState : IState
         Debug.Log("Enter Dead");
         enemyController.Animator.SetTrigger("isDead");
         enemyController.DynamicCollider.enabled = false;
+
+        effect.SetActiveAura(false);
     }
 
     public void Excute()
@@ -36,6 +38,5 @@ public class EnemyDeadState : IState
     public void Exit()
     {
         enemyController.DynamicCollider.enabled = true;
-        effect.SetActiveAura(false);
     }
 }

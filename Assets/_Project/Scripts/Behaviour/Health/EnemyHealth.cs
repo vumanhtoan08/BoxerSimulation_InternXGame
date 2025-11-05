@@ -27,6 +27,7 @@ public class EnemyHealth : EntityHealth
     protected override void Dead()
     {
         base.Dead();
+        SoundManager.Instance.PlaySound(SoundKey.Dead, 1f, 1f);
         enemyController.StateMachine.ChangeState(new EnemyDeadState(enemyController));
         isDead = true;
     }
@@ -34,6 +35,9 @@ public class EnemyHealth : EntityHealth
     protected override void Hurt()
     {
         base.Hurt();
+        var random = Random.Range(0.6f, 1.2f);
+        SoundManager.Instance.PlaySound(SoundKey.Hurt_1, 1f, random);
+
         if (currentHealth <= maxHealth / 2 && !isAuraActive && enemyController.RuntimeData.EnemyData.Difficult != Enemy_Difficult.Easy)
         {
             isAuraActive = true;
