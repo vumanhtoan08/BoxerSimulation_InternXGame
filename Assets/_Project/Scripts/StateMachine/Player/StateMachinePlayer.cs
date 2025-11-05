@@ -9,6 +9,9 @@ public class StateMachinePlayer : MonoBehaviour
 
     [SerializeField] private string currentStateString;
 
+    [SerializeField] private GameObject weight_L; 
+    [SerializeField] private GameObject weight_R;
+
     public void ChangeState(IState newState)
     {
         if (currentState != null && newState == currentState)
@@ -86,5 +89,11 @@ public class StateMachinePlayer : MonoBehaviour
         {
             ChangeState(new PlayerCounterState(PlayerController.Instance));
         }
+    }
+
+    public void SetActiveForWeight(bool isActive)
+    {
+        weight_L.SetActive(isActive);
+        weight_R.SetActive(isActive);
     }
 }

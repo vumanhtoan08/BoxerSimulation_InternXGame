@@ -17,13 +17,11 @@ public class PlayerTrainingState : IState
             case TYPE_TRAINING.NONE:
                 break;
             case TYPE_TRAINING.BOXING:
-                playerController.Animator.SetBool("isBoxing", true);
                 break;
             case TYPE_TRAINING.RUNING:
                 playerController.Animator.SetBool("isRunning", true);
                 break;
             case TYPE_TRAINING.SQUAT:
-                playerController.Animator.SetBool("isSquat", true);
                 break;
             default:
                 break;
@@ -55,7 +53,6 @@ public class PlayerTrainingState : IState
                 break;
             case TYPE_TRAINING.BOXING:
                 playerController.Animator.SetBool("isMoving", false);
-                playerController.Animator.SetBool("isBoxing", false);
                 break;
             case TYPE_TRAINING.RUNING:
                 playerController.Animator.SetBool("isMoving", false);
@@ -63,7 +60,7 @@ public class PlayerTrainingState : IState
                 break;
             case TYPE_TRAINING.SQUAT:
                 playerController.Animator.SetBool("isMoving", false);
-                playerController.Animator.SetBool("isSquat", false);
+                PlayerController.Instance.StateMachine.SetActiveForWeight(false);
                 break;
             default:
                 break;

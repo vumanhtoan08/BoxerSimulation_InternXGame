@@ -41,9 +41,9 @@ public class CanvasManager : Singleton<CanvasManager>
 
     [Header("Energy Settings")]
     [SerializeField] private float startFill = 0.5f;
-    [SerializeField] private float increaseAmount = 0.2f;
+    [SerializeField] private float increaseAmount = 0.3f;
     [SerializeField] private float fillDuration = 0.5f;
-    [SerializeField] private float cooldown = 0.75f;
+    [SerializeField] private float cooldown = 0.5f;
     [SerializeField] private float decayPerSecond = 0.25f;
 
     private float currentFill = 0f;
@@ -69,6 +69,7 @@ public class CanvasManager : Singleton<CanvasManager>
             AnimateButton(exitBtn.transform); // 🔹 Tween
             OnUnActiveTrainingPanel();
             GameManager.Instance.ChangeGameState(Game_State.Training);
+            PlayerController.Instance.StateMachine.SetActiveForWeight(false);
             OnResetAction();
         });
     }
@@ -88,6 +89,8 @@ public class CanvasManager : Singleton<CanvasManager>
     {
         if (Time.time - lastTapTime < cooldown) return;
         lastTapTime = Time.time;
+
+        TriggerTrainingAnim();
 
         float target = Mathf.Clamp01(currentFill + increaseAmount);
         DOTween.Kill(fillEnergyBar);
@@ -111,6 +114,27 @@ public class CanvasManager : Singleton<CanvasManager>
                 }
                 OnResetAction();
             });
+        }
+    }
+
+    private int currentSquatBlend = 0;
+
+    private void TriggerTrainingAnim()
+    {
+        switch (playerController.CameraForInteract.CurrentInteractable.Type)
+        {
+            case TYPE_TRAINING.BOXING:
+                playerController.Animator.SetTrigger("isPunch");
+                break;
+            case TYPE_TRAINING.RUNING:
+                playerController.Animator.SetBool("isRunning", true);
+                break;
+            case TYPE_TRAINING.SQUAT:
+                PlayerController.Instance.StateMachine.SetActiveForWeight(true);
+                currentSquatBlend = 1 - currentSquatBlend; // 🔁 Đảo giữa 0 và 1 mỗi lần gọi
+                playerController.Animator.SetFloat("squatValue", currentSquatBlend);
+                playerController.Animator.SetTrigger("isSquat");
+                break;
         }
     }
 
