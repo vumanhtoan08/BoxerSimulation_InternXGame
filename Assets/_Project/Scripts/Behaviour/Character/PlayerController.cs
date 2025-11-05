@@ -47,6 +47,8 @@ public class PlayerController : Singleton<PlayerController>
 
     public CameraForInteract CameraForInteract => cameraForInteract;
 
+    public CameraLook CameraLook => cameraLook;
+
     public float Speed => speed;
     public float Gravity => gravity;
     public float GroundCheckDistance => groundCheckDistance;

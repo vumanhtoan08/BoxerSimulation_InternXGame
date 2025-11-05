@@ -6,6 +6,8 @@ public class TouchController : MonoBehaviour
 {
     [SerializeField] private FixedTouchField fixedTouchField;
     [SerializeField] private CameraLook cameraLook;
+
+    public CameraLook CameraLook => cameraLook;
   
     public void OnStart()
     {

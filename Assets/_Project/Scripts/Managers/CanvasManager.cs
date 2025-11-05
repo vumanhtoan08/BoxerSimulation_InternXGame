@@ -219,6 +219,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void MovePlayerToBattle()
     {
+        playerController.CameraLook.SetCameraRotation(Vector3.zero);
         playerController.CharacterController.enabled = false;
         playerController.transform.position = playerBattlePositon;
         playerController.transform.rotation = Quaternion.Euler(0, -45, 0);
@@ -227,6 +228,7 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void MovePlayerToTraining()
     {
+        playerController.CameraLook.SetCameraRotation(Vector3.zero);
         playerController.CharacterController.enabled = false;
         playerController.transform.position = playerTrainingPositon;
         playerController.transform.rotation = Quaternion.Euler(0, 180, 0);
