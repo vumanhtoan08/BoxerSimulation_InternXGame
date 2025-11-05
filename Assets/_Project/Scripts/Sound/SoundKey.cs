@@ -20,4 +20,7 @@ public static class SoundKey
 
     public const string Hurt_1 = "Hurt_1";
     public const string Dead = "Dead";
+
+    public const string Fire = "Fire";
+    public const string Taunt = "Taunt";
 }

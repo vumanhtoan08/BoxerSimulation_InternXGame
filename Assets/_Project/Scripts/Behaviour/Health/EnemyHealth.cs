@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : EntityHealth
 {
     [SerializeField] private EnemyAuraEffect enemyAuraEffect;
+    [SerializeField] private GameObject energyExplosion; 
 
     private EnemyController enemyController;
     private bool isDead;
@@ -46,6 +48,27 @@ public class EnemyHealth : EntityHealth
         else
         {
             enemyController.StateMachine.ChangeState(new EnemyHitState(enemyController));
+        }
+    }
+
+    public void SetExplosionActive(bool value)
+    {
+        if (energyExplosion == null) return;
+
+        if (value)
+        {
+            energyExplosion.SetActive(true);
+            energyExplosion.transform.localScale = Vector3.zero;
+
+            // Scale lên 10 lần trong 0.8 giây (có easing mượt)
+            energyExplosion.transform
+                .DOScale(Vector3.one * 5f, 8f)
+                .SetEase(Ease.OutBack); // hoặc Ease.OutCubic nếu muốn mềm hơn
+        }
+        else
+        {
+            // Thu nhỏ lại rồi ẩn
+            energyExplosion.SetActive(false);
         }
     }
 }
