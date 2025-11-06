@@ -40,9 +40,6 @@ public class GameManager : Singleton<GameManager>
         QualitySettings.vSyncCount = 0;
 
         //
-        StartState();
-       
-
         dataManager?.OnStart();
         playerController?.OnStart();
         soundManager?.OnStart();
@@ -53,6 +50,8 @@ public class GameManager : Singleton<GameManager>
         walletManager?.OnStart();
         shopManager?.OnStart();
         canvasManager?.OnStart();
+
+        StartState();
 
         StartingSetupForSplashScreen();
         ChangeGameState(Game_State.Training);
@@ -92,6 +91,7 @@ public class GameManager : Singleton<GameManager>
         switch (gameState)
         {
             case Game_State.Init:
+                soundManager.PlayBGM(SoundKey.TrainingBGM, 1f);
                 break;
             case Game_State.Pause:
                 break;

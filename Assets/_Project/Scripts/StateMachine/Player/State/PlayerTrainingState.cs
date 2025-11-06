@@ -1,3 +1,4 @@
+﻿using DG.Tweening;
 using UnityEngine;
 
 public class PlayerTrainingState : IState
@@ -71,46 +72,97 @@ public class PlayerTrainingState : IState
 
     private void OnChangeStateTraining()
     {
+        //CanvasManager.Instance.OnBoxingComplete += CanvasManager.Instance.OnEnergyChange;
         CanvasManager.Instance.OnBoxingComplete += OnBoxingComplete;
-        CanvasManager.Instance.OnBoxingComplete += CanvasManager.Instance.OnEnergyChange;
-        CanvasManager.Instance.OnRuningComplete += OnRunningComplete;
         CanvasManager.Instance.OnRuningComplete += CanvasManager.Instance.OnEnergyChange;
-        CanvasManager.Instance.OnSquatComplete += OnSquatComplete;
+        CanvasManager.Instance.OnRuningComplete += OnRunningComplete;
         CanvasManager.Instance.OnSquatComplete += CanvasManager.Instance.OnEnergyChange;
+        CanvasManager.Instance.OnSquatComplete += OnSquatComplete;
     }
 
     private void OnBoxingComplete()
     {
-        // tang suc manh
-        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
-        playerController.Data.EnergyUse(1);
-        playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.BOXING);
-        Debug.Log("Hoan thanh bai boxing");
+        Sequence seq = DOTween.Sequence();
 
-        GameManager.Instance.ChangeGameState(Game_State.Training);
+        seq.AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnEnergyBarActive(false);
+            playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.BOXING);
+            playerController.Data.EnergyUse(1);
+            CanvasManager.Instance.OnEnergyChange();
+        })
+        .AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnEmitParticleAttractor(
+                DataManager.Instance.ListInteractableTable.InteractableTables[0]
+                    .Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value);
+
+            CanvasManager.Instance.OnProcessTxtUpdate(TYPE_TRAINING.BOXING);
+            CanvasManager.Instance.OnProcessImgFillUpdate(TYPE_TRAINING.BOXING);
+        })
+        .AppendInterval(2.5f)
+        .AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnUnActiveTrainingPanel();
+            GameManager.Instance.ChangeGameState(Game_State.Training);
+        });
     }
 
     private void OnRunningComplete()
     {
-        // tang suc manh
-        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
-        playerController.Data.EnergyUse(1);
-        playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.RUNING);
-        Debug.Log("Hoan thanh bai chay");
+        Sequence seq = DOTween.Sequence();
 
-        GameManager.Instance.ChangeGameState(Game_State.Training);
+        seq.AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnEnergyBarActive(false);
+            playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.RUNING);
+            playerController.Data.EnergyUse(1);
+            CanvasManager.Instance.OnEnergyChange();
+        })
+        .AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnEmitParticleAttractor(
+                DataManager.Instance.ListInteractableTable.InteractableTables[1]
+                    .Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value);
+
+            CanvasManager.Instance.OnProcessTxtUpdate(TYPE_TRAINING.RUNING);
+            CanvasManager.Instance.OnProcessImgFillUpdate(TYPE_TRAINING.RUNING);
+        })
+        .AppendInterval(2.5f)
+        .AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnUnActiveTrainingPanel();
+            GameManager.Instance.ChangeGameState(Game_State.Training);
+        });
     }
+
     private void OnSquatComplete()
     {
-        // tang suc manh
-        playerController.StateMachine.ChangeState(new PlayerIdleState(playerController));
-        playerController.Data.EnergyUse(1);
-        playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.SQUAT);
-        Debug.Log("Hoan thanh bai squat");
+        Sequence seq = DOTween.Sequence();
 
-        GameManager.Instance.ChangeGameState(Game_State.Training);
+        seq.AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnEnergyBarActive(false);
+            playerController.Data.DataRuntime.UpProcess(TYPE_TRAINING.SQUAT);
+            playerController.Data.EnergyUse(1);
+            CanvasManager.Instance.OnEnergyChange();
+        })
+        .AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnEmitParticleAttractor(
+                DataManager.Instance.ListInteractableTable.InteractableTables[2]
+                    .Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value);
+
+            CanvasManager.Instance.OnProcessTxtUpdate(TYPE_TRAINING.SQUAT);
+            CanvasManager.Instance.OnProcessImgFillUpdate(TYPE_TRAINING.SQUAT);
+        })
+        .AppendInterval(2.5f)
+        .AppendCallback(() =>
+        {
+            CanvasManager.Instance.OnUnActiveTrainingPanel();
+            GameManager.Instance.ChangeGameState(Game_State.Training);
+        });
     }
-
 
     #endregion
 }

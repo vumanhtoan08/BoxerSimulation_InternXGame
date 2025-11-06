@@ -28,7 +28,7 @@ public class PopupWin : PopupBase
                    GameManager.Instance.ChangeGameState(Game_State.Training);
                    CanvasManager.Instance.MovePlayerToTraining();
 
-                   SoundManager.Instance.StopBGM();
+                   SoundManager.Instance.PlayBGM(SoundKey.TrainingBGM, 1f);
                })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() =>

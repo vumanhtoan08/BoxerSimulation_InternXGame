@@ -239,6 +239,8 @@ public class PlayerData
         var playerData = dataManager.CurrentPlayerData;
         var statTables = dataManager.StatLevelTables.StatLevelTables;
 
+        SoundManager.Instance.PlaySound(SoundKey.LevelUp, 1f, 1f);
+
         switch (type)
         {
             case STATE_TYPE.Attack:

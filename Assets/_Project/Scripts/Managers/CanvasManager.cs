@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using Coffee.UIExtensions;
+using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -56,6 +57,9 @@ public class CanvasManager : Singleton<CanvasManager>
 
     public void OnActiveTrainingPanel()
     {
+        OnEnergyBarActive(true);
+        OnProcessUIUpdateWhenActivePanel(playerController.CameraForInteract.CurrentInteractable.Type);
+
         ResetEnergyToStart();
         UpdateUI();
         trainingPanel?.SetActive(true);
@@ -105,7 +109,7 @@ public class CanvasManager : Singleton<CanvasManager>
         {
             DOVirtual.DelayedCall(fillDuration, () =>
             {
-                OnUnActiveTrainingPanel();
+                //OnUnActiveTrainingPanel();
                 switch (playerController.CameraForInteract.CurrentInteractable.Type)
                 {
                     case TYPE_TRAINING.BOXING: OnBoxingComplete?.Invoke(); break;
@@ -164,6 +168,116 @@ public class CanvasManager : Singleton<CanvasManager>
         OnBoxingComplete = null;
         OnRuningComplete = null;
         OnSquatComplete = null;
+    }
+
+    [Header("UIEffect")]
+    [SerializeField] private Image goalPowerCellImage;
+    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private Text processTxt;
+    [SerializeField] private Image processFillImg;
+    [SerializeField] private GameObject gameobjEnergyBar;
+    [SerializeField] private Text valueGainEnergy;
+
+    public void OnProcessUIUpdateWhenActivePanel(TYPE_TRAINING type)
+    {
+        switch (type)
+        {
+            case TYPE_TRAINING.BOXING:
+                processTxt.text = $"{playerController.Data.DataRuntime.CurrentAttackProcess}/{playerController.Data.DataRuntime.MaxAttackProcess}";
+                processFillImg.fillAmount = (float)playerController.Data.DataRuntime.CurrentAttackProcess / playerController.Data.DataRuntime.MaxAttackProcess;
+                valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value}";
+                break;
+            case TYPE_TRAINING.RUNING:
+                processTxt.text = $"{playerController.Data.DataRuntime.CurrentStaminaProcess}/{playerController.Data.DataRuntime.MaxStaminaProcess}";
+                processFillImg.fillAmount = (float)playerController.Data.DataRuntime.CurrentStaminaProcess / playerController.Data.DataRuntime.MaxStaminaProcess;
+                valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value}";
+                break;
+            case TYPE_TRAINING.SQUAT:
+                processTxt.text = $"{playerController.Data.DataRuntime.CurrentHealthProcess}/{playerController.Data.DataRuntime.MaxHealthProcess}";
+                processFillImg.fillAmount = (float)playerController.Data.DataRuntime.CurrentHealthProcess / playerController.Data.DataRuntime.MaxHealthProcess;
+                valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value}";
+                break;
+        }
+    }
+
+    public void OnProcessUIUpdate() // da goi trong inspector 
+    {
+        OnEnergyImgTween();
+        //OnProcessTxtUpdate();
+        //OnProcessImgFillUpdate();
+    }
+
+    private void OnEnergyImgTween()
+    {
+        var random = UnityEngine.Random.Range(0.8f, 1.2f);
+        SoundManager.Instance.PlaySound(SoundKey.Stack, 0.8f, random);
+        goalPowerCellImage.transform.localScale = Vector3.one;
+        goalPowerCellImage.transform.DOScale(1.2f, 0.1f).SetEase(Ease.OutCubic);
+    }
+
+    public void OnProcessTxtUpdate(TYPE_TRAINING type)
+    {
+        processTxt.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        processTxt.transform.DOScale(1f, 0.1f).SetEase(Ease.OutCubic);
+
+        switch (type)
+        {
+            case TYPE_TRAINING.BOXING:
+                processTxt.text = $"{playerController.Data.DataRuntime.CurrentAttackProcess}/{playerController.Data.DataRuntime.MaxAttackProcess}";
+                break;
+            case TYPE_TRAINING.RUNING:
+                processTxt.text = $"{playerController.Data.DataRuntime.CurrentStaminaProcess}/{playerController.Data.DataRuntime.MaxStaminaProcess}";
+                break;
+            case TYPE_TRAINING.SQUAT:
+                processTxt.text = $"{playerController.Data.DataRuntime.CurrentHealthProcess}/{playerController.Data.DataRuntime.MaxHealthProcess}";
+                break;
+        }
+    }
+
+    public void OnProcessImgFillUpdate(TYPE_TRAINING type)
+    {
+        float currentValue = processFillImg.fillAmount;
+        float targetValue = 0f;
+
+        switch (type)
+        {
+            case TYPE_TRAINING.BOXING:
+                targetValue = (float)playerController.Data.DataRuntime.CurrentAttackProcess
+                            / playerController.Data.DataRuntime.MaxAttackProcess;
+                break;
+
+            case TYPE_TRAINING.RUNING:
+                targetValue = (float)playerController.Data.DataRuntime.CurrentStaminaProcess
+                            / playerController.Data.DataRuntime.MaxStaminaProcess;
+                break;
+
+            case TYPE_TRAINING.SQUAT:
+                targetValue = (float)playerController.Data.DataRuntime.CurrentHealthProcess
+                            / playerController.Data.DataRuntime.MaxHealthProcess;
+                break;
+        }
+
+        // 🧹 Dừng tween cũ trên cùng đối tượng
+        DOTween.Kill(processFillImg);
+
+        // 🎞 Tween mượt fillAmount
+        DOTween.To(() => currentValue, x =>
+        {
+            processFillImg.fillAmount = x;
+        }, targetValue, 0.1f)
+        .SetEase(Ease.OutCubic)
+        .SetTarget(processFillImg);
+    }
+
+
+    public void OnEnergyBarActive(bool active)
+    {
+        gameobjEnergyBar.SetActive(active);
+    }
+
+    public void OnEmitParticleAttractor(int count)
+    {
+        particle.Emit(count);
     }
 
     #endregion

@@ -14,6 +14,7 @@ public static class SoundKey
     public const string Bubble = "Bubble";
     public const string FightStart = "FightStart";
     public const string BattleBGM = "BattleBGM";
+    public const string TrainingBGM = "TrainingBGM";
     
     public const string Win = "Win";
     public const string Lose = "Lose";
@@ -23,4 +24,7 @@ public static class SoundKey
 
     public const string Fire = "Fire";
     public const string Taunt = "Taunt";
+
+    public const string Stack = "Stack";
+    public const string LevelUp = "LevelUp";
 }
