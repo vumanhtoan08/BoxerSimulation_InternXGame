@@ -48,8 +48,7 @@ public class StateMachinePlayer : MonoBehaviour
     {
         var player = PlayerController.Instance;
 
-        if (currentState.ToString() != "PlayerBlockState" && !PlayerController.Instance.IsBlocking
-             && PlayerController.Instance.Data.CheckStamina(PlayerController.Instance.Data.DataRuntime.BlockCost))
+        if (currentState.ToString() != "PlayerBlockState" && !PlayerController.Instance.IsBlocking)
         {
             ChangeState(new PlayerBlockState(player));
         }

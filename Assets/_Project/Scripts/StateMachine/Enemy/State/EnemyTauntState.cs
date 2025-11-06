@@ -107,5 +107,8 @@ public class EnemyTauntState : IState
         enemyController.Animator.speed = 1.5f;
         enemyController.Health.SetExplosionActive(false);
         currentPushVelocity = Vector3.zero;
+
+        // ✅ Reset lại timer để 15s sau mới gồng tiếp
+        enemyController.StateMachine.ResetTauntTimer();
     }
 }

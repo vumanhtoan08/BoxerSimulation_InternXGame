@@ -1,11 +1,14 @@
-using Unity.Cinemachine;
+﻿using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraEffect : Singleton<CameraEffect> 
 {
     [Header("Cameras")]
-    [SerializeField] private CinemachineCamera playerCine;
-    [SerializeField] private CinemachineCamera enemyCine; 
+    [SerializeField] private CinemachineBrain brain;
+
+    [SerializeField] private CinemachineCamera mainCine;
+    [SerializeField] private CinemachineCamera playerDeadCine;
+    [SerializeField] private CinemachineCamera enemyIntroCine; 
 
 
 }
