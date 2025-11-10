@@ -16,7 +16,10 @@ public class PlayerHealth : EntityHealth
     protected override void Dead()
     {
         base.Dead();
-        GameManager.Instance.ChangeGameState(Game_State.Lose);
+        CanvasManager.Instance.OnPlayerHealthChange();
+        CameraEffect.Instance.PlayerDeadCine(true);
+        EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyWinState(EnemyManager.Instance.EnemyController));
+        playerController.StateMachine.ChangeState(new PlayerDeadState(playerController));
     }
 
     protected override void Hurt()

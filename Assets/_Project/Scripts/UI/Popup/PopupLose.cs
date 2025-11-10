@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PopupLose : PopupBase
 {
     [SerializeField] private Button closeBtn;
+    [SerializeField] private Image iconEnemy;
 
     public override void Init()
     {
@@ -36,6 +37,7 @@ public class PopupLose : PopupBase
 
                    CanvasManager.Instance.OnUpdateUIEnemy();
                    CanvasManager.Instance.MoveEnemyToBattle();
+                   CameraEffect.Instance.PlayerDeadCine(false);
                });
         });
     }
@@ -43,7 +45,8 @@ public class PopupLose : PopupBase
     public override void Show()
     {
         base.Show();
-        SoundManager.Instance.PlaySound(SoundKey.Lose, 0.3f, 0.5f);
+        SoundManager.Instance.PlaySound(SoundKey.Lose, 2f, 0.5f);
+        iconEnemy.sprite = EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Avatar;
     }
 
     /// <summary>

@@ -12,4 +12,14 @@ public class TimeEffect : Singleton<TimeEffect>
             Time.timeScale = 1;
         });
     }
+
+    public static void SlowMotionDuration(float duration, float scale)
+    {
+        Time.timeScale = scale;
+
+        DOVirtual.DelayedCall(duration, () =>
+        {
+            Time.timeScale = 1;
+        });
+    }
 }

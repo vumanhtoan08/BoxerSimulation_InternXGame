@@ -183,16 +183,40 @@ public class CanvasManager : Singleton<CanvasManager>
         switch (type)
         {
             case TYPE_TRAINING.BOXING:
+                if (DataManager.Instance.CurrentPlayerData.AttackLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value}";
+                    return;
+                }
+
                 processTxt.text = $"{playerController.Data.DataRuntime.CurrentAttackProcess}/{playerController.Data.DataRuntime.MaxAttackProcess}";
                 processFillImg.fillAmount = (float)playerController.Data.DataRuntime.CurrentAttackProcess / playerController.Data.DataRuntime.MaxAttackProcess;
                 valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value}";
                 break;
             case TYPE_TRAINING.RUNING:
+                if (DataManager.Instance.CurrentPlayerData.StaminaLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value}";
+                    return;
+                }
+
                 processTxt.text = $"{playerController.Data.DataRuntime.CurrentStaminaProcess}/{playerController.Data.DataRuntime.MaxStaminaProcess}";
                 processFillImg.fillAmount = (float)playerController.Data.DataRuntime.CurrentStaminaProcess / playerController.Data.DataRuntime.MaxStaminaProcess;
                 valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value}";
                 break;
             case TYPE_TRAINING.SQUAT:
+                if (DataManager.Instance.CurrentPlayerData.HealthLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value}";
+                    return;
+                }
+
                 processTxt.text = $"{playerController.Data.DataRuntime.CurrentHealthProcess}/{playerController.Data.DataRuntime.MaxHealthProcess}";
                 processFillImg.fillAmount = (float)playerController.Data.DataRuntime.CurrentHealthProcess / playerController.Data.DataRuntime.MaxHealthProcess;
                 valueGainEnergy.text = $"{DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value}";
@@ -223,12 +247,33 @@ public class CanvasManager : Singleton<CanvasManager>
         switch (type)
         {
             case TYPE_TRAINING.BOXING:
+                if (DataManager.Instance.CurrentPlayerData.AttackLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    return;
+                }
+
                 processTxt.text = $"{playerController.Data.DataRuntime.CurrentAttackProcess}/{playerController.Data.DataRuntime.MaxAttackProcess}";
                 break;
             case TYPE_TRAINING.RUNING:
+                if (DataManager.Instance.CurrentPlayerData.StaminaLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    return;
+                }
+
                 processTxt.text = $"{playerController.Data.DataRuntime.CurrentStaminaProcess}/{playerController.Data.DataRuntime.MaxStaminaProcess}";
                 break;
             case TYPE_TRAINING.SQUAT:
+                if (DataManager.Instance.CurrentPlayerData.HealthLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    return;
+                }
+
                 processTxt.text = $"{playerController.Data.DataRuntime.CurrentHealthProcess}/{playerController.Data.DataRuntime.MaxHealthProcess}";
                 break;
         }
@@ -242,16 +287,35 @@ public class CanvasManager : Singleton<CanvasManager>
         switch (type)
         {
             case TYPE_TRAINING.BOXING:
+                if (DataManager.Instance.CurrentPlayerData.AttackLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    return;
+                }
+
                 targetValue = (float)playerController.Data.DataRuntime.CurrentAttackProcess
                             / playerController.Data.DataRuntime.MaxAttackProcess;
                 break;
 
             case TYPE_TRAINING.RUNING:
+                if (DataManager.Instance.CurrentPlayerData.StaminaLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    return;
+                }
                 targetValue = (float)playerController.Data.DataRuntime.CurrentStaminaProcess
                             / playerController.Data.DataRuntime.MaxStaminaProcess;
                 break;
 
             case TYPE_TRAINING.SQUAT:
+                if (DataManager.Instance.CurrentPlayerData.HealthLevel >= DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels.Count - 1)
+                {
+                    processTxt.text = "MAX";
+                    processFillImg.fillAmount = 1f;
+                    return;
+                }
                 targetValue = (float)playerController.Data.DataRuntime.CurrentHealthProcess
                             / playerController.Data.DataRuntime.MaxHealthProcess;
                 break;

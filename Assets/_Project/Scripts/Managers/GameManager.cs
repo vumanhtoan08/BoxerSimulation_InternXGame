@@ -51,10 +51,10 @@ public class GameManager : Singleton<GameManager>
         shopManager?.OnStart();
         canvasManager?.OnStart();
 
-        StartState();
-
         StartingSetupForSplashScreen();
         ChangeGameState(Game_State.Training);
+
+        soundManager.PlayBGM(SoundKey.TrainingBGM);
     }
 
     private void Update()
@@ -107,7 +107,6 @@ public class GameManager : Singleton<GameManager>
                 PopupManager.Instance.ShowPopup(Type_Popup.Win);
                 break;
             case Game_State.Lose:
-                CanvasManager.Instance.OnPlayerHealthChange();
                 PopupManager.Instance.ShowPopup(Type_Popup.Lose);
                 break;
             case Game_State.Waitting:

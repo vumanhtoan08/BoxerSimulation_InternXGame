@@ -233,7 +233,7 @@ public class PlayerData
         Debug.Log($"{Attack} == {Stamina} == {Health} == {AttackLevel} == {StaminaLevel} == {HealthLevel} == {CurrentAttackProcess}");
     }
 
-    public void UpgradeState(STATE_TYPE type)
+    public bool UpgradeState(STATE_TYPE type)
     {
         var dataManager = DataManager.Instance;
         var playerData = dataManager.CurrentPlayerData;
@@ -249,14 +249,14 @@ public class PlayerData
                     if (playerData.AttackLevel >= maxLevel)
                     {
                         Debug.LogWarning($"⚠️ Attack đã đạt cấp tối đa ({maxLevel})!");
-                        return;
+                        return false;
                     }
 
                     playerData.AttackLevel++;
                     dataManager.SaveData();
                     SetDataForPlayer();
                     Debug.Log($"✅ Attack upgraded to level {playerData.AttackLevel}");
-                    break;
+                    return true;
                 }
 
             case STATE_TYPE.Health:
@@ -265,14 +265,14 @@ public class PlayerData
                     if (playerData.HealthLevel >= maxLevel)
                     {
                         Debug.LogWarning($"⚠️ Health đã đạt cấp tối đa ({maxLevel})!");
-                        return;
+                        return false;
                     }
 
                     playerData.HealthLevel++;
                     dataManager.SaveData();
                     SetDataForPlayer();
                     Debug.Log($"✅ Health upgraded to level {playerData.HealthLevel}");
-                    break;
+                    return true;
                 }
 
             case STATE_TYPE.Stamina:
@@ -281,19 +281,19 @@ public class PlayerData
                     if (playerData.StaminaLevel >= maxLevel)
                     {
                         Debug.LogWarning($"⚠️ Stamina đã đạt cấp tối đa ({maxLevel})!");
-                        return;
+                        return false;
                     }
 
                     playerData.StaminaLevel++;
                     dataManager.SaveData();
                     SetDataForPlayer();
                     Debug.Log($"✅ Stamina upgraded to level {playerData.StaminaLevel}");
-                    break;
+                    return true;
                 }
 
             default:
                 Debug.LogWarning("⚠️ STATE_TYPE không hợp lệ khi gọi UpgradeState()");
-                break;
+                return false;
         }
     }
 
@@ -326,7 +326,13 @@ public class PlayerData
                     {
                         playerData.AttackProcess = 0;
                         DataManager.Instance.CurrentPlayerData.AttackProcess = 0;
-                        UpgradeState(STATE_TYPE.Attack);
+
+                        bool upgraded = UpgradeState(STATE_TYPE.Attack);
+                        if (upgraded)
+                        {
+                            // 🪄 Hiển thị popup upgrade
+                            PopupManager.Instance.ShowPopup(Type_Popup.Upgrade);
+                        }
                     }
 
                     break;
@@ -354,7 +360,13 @@ public class PlayerData
                     {
                         playerData.StaminaProcess = 0;
                         DataManager.Instance.CurrentPlayerData.StaminaProcess = 0;
-                        UpgradeState(STATE_TYPE.Stamina);
+
+                        bool upgraded = UpgradeState(STATE_TYPE.Stamina);
+                        if (upgraded)
+                        {
+                            // 🪄 Hiển thị popup upgrade
+                            PopupManager.Instance.ShowPopup(Type_Popup.Upgrade);
+                        }
                     }
 
                     break;
@@ -382,7 +394,13 @@ public class PlayerData
                     {
                         playerData.HealthProcess = 0;
                         DataManager.Instance.CurrentPlayerData.HealthProcess = 0;
-                        UpgradeState(STATE_TYPE.Health);
+                        
+                        bool upgraded = UpgradeState(STATE_TYPE.Health);
+                        if (upgraded)
+                        {
+                            // 🪄 Hiển thị popup upgrade
+                            PopupManager.Instance.ShowPopup(Type_Popup.Upgrade);
+                        }
                     }
 
                     break;

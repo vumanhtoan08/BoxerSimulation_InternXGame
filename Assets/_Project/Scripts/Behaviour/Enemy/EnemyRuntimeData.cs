@@ -27,6 +27,31 @@ public class EnemyRuntimeData : MonoBehaviour
     }
 
     #endregion
+
+    #region Cinemachine
+
+    public void StopCinemachineWarmingEnemy()
+    {
+        CameraEffect.Instance.EnemyIntroCine(false, 1.5f);
+        SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f);
+    }
+
+    public void OnEnemyWarmingUpEnd()
+    {
+        EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyIdleState(EnemyManager.Instance.EnemyController));
+    }
+
+    public void OnIntroActive()
+    {
+        CameraEffect.Instance.OnActiveIntro(true);
+    }
+
+    public void OnIntroUnActive()
+    {
+        CameraEffect.Instance.OnActiveIntro(false);
+    }
+
+    #endregion
 }
 
 [System.Serializable]

@@ -47,5 +47,6 @@ public enum Type_Popup
     Shop, 
     WarningEnergy,
     NotEnoughEnergy,
-    Setting
+    Setting,
+    Upgrade
 }

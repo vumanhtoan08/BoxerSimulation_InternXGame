@@ -12,7 +12,7 @@ public class EnemyWarmingUpState : IState
 
     public void Enter()
     {
-        float randomAnim = Random.Range(0f, 2f);
+        float randomAnim = Random.Range(0f, 1f);
         enemyController.Animator.SetFloat("randomWarmingUp", randomAnim);
 
         enemyController.Animator.SetTrigger("isWarmingUp");
@@ -20,12 +20,6 @@ public class EnemyWarmingUpState : IState
 
     public void Excute()
     {
-        info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
-
-        if (info.IsName("WarmingUp") && info.normalizedTime >= 1f && !enemyController.Animator.IsInTransition(0))
-        {
-            enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
-        }
     }
     public void Exit()
     {
