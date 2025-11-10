@@ -3,6 +3,8 @@ public static class SoundKey
     public const string FootStep = "FootStep";
     
     public const string Punch = "Punch";
+    public const string PunchWind = "PunchWind";
+
     public const string Block = "Block";
     public const string Counter = "Counter";
 
@@ -27,4 +29,5 @@ public static class SoundKey
 
     public const string Stack = "Stack";
     public const string LevelUp = "LevelUp";
+    public const string WarmingUpYell_01 = "WarmingUpYell_01";
 }

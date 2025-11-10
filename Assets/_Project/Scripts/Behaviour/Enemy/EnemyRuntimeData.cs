@@ -13,7 +13,20 @@ public class EnemyRuntimeData : MonoBehaviour
         enemyData.SetDataForEnemy();
     }
 
+    #region Audio
 
+    public void EnemyPunchWindSound()
+    {
+        var random = Random.Range(0.7f, 1f);
+        SoundManager.Instance.PlaySound(SoundKey.PunchWind, 0.7f, random);
+    }
+
+    public void EnemyTrainingYellSound()
+    {
+        SoundManager.Instance.PlaySound(SoundKey.WarmingUpYell_01, 0.7f, 0.7f);
+    }
+
+    #endregion
 }
 
 [System.Serializable]

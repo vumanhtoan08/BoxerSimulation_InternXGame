@@ -26,7 +26,7 @@ public class PopupLose : PopupBase
                    GameManager.Instance.ChangeGameState(Game_State.Training);
                    CanvasManager.Instance.MovePlayerToTraining();
 
-                   SoundManager.Instance.PlayBGM(SoundKey.TrainingBGM, 1f);
+                   SoundManager.Instance.PlayBGM(SoundKey.TrainingBGM, 0.7f);
                })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() =>

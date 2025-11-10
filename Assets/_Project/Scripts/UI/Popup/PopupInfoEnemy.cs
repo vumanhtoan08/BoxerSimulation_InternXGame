@@ -46,10 +46,17 @@ public class PopupInfoEnemy : PopupBase
                     CanvasManager.Instance.OnUpdateUIPlayer();
 
                     EnemyManager.Instance.EnemyController.Animator.speed = 1f;
+                    CameraEffect.Instance.EnemyIntroCine(true, 1.5f);
+                    EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyWarmingUpState(EnemyManager.Instance.EnemyController));
                 })
                .Append(CanvasManager.Instance.DarkPanelUnActive())
-               .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f))
-               .AppendCallback(() => SoundManager.Instance.PlayBGM(SoundKey.BattleBGM, 0.4f));
+               .AppendInterval(5f)
+               .AppendCallback(() =>
+               {
+                   SoundManager.Instance.PlaySound(SoundKey.FightStart, 0.7f, 0.7f);
+                   SoundManager.Instance.PlayBGM(SoundKey.BattleBGM, 0.4f);
+                   CameraEffect.Instance.EnemyIntroCine(false, 1.5f);
+               });
         });
 
         // setup for close button

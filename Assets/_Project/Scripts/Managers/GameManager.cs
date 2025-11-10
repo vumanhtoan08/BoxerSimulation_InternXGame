@@ -91,7 +91,7 @@ public class GameManager : Singleton<GameManager>
         switch (gameState)
         {
             case Game_State.Init:
-                soundManager.PlayBGM(SoundKey.TrainingBGM, 1f);
+                soundManager.PlayBGM(SoundKey.TrainingBGM, 0.7f);
                 break;
             case Game_State.Pause:
                 break;
