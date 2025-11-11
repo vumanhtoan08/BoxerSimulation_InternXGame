@@ -171,6 +171,11 @@ public class PlayerTrainingState : IState
         {
             CanvasManager.Instance.OnUnActiveTrainingPanel();
             GameManager.Instance.ChangeGameState(Game_State.Training);
+
+            if (!TutorialManager.Instance.Data.isPass)
+            {
+                TutorialManager.Instance.OnInteractWithBattleRingTutorial(true);
+            }
         });
     }
 

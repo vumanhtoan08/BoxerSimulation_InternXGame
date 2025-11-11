@@ -41,6 +41,14 @@ public class CameraEffect : Singleton<CameraEffect>
     public void PlayerDeadCine(bool isActive)
     {
         playerDeadCine.Priority = isActive ? 100 : 0;
+        if (isActive)
+        {
+            playerBehaviour.SetActive(false);
+        }
+        else
+        {
+            playerBehaviour.SetActive(true);
+        }
     }
 
     #region Intro Cavas WorldSpace

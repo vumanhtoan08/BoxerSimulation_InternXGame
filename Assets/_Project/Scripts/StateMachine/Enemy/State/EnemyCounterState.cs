@@ -40,6 +40,7 @@ public class EnemyCounterState : IState
             switch (enemyController.RuntimeData.EnemyData.Difficult)
             {
                 case Enemy_Difficult.Easy:
+                    enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
                     break;
                 case Enemy_Difficult.Med:
                     DecideNextActionMedEnemy();
