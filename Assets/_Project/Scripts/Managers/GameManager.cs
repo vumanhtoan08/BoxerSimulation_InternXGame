@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private PopupManager popupManager;
     [SerializeField] private WalletManager walletManager;
     [SerializeField] private ShopManager shopManager;
+    [SerializeField] private TutorialManager tutorialManager;
 
     [SerializeField] private PlayerController playerController;
     [SerializeField] private FixedTouchField fixedTouchField; 
@@ -50,6 +51,7 @@ public class GameManager : Singleton<GameManager>
         walletManager?.OnStart();
         shopManager?.OnStart();
         canvasManager?.OnStart();
+        tutorialManager?.OnStart();
 
         StartingSetupForSplashScreen();
         ChangeGameState(Game_State.Training);
@@ -73,6 +75,7 @@ public class GameManager : Singleton<GameManager>
         popupManager?.OnUpdate();
         walletManager?.OnUpdate();
         shopManager?.OnUpdate();
+        tutorialManager?.OnUpdate();
 
         playerController?.OnUpdate();
     }

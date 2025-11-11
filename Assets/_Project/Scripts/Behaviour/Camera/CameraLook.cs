@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,12 +49,26 @@ public class CameraLook : MonoBehaviour
     /// <summary>
     /// Xoay camera theo góc nhìn của Transform target
     /// </summary>
-    public void LookAtTarget(Transform target)
+    public void LookAtTarget(Transform target, float duration = 1f)
     {
+        // Hướng từ camera tới target
         Vector3 direction = (target.position - transform.position).normalized;
         Quaternion lookRot = Quaternion.LookRotation(direction);
-        transform.rotation = lookRot;
-        PlayerBody.rotation = Quaternion.Euler(0, lookRot.eulerAngles.y, 0);
-        XRotation = lookRot.eulerAngles.x;
+
+        // Tween rotation của camera
+        transform.DORotateQuaternion(lookRot, duration)
+            .SetEase(Ease.InOutSine);
+
+        // Tween rotation của thân người chơi (yaw)
+        Quaternion playerRot = Quaternion.Euler(0, lookRot.eulerAngles.y, 0);
+        PlayerBody.DORotateQuaternion(playerRot, duration)
+            .SetEase(Ease.InOutSine);
+
+        // Cập nhật XRotation để đồng bộ sau khi tween xong
+        DOVirtual.DelayedCall(duration, () =>
+        {
+            XRotation = lookRot.eulerAngles.x;
+        });
     }
+
 }

@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class BoxingBagInteractable : InteractableBase
@@ -10,6 +11,12 @@ public class BoxingBagInteractable : InteractableBase
 
     public override void Interact()
     {
+        if (!TutorialManager.Instance.Data.isPass)
+        {
+            TutorialManager.Instance.OnInteractWithBoxingTutorial(false);
+            TutorialManager.Instance.OnTrainingBoxingTutorial(false);
+        }
+
         base.Interact();
         if (playerController.Data.CurrentEnergy <= 0) return;
 

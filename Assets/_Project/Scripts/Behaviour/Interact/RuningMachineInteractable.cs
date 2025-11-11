@@ -11,6 +11,12 @@ public class RuningMachineInteractable : InteractableBase
 
     public override void Interact()
     {
+        if (!TutorialManager.Instance.Data.isPass)
+        {
+            TutorialManager.Instance.OnInteractWithRunningMachineTutorial(false);
+            TutorialManager.Instance.OnTrainingRunningTutorial(false);
+        }
+
         base.Interact();
         if (playerController.Data.CurrentEnergy <= 0) return;
 

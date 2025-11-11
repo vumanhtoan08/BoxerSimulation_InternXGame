@@ -105,6 +105,11 @@ public class PlayerTrainingState : IState
         {
             CanvasManager.Instance.OnUnActiveTrainingPanel();
             GameManager.Instance.ChangeGameState(Game_State.Training);
+            
+            if (!TutorialManager.Instance.Data.isPass)
+            {
+                TutorialManager.Instance.OnInteractWithRunningMachineTutorial(true);
+            }
         });
     }
 
@@ -133,6 +138,11 @@ public class PlayerTrainingState : IState
         {
             CanvasManager.Instance.OnUnActiveTrainingPanel();
             GameManager.Instance.ChangeGameState(Game_State.Training);
+
+            if (!TutorialManager.Instance.Data.isPass)
+            {
+                TutorialManager.Instance.OnInteractWithDumbelRackTutorial(true);
+            }
         });
     }
 

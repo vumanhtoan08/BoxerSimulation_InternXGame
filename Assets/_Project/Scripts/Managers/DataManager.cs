@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class DataManager : Singleton<DataManager>
 {
     private const string PlayerDataKey = "PlayerData";
@@ -11,6 +15,7 @@ public class DataManager : Singleton<DataManager>
     private const string InteractableDataKey = "InteractableData";
     private const string DayDataKey = "DayData";
     private const string EnemyDataKey = "EnemyData";
+    private const string TutorialDataKey = "TutorialData";
 
     [SerializeField] private ListStatLevelTable statLevelTables;
     [SerializeField] private ListSkillLevelTable skillLevelTables;
@@ -22,29 +27,17 @@ public class DataManager : Singleton<DataManager>
     public EnemyStatDatabase EnemyStatDatabase => enemyStatDatabase;
     public ListInteractableTable ListInteractableTable => listInteractableTable;
 
-    public DataSaveForPlayer CurrentPlayerData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
-    public DataSaveForWallet CurrentWalletData { get; private set; }                       // 3 cái này lấy từ PlayerPrebs
-    public DataSaveForInteractable CurrentInteractableData { get; private set; }           // 3 cái này lấy từ PlayerPrebs
+    public DataSaveForPlayer CurrentPlayerData { get; private set; }
+    public DataSaveForWallet CurrentWalletData { get; private set; }
+    public DataSaveForInteractable CurrentInteractableData { get; private set; }
     public DataSaveForDay CurrentDayData { get; private set; }
     public DataSaveForEnemy CurrentEnemyData { get; private set; }
+    public DataSaveForTutorial CurrentTutorialData { get; private set; }
 
     #region Unity Methods
-
-    public void OnAwake()
-    {
-        LoadData();
-    }
-
-    public void OnStart()
-    {
-
-    }
-
-    public void OnUpdate()
-    {
-
-    }
-
+    public void OnAwake() => LoadData();
+    public void OnStart() { }
+    public void OnUpdate() { }
     #endregion
 
     private void LoadData()
@@ -53,11 +46,9 @@ public class DataManager : Singleton<DataManager>
         if (PlayerPrefs.HasKey(PlayerDataKey))
         {
             string json = PlayerPrefs.GetString(PlayerDataKey);
-            if (!string.IsNullOrEmpty(json))
-                CurrentPlayerData = JsonUtility.FromJson<DataSaveForPlayer>(json);
-            else
-                CurrentPlayerData = new DataSaveForPlayer();
-
+            CurrentPlayerData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForPlayer>(json)
+                : new DataSaveForPlayer();
             Debug.Log("✅ Player data loaded from PlayerPrefs");
         }
         else
@@ -70,11 +61,9 @@ public class DataManager : Singleton<DataManager>
         if (PlayerPrefs.HasKey(WalletDataKey))
         {
             string json = PlayerPrefs.GetString(WalletDataKey);
-            if (!string.IsNullOrEmpty(json))
-                CurrentWalletData = JsonUtility.FromJson<DataSaveForWallet>(json);
-            else
-                CurrentWalletData = new DataSaveForWallet();
-
+            CurrentWalletData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForWallet>(json)
+                : new DataSaveForWallet();
             Debug.Log("✅ Wallet data loaded from PlayerPrefs");
         }
         else
@@ -87,11 +76,9 @@ public class DataManager : Singleton<DataManager>
         if (PlayerPrefs.HasKey(InteractableDataKey))
         {
             string json = PlayerPrefs.GetString(InteractableDataKey);
-            if (!string.IsNullOrEmpty(json))
-                CurrentInteractableData = JsonUtility.FromJson<DataSaveForInteractable>(json);
-            else
-                CurrentInteractableData = new DataSaveForInteractable();
-
+            CurrentInteractableData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForInteractable>(json)
+                : new DataSaveForInteractable();
             Debug.Log("✅ Interactable data loaded from PlayerPrefs");
         }
         else
@@ -104,11 +91,9 @@ public class DataManager : Singleton<DataManager>
         if (PlayerPrefs.HasKey(DayDataKey))
         {
             string json = PlayerPrefs.GetString(DayDataKey);
-            if (!string.IsNullOrEmpty(json))
-                CurrentDayData = JsonUtility.FromJson<DataSaveForDay>(json);
-            else
-                CurrentDayData = new DataSaveForDay();
-
+            CurrentDayData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForDay>(json)
+                : new DataSaveForDay();
             Debug.Log("✅ Day data loaded from PlayerPrefs");
         }
         else
@@ -121,11 +106,9 @@ public class DataManager : Singleton<DataManager>
         if (PlayerPrefs.HasKey(EnemyDataKey))
         {
             string json = PlayerPrefs.GetString(EnemyDataKey);
-            if (!string.IsNullOrEmpty(json))
-                CurrentEnemyData = JsonUtility.FromJson<DataSaveForEnemy>(json);
-            else
-                CurrentEnemyData = new DataSaveForEnemy();
-
+            CurrentEnemyData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForEnemy>(json)
+                : new DataSaveForEnemy();
             Debug.Log("✅ Enemy data loaded from PlayerPrefs");
         }
         else
@@ -134,34 +117,40 @@ public class DataManager : Singleton<DataManager>
             Debug.Log("⚙️ No enemy data found. Created default values.");
         }
 
-        // 🔥 Đảm bảo tất cả đã được khởi tạo trước khi SaveData()
-        if (CurrentPlayerData == null) CurrentPlayerData = new DataSaveForPlayer();
-        if (CurrentWalletData == null) CurrentWalletData = new DataSaveForWallet();
-        if (CurrentInteractableData == null) CurrentInteractableData = new DataSaveForInteractable();
-        if (CurrentDayData == null) CurrentDayData = new DataSaveForDay();
-        if (CurrentEnemyData == null) CurrentEnemyData = new DataSaveForEnemy();
+        // --- TUTORIAL ---
+        if (PlayerPrefs.HasKey(TutorialDataKey))
+        {
+            string json = PlayerPrefs.GetString(TutorialDataKey);
+            CurrentTutorialData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForTutorial>(json)
+                : new DataSaveForTutorial();
+            Debug.Log("✅ Tutorial data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentTutorialData = new DataSaveForTutorial();
+            Debug.Log("⚙️ No tutorial data found. Created default values.");
+        }
 
-        SaveData(); // ✅ Gọi 1 lần duy nhất, sau khi tất cả có dữ liệu
+        // Đảm bảo tất cả tồn tại
+        CurrentPlayerData ??= new DataSaveForPlayer();
+        CurrentWalletData ??= new DataSaveForWallet();
+        CurrentInteractableData ??= new DataSaveForInteractable();
+        CurrentDayData ??= new DataSaveForDay();
+        CurrentEnemyData ??= new DataSaveForEnemy();
+        CurrentTutorialData ??= new DataSaveForTutorial();
+
+        SaveData(); // ✅ Gọi 1 lần duy nhất
     }
-
 
     public void SaveData()
     {
-        string jsonPlayerData = JsonUtility.ToJson(CurrentPlayerData);
-        PlayerPrefs.SetString(PlayerDataKey, jsonPlayerData);
-
-        string jsonWalletData = JsonUtility.ToJson(CurrentWalletData);
-        PlayerPrefs.SetString(WalletDataKey, jsonWalletData);
-
-        string jsonInteractableData = JsonUtility.ToJson(CurrentInteractableData);
-        PlayerPrefs.SetString(InteractableDataKey, jsonInteractableData);
-
-        string jsonDayData = JsonUtility.ToJson(CurrentDayData);
-        PlayerPrefs.SetString(DayDataKey, jsonDayData);
-
-        string jsonEnemyData = JsonUtility.ToJson(CurrentEnemyData);
-        PlayerPrefs.SetString(EnemyDataKey, jsonEnemyData);
-
+        PlayerPrefs.SetString(PlayerDataKey, JsonUtility.ToJson(CurrentPlayerData));
+        PlayerPrefs.SetString(WalletDataKey, JsonUtility.ToJson(CurrentWalletData));
+        PlayerPrefs.SetString(InteractableDataKey, JsonUtility.ToJson(CurrentInteractableData));
+        PlayerPrefs.SetString(DayDataKey, JsonUtility.ToJson(CurrentDayData));
+        PlayerPrefs.SetString(EnemyDataKey, JsonUtility.ToJson(CurrentEnemyData));
+        PlayerPrefs.SetString(TutorialDataKey, JsonUtility.ToJson(CurrentTutorialData));
         PlayerPrefs.Save();
         Debug.Log("💾 Data saved to PlayerPrefs");
     }
@@ -171,14 +160,41 @@ public class DataManager : Singleton<DataManager>
         PlayerPrefs.DeleteKey(PlayerDataKey);
         PlayerPrefs.DeleteKey(WalletDataKey);
         PlayerPrefs.DeleteKey(InteractableDataKey);
+        PlayerPrefs.DeleteKey(DayDataKey);
+        PlayerPrefs.DeleteKey(EnemyDataKey);
+        PlayerPrefs.DeleteKey(TutorialDataKey);
         LoadData();
         Debug.Log("♻️ Player data reset to default");
     }
 
-    internal void ChangeGameState(Game_State battle)
+#if UNITY_EDITOR
+    // 🧩 Thêm menu Reset trên thanh Tools
+    [MenuItem("Tools/Demigiant/Reset Player Data %#r")] // Ctrl+Shift+R
+    public static void ResetPlayerDataMenu()
     {
-        throw new NotImplementedException();
+        if (EditorUtility.DisplayDialog(
+            "Reset Player Data",
+            "Bạn có chắc muốn xoá toàn bộ dữ liệu người chơi không?",
+            "Xoá hết",
+            "Huỷ"))
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+            Debug.Log("♻️ Tất cả PlayerPrefs đã được reset về mặc định.");
+
+            var manager = UnityEngine.Object.FindFirstObjectByType<DataManager>();
+            if (manager != null)
+            {
+                manager.ReloadPref();
+                Debug.Log("✅ Đã gọi ReloadPref() trong scene.");
+            }
+            else
+            {
+                Debug.LogWarning("⚠️ Không tìm thấy DataManager trong scene hiện tại.");
+            }
+        }
     }
+#endif
 }
 
 #region PlayerData

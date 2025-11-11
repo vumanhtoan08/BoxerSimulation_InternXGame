@@ -10,6 +10,12 @@ public class SquatInteractable : InteractableBase
 
     public override void Interact()
     {
+        if (!TutorialManager.Instance.Data.isPass)
+        {
+            TutorialManager.Instance.OnInteractWithDumbelRackTutorial(false);
+            TutorialManager.Instance.OnTrainingDumbelTutorial(false);
+        }
+
         base.Interact();
         if (playerController.Data.CurrentEnergy <= 0) return;
 
