@@ -167,6 +167,14 @@ public class DataManager : Singleton<DataManager>
         Debug.Log("♻️ Player data reset to default");
     }
 
+    public void ResetAllData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        ReloadPref();
+        Debug.Log("♻️ Toàn bộ dữ liệu đã được reset do tutorial chưa hoàn thành.");
+    }
+
 #if UNITY_EDITOR
     // 🧩 Thêm menu Reset trên thanh Tools
     [MenuItem("Tools/Demigiant/Reset Player Data %#r")] // Ctrl+Shift+R

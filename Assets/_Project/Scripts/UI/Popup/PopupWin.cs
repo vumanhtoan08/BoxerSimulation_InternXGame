@@ -45,6 +45,14 @@ public class PopupWin : PopupBase
                    // Update UI & position
                    CanvasManager.Instance.OnUpdateUIEnemy();
                    CanvasManager.Instance.MoveEnemyToBattle();
+
+                   if (!TutorialManager.Instance.Data.isPass)
+                   {
+                       Sequence seq = DOTween.Sequence();
+
+                       seq.AppendCallback(() => TutorialManager.Instance.OnConversationActive(true)).AppendInterval(2f)
+                       .AppendCallback(() => TutorialManager.Instance.OnConversationActive(false));
+                   }
                });
 
             // Reward player

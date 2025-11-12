@@ -44,11 +44,10 @@ public class PlayerController : Singleton<PlayerController>
     public PlayerRunTimeDatas Data => data;
     public PlayerHealth Health => health;
     public FixedJoystick FixedJoystick => joystick;
-
     public CameraForInteract CameraForInteract => cameraForInteract;
-
     public CameraLook CameraLook => cameraLook;
 
+    public TouchController TouchController => touchController;
     public float Speed => speed;
     public float Gravity => gravity;
     public float GroundCheckDistance => groundCheckDistance;

@@ -4,6 +4,7 @@ public class PlayerHealth : EntityHealth
 {
     private PlayerController playerController;
 
+    public bool IsDead {  get; set; }
     public void Init(PlayerController playerController)
     {
         this.playerController = playerController;
@@ -16,6 +17,9 @@ public class PlayerHealth : EntityHealth
     protected override void Dead()
     {
         base.Dead();
+        playerController.FixedJoystick.ResetInput();
+        playerController.TouchController.FixedTouchField.ResetInput();
+
         CanvasManager.Instance.OnPlayerHealthChange();
         CameraEffect.Instance.PlayerDeadCine(true);
         EnemyManager.Instance.EnemyController.StateMachine.ChangeState(new EnemyWinState(EnemyManager.Instance.EnemyController));

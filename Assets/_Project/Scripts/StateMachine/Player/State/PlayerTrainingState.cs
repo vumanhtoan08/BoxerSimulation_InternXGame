@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.LowLevel;
 
 public class PlayerTrainingState : IState
 {
@@ -141,6 +142,10 @@ public class PlayerTrainingState : IState
 
             if (!TutorialManager.Instance.Data.isPass)
             {
+                PlayerController.Instance.CharacterController.enabled = false;
+                PlayerController.Instance.transform.position = new Vector3(-1f, 0.1f, 5f);
+                PlayerController.Instance.CharacterController.enabled = true;
+
                 TutorialManager.Instance.OnInteractWithDumbelRackTutorial(true);
             }
         });

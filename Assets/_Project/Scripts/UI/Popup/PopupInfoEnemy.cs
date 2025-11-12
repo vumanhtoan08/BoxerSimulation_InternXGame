@@ -60,7 +60,7 @@ public class PopupInfoEnemy : PopupBase
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() =>
                {
-
+                   TutorialManager.Instance.CompleteTutorial();
                });
         });
 
@@ -77,10 +77,14 @@ public class PopupInfoEnemy : PopupBase
 
     public override void Show()
     {
-        if (!TutorialManager.Instance.Data.isPass)
+        DOVirtual.DelayedCall(0.4f, () =>
         {
-            TutorialManager.Instance.OnTrainingBattleTutorial(true);
-        }
+            if (!TutorialManager.Instance.Data.isPass)
+            {
+                TutorialManager.Instance.OnTrainingBattleTutorial(true);
+               
+            }
+        });
 
         base.Show();
         SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.3f, 0.5f);

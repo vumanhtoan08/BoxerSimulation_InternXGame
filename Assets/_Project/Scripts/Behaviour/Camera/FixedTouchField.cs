@@ -54,4 +54,9 @@ public class FixedTouchField : MonoBehaviour , IPointerDownHandler, IPointerUpHa
     {
         Pressed = false;
     }
+
+    public void ResetInput()
+    {
+        Pressed = false;
+    }
 }

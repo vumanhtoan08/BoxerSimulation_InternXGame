@@ -1,7 +1,6 @@
 ﻿using Coffee.UIExtensions;
 using DG.Tweening;
 using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +11,7 @@ public class TutorialManager : Singleton<TutorialManager>
 
     private bool isPassBoxing;
     public bool IsPassBoxing => isPassBoxing;
+    private bool isPassMove = false;
     private bool isPassRunning;
     private bool isPassSquat;
     private bool isPassBattle;
@@ -39,6 +39,12 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private Transform runningMachine;
     [SerializeField] private Transform dumbelRack;
     [SerializeField] private Transform battleRing;
+
+    [Header("Collider")]
+    [SerializeField] private GameObject step0_Collider; 
+    [SerializeField] private GameObject step1_Collider; 
+    [SerializeField] private GameObject step2_Collider; 
+    [SerializeField] private GameObject step3_Collider; 
 
     [Header("Arrow")]
     [SerializeField] private GameObject arrowObj;
@@ -169,6 +175,10 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             irisShot.SetActive(false);
             handTut_Cirle.SetActive(false);
+
+            if (isPassMove || data.isPass) return;
+            
+            step0_Collider.SetActive(true);
         }
     }
 
@@ -187,6 +197,8 @@ public class TutorialManager : Singleton<TutorialManager>
         else
         {
             arrowObj.SetActive(false);
+            step0_Collider.SetActive(false);
+            isPassMove = true;
         }
     }
 
@@ -217,10 +229,12 @@ public class TutorialManager : Singleton<TutorialManager>
             arrowObj.SetActive(true);
             arrowTransform.position = new Vector3(-2.5f, 2.5f, 7.5f);
             PlayerController.Instance.CameraLook.LookAtTarget(runningMachine);
+            step1_Collider.gameObject.SetActive(true);
         }
         else
         {
             arrowObj.SetActive(false);
+            step1_Collider.gameObject.SetActive(false);
         }
     }
 
@@ -248,10 +262,12 @@ public class TutorialManager : Singleton<TutorialManager>
             arrowObj.SetActive(true);
             arrowTransform.position = new Vector3(8.5f, 2f, 0f);
             PlayerController.Instance.CameraLook.LookAtTarget(dumbelRack);
+            step2_Collider.gameObject.SetActive(true);
         }
         else
         {
             arrowObj.SetActive(false);
+            step2_Collider.gameObject.SetActive(false);
         }
     }
 
@@ -272,6 +288,9 @@ public class TutorialManager : Singleton<TutorialManager>
 
     #region Step 5 Battle
 
+    [SerializeField] private GameObject conversationVMT; 
+    [SerializeField] private float tweenDuration = 0.4f; 
+
     public void OnInteractWithBattleRingTutorial(bool isActive)
     {
         if (isActive)
@@ -279,10 +298,12 @@ public class TutorialManager : Singleton<TutorialManager>
             arrowObj.SetActive(true);
             arrowTransform.position = new Vector3(-6.5f, 2f, -6.5f);
             PlayerController.Instance.CameraLook.LookAtTarget(battleRing);
+            step3_Collider.gameObject.SetActive(true);
         }
         else
         {
             arrowObj.SetActive(false);
+            step3_Collider.gameObject.SetActive(false);
         }
     }
 
@@ -299,12 +320,35 @@ public class TutorialManager : Singleton<TutorialManager>
         {
             irisShot.SetActive(false);
             handTut_Tap_2.SetActive(false);
-
-            CompleteTutorial();
         }
     }
 
-    private void CompleteTutorial()
+    public void OnConversationActive(bool isActive)
+    {
+        if (isActive)
+        {
+            // bật đối tượng và scale từ 0 -> 1
+            conversationVMT.SetActive(true);
+            conversationVMT.transform.localScale = Vector3.zero;
+
+            conversationVMT.transform
+                .DOScale(Vector3.one, tweenDuration)
+                .SetEase(Ease.OutBack); // hiệu ứng bật mượt
+        }
+        else
+        {
+            // scale ngược từ 1 -> 0, sau đó tắt
+            conversationVMT.transform
+                .DOScale(Vector3.zero, tweenDuration)
+                .SetEase(Ease.InBack)
+                .OnComplete(() =>
+                {
+                    conversationVMT.SetActive(false);
+                });
+        }
+    }
+
+    public void CompleteTutorial()
     {
         data.isPass = true;
         DataManager.Instance.CurrentTutorialData.isPass = data.isPass;
@@ -312,6 +356,27 @@ public class TutorialManager : Singleton<TutorialManager>
     }
 
     #endregion 
+
+    private void OnApplicationQuit()
+    {
+        CheckAndResetIfNotPassed();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+            CheckAndResetIfNotPassed();
+    }
+
+    private void CheckAndResetIfNotPassed()
+    {
+        if (!data.isPass)
+        {
+            Debug.LogWarning("⚠️ Tutorial chưa hoàn thành, reset toàn bộ dữ liệu người chơi!");
+            DataManager.Instance.ResetAllData();
+        }
+    }
+
 }
 
 [System.Serializable]

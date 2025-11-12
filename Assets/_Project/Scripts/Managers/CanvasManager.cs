@@ -67,6 +67,13 @@ public class CanvasManager : Singleton<CanvasManager>
         if (decayCo != null) StopCoroutine(decayCo);
         decayCo = StartCoroutine(CoDecay());
 
+        if (!TutorialManager.Instance.Data.isPass)
+        {
+            exitBtn.gameObject.SetActive(false);
+            return;
+        }
+
+        exitBtn.gameObject.SetActive(true);
         exitBtn.onClick.RemoveAllListeners();
         exitBtn.onClick.AddListener(() =>
         {
