@@ -148,7 +148,8 @@ public class GameManager : Singleton<GameManager>
             {
                 splashScreen.SetActive(false);
                 Debug.Log("Splash done!");
-            
+
+                TutorialManager.Instance.StoryTelling(!TutorialManager.Instance.Data.isPass);
                 CanvasManager.Instance.DarkPanelUnActive();
             });
     }

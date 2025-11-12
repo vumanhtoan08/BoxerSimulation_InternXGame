@@ -35,7 +35,14 @@ public class PopupInfoEnemy : PopupBase
 
             Sequence seq = DOTween.Sequence();
 
-            seq.Append(CanvasManager.Instance.DarkPanelActive())
+            seq.AppendCallback(() =>
+                {
+                    if (!TutorialManager.Instance.Data.isPass)
+                    {
+                        TutorialManager.Instance.OnTrainingBattleTutorial(false);
+                    }
+                })
+                .Append(CanvasManager.Instance.DarkPanelActive())
                 .AppendCallback(() =>
                 {
                     GameManager.Instance.ChangeGameState(Game_State.Battle);
@@ -53,8 +60,7 @@ public class PopupInfoEnemy : PopupBase
                .Append(CanvasManager.Instance.DarkPanelUnActive())
                .AppendCallback(() =>
                {
-                   
-                  
+
                });
         });
 
@@ -71,6 +77,11 @@ public class PopupInfoEnemy : PopupBase
 
     public override void Show()
     {
+        if (!TutorialManager.Instance.Data.isPass)
+        {
+            TutorialManager.Instance.OnTrainingBattleTutorial(true);
+        }
+
         base.Show();
         SoundManager.Instance.PlaySound(SoundKey.Bubble, 0.3f, 0.5f);
         UpdateInfoEnemy();

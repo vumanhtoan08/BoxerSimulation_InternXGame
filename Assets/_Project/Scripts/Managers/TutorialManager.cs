@@ -1,4 +1,5 @@
-using Coffee.UIExtensions;
+﻿using Coffee.UIExtensions;
+using DG.Tweening;
 using System.Collections.Generic;
 using Unity.Android.Gradle.Manifest;
 using UnityEngine;
@@ -20,8 +21,8 @@ public class TutorialManager : Singleton<TutorialManager>
     [SerializeField] private Unmask unmask;
     [SerializeField] private Image unmaskImg;
     [SerializeField] private RectTransform unmaskRect;
-    [SerializeField] private Sprite circleSprite; 
-    [SerializeField] private Sprite rectangleSprite; 
+    [SerializeField] private Sprite circleSprite;
+    [SerializeField] private Sprite rectangleSprite;
 
     [Header("Player Btn")]
     [SerializeField] private RectTransform moveBtn;
@@ -56,7 +57,7 @@ public class TutorialManager : Singleton<TutorialManager>
     {
         if (data.isPass) return;
 
-            if (!isPassBoxing && Vector3.Distance(PlayerController.Instance.transform.position, boxingBag.position) <= 4f)
+        if (!isPassBoxing && Vector3.Distance(PlayerController.Instance.transform.position, boxingBag.position) <= 4f)
         {
             isPassBoxing = true;
             OnTrainingBoxingTutorial(true);
@@ -85,14 +86,71 @@ public class TutorialManager : Singleton<TutorialManager>
 
     [Header("Image")]
     [SerializeField] private GameObject canvasStory;
-    [SerializeField] private List<Sprite> listSpriteStory;
+    [SerializeField] private List<Image> listImgStory;
+    [SerializeField] private List<Text> textsStory;
 
-    private void StoryTelling(bool isActive)
+    public void StoryTelling(bool isActive)
     {
-        if (!isActive) return; 
+        if (!isActive)
+        {
+            canvasStory.SetActive(false);
+            return;
+        }
 
+        Sequence seq = DOTween.Sequence();
 
+        seq.AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.LoiThoai_01))
+            .Append(FadeImageByIndex(0))
+            .Append(FadeTextByIndex(0))
+            .AppendInterval(2.5f)
+
+            .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.LoiThoai_02))
+            .Append(FadeImageByIndex(1))
+            .Append(FadeTextByIndex(1))
+            .AppendInterval(6f)
+
+            .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.LoiThoai_03))
+            .Append(FadeImageByIndex(2))
+            .Append(FadeTextByIndex(2))
+            .AppendInterval(4.5f)
+
+            .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.LoiThoai_04))
+            .Append(FadeImageByIndex(3))
+            .Append(FadeTextByIndex(3))
+            .AppendInterval(4f)
+
+            .AppendCallback(() => SoundManager.Instance.PlaySound(SoundKey.LoiThoai_05))
+            .Append(FadeImageByIndex(4))
+            .Append(FadeTextByIndex(4))
+            .AppendInterval(3.5f)
+
+            .AppendCallback(() => StoryTelling(false));
     }
+
+    /// <summary>
+    /// Fade ảnh theo index trong listImgStory từ 0 -> 1 opacity trong 0.5s
+    /// </summary>
+    public Tween FadeImageByIndex(int index)
+    {
+        if (index < 0 || index >= listImgStory.Count) return null;
+
+        Image img = listImgStory[index];
+        img.color = new Color(img.color.r, img.color.g, img.color.b, 0f); // set alpha ban đầu
+        return img.DOFade(1f, 0.5f).SetEase(Ease.Linear);
+    }
+
+    /// <summary>
+    /// Fade text theo index trong textsStory từ 0 -> 1 opacity trong 0.5s
+    /// </summary>
+    public Tween FadeTextByIndex(int index)
+    {
+        if (index < 0 || index >= textsStory.Count) return null;
+
+        Text txt = textsStory[index];
+        txt.color = new Color(txt.color.r, txt.color.g, txt.color.b, 0f); // set alpha ban đầu
+        return txt.DOFade(1f, 0.5f).SetEase(Ease.Linear);
+    }
+
 
     #endregion
 
@@ -103,6 +161,7 @@ public class TutorialManager : Singleton<TutorialManager>
         if (isActive)
         {
             irisShot.SetActive(true);
+            unmaskImg.sprite = circleSprite;
             unmask.FitTo(moveBtn);
             handTut_Cirle.SetActive(true);
         }
@@ -224,13 +283,30 @@ public class TutorialManager : Singleton<TutorialManager>
         else
         {
             arrowObj.SetActive(false);
+        }
+    }
+
+    public void OnTrainingBattleTutorial(bool isActive)
+    {
+        if (isActive)
+        {
+            irisShot.SetActive(true);
+            unmaskImg.sprite = rectangleSprite;
+            unmask.FitTo(fightBtn);
+            handTut_Tap_2.SetActive(true);
+        }
+        else
+        {
+            irisShot.SetActive(false);
+            handTut_Tap_2.SetActive(false);
+
             CompleteTutorial();
         }
     }
 
     private void CompleteTutorial()
     {
-        data.isPass = true; 
+        data.isPass = true;
         DataManager.Instance.CurrentTutorialData.isPass = data.isPass;
         DataManager.Instance.SaveData();
     }

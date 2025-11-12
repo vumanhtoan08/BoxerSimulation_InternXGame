@@ -30,4 +30,10 @@ public static class SoundKey
     public const string Stack = "Stack";
     public const string LevelUp = "LevelUp";
     public const string WarmingUpYell_01 = "WarmingUpYell_01";
+
+    public const string LoiThoai_01 = "LoiThoai_01";
+    public const string LoiThoai_02 = "LoiThoai_02";
+    public const string LoiThoai_03 = "LoiThoai_03";
+    public const string LoiThoai_04 = "LoiThoai_04";
+    public const string LoiThoai_05 = "LoiThoai_05";
 }
