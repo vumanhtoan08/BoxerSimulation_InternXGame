@@ -1,193 +1,669 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
-namespace D.Editor
-{
 
 #if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-    using UnityEditor;
+public class DataManager : Singleton<DataManager>
+{
+    private const string PlayerDataKey = "PlayerData";
+    private const string WalletDataKey = "WalletData";
+    private const string InteractableDataKey = "InteractableData";
+    private const string DayDataKey = "DayData";
+    private const string EnemyDataKey = "EnemyData";
+    private const string TutorialDataKey = "TutorialData";
 
-    [CustomEditor(typeof(DataManager))]
-    public class DataManagerEditor : Editor
+    [SerializeField] private ListStatLevelTable statLevelTables;
+    [SerializeField] private ListSkillLevelTable skillLevelTables;
+    [SerializeField] private EnemyStatDatabase enemyStatDatabase;
+    [SerializeField] private ListInteractableTable listInteractableTable;
+
+    public ListStatLevelTable StatLevelTables => statLevelTables;
+    public ListSkillLevelTable SkillLevelTables => skillLevelTables;
+    public EnemyStatDatabase EnemyStatDatabase => enemyStatDatabase;
+    public ListInteractableTable ListInteractableTable => listInteractableTable;
+
+    public DataSaveForPlayer CurrentPlayerData { get; private set; }
+    public DataSaveForWallet CurrentWalletData { get; private set; }
+    public DataSaveForInteractable CurrentInteractableData { get; private set; }
+    public DataSaveForDay CurrentDayData { get; private set; }
+    public DataSaveForEnemy CurrentEnemyData { get; private set; }
+    public DataSaveForTutorial CurrentTutorialData { get; private set; }
+
+    #region Unity Methods
+    public void OnAwake() => LoadData();
+    public void OnStart() { }
+    public void OnUpdate() { }
+    #endregion
+
+    private void LoadData()
     {
-        public Dictionary<string, string> prefInfos;
-
-        public override void OnInspectorGUI()
+        // --- PLAYER ---
+        if (PlayerPrefs.HasKey(PlayerDataKey))
         {
-            base.OnInspectorGUI();
-            if (prefInfos == null)
+            string json = PlayerPrefs.GetString(PlayerDataKey);
+            CurrentPlayerData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForPlayer>(json)
+                : new DataSaveForPlayer();
+            Debug.Log("✅ Player data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentPlayerData = new DataSaveForPlayer();
+            Debug.Log("⚙️ No player data found. Created default values.");
+        }
+
+        // --- WALLET ---
+        if (PlayerPrefs.HasKey(WalletDataKey))
+        {
+            string json = PlayerPrefs.GetString(WalletDataKey);
+            CurrentWalletData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForWallet>(json)
+                : new DataSaveForWallet();
+            Debug.Log("✅ Wallet data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentWalletData = new DataSaveForWallet();
+            Debug.Log("⚙️ No wallet data found. Created default values.");
+        }
+
+        // --- INTERACTABLE ---
+        if (PlayerPrefs.HasKey(InteractableDataKey))
+        {
+            string json = PlayerPrefs.GetString(InteractableDataKey);
+            CurrentInteractableData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForInteractable>(json)
+                : new DataSaveForInteractable();
+            Debug.Log("✅ Interactable data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentInteractableData = new DataSaveForInteractable();
+            Debug.Log("⚙️ No Interactable data found. Created default values.");
+        }
+
+        // --- DAY ---
+        if (PlayerPrefs.HasKey(DayDataKey))
+        {
+            string json = PlayerPrefs.GetString(DayDataKey);
+            CurrentDayData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForDay>(json)
+                : new DataSaveForDay();
+            Debug.Log("✅ Day data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentDayData = new DataSaveForDay();
+            Debug.Log("⚙️ No day data found. Created default values.");
+        }
+
+        // --- ENEMY ---
+        if (PlayerPrefs.HasKey(EnemyDataKey))
+        {
+            string json = PlayerPrefs.GetString(EnemyDataKey);
+            CurrentEnemyData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForEnemy>(json)
+                : new DataSaveForEnemy();
+            Debug.Log("✅ Enemy data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentEnemyData = new DataSaveForEnemy();
+            Debug.Log("⚙️ No enemy data found. Created default values.");
+        }
+
+        // --- TUTORIAL ---
+        if (PlayerPrefs.HasKey(TutorialDataKey))
+        {
+            string json = PlayerPrefs.GetString(TutorialDataKey);
+            CurrentTutorialData = !string.IsNullOrEmpty(json)
+                ? JsonUtility.FromJson<DataSaveForTutorial>(json)
+                : new DataSaveForTutorial();
+            Debug.Log("✅ Tutorial data loaded from PlayerPrefs");
+        }
+        else
+        {
+            CurrentTutorialData = new DataSaveForTutorial();
+            Debug.Log("⚙️ No tutorial data found. Created default values.");
+        }
+
+        // Đảm bảo tất cả tồn tại
+        CurrentPlayerData ??= new DataSaveForPlayer();
+        CurrentWalletData ??= new DataSaveForWallet();
+        CurrentInteractableData ??= new DataSaveForInteractable();
+        CurrentDayData ??= new DataSaveForDay();
+        CurrentEnemyData ??= new DataSaveForEnemy();
+        CurrentTutorialData ??= new DataSaveForTutorial();
+
+        SaveData(); // ✅ Gọi 1 lần duy nhất
+    }
+
+    public void SaveData()
+    {
+        PlayerPrefs.SetString(PlayerDataKey, JsonUtility.ToJson(CurrentPlayerData));
+        PlayerPrefs.SetString(WalletDataKey, JsonUtility.ToJson(CurrentWalletData));
+        PlayerPrefs.SetString(InteractableDataKey, JsonUtility.ToJson(CurrentInteractableData));
+        PlayerPrefs.SetString(DayDataKey, JsonUtility.ToJson(CurrentDayData));
+        PlayerPrefs.SetString(EnemyDataKey, JsonUtility.ToJson(CurrentEnemyData));
+        PlayerPrefs.SetString(TutorialDataKey, JsonUtility.ToJson(CurrentTutorialData));
+        PlayerPrefs.Save();
+        Debug.Log("💾 Data saved to PlayerPrefs");
+    }
+
+    private void ReloadPref()
+    {
+        PlayerPrefs.DeleteKey(PlayerDataKey);
+        PlayerPrefs.DeleteKey(WalletDataKey);
+        PlayerPrefs.DeleteKey(InteractableDataKey);
+        PlayerPrefs.DeleteKey(DayDataKey);
+        PlayerPrefs.DeleteKey(EnemyDataKey);
+        PlayerPrefs.DeleteKey(TutorialDataKey);
+        LoadData();
+        Debug.Log("♻️ Player data reset to default");
+    }
+
+    public void ResetAllData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+        ReloadPref();
+        Debug.Log("♻️ Toàn bộ dữ liệu đã được reset do tutorial chưa hoàn thành.");
+    }
+
+#if UNITY_EDITOR
+    // 🧩 Thêm menu Reset trên thanh Tools
+    [MenuItem("Tools/Demigiant/Reset Player Data %#r")] // Ctrl+Shift+R
+    public static void ResetPlayerDataMenu()
+    {
+        if (EditorUtility.DisplayDialog(
+            "Reset Player Data",
+            "Bạn có chắc muốn xoá toàn bộ dữ liệu người chơi không?",
+            "Xoá hết",
+            "Huỷ"))
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+            Debug.Log("♻️ Tất cả PlayerPrefs đã được reset về mặc định.");
+
+            var manager = UnityEngine.Object.FindFirstObjectByType<DataManager>();
+            if (manager != null)
             {
-                foldOut = true;
-                if (GUILayout.Button("Show Prefs"))
-                {
-                    string data = SaveSystem.LoadGame(DataManager.DATAPATH);
-                    if (data == null || data.Length == 0) return;
-                    var userData = JsonConvert.DeserializeObject<PlayerData>(data);
-                    if (userData.prefData == null || userData.prefData.Length == 0) return;
-                    prefInfos = JsonConvert.DeserializeObject<Dictionary<string, string>>(userData.prefData);
-                }
+                manager.ReloadPref();
+                Debug.Log("✅ Đã gọi ReloadPref() trong scene.");
             }
             else
             {
-                ShowPrefs();
-                if (GUILayout.Button("Save Prefs"))
-                {
-                    string data = SaveSystem.LoadGame(DataManager.DATAPATH);
-                    if (data == null || data.Length == 0) return;
-                    var userData = JsonConvert.DeserializeObject<PlayerData>(data);
-                    string newData = JsonConvert.SerializeObject(prefInfos);
-                    userData.prefData = newData;
-                    var d = JsonConvert.SerializeObject(userData);
-                    PlayerPrefs.SetString("user_data", d);
-                    Debug.Log("Saved:" + d);
-                    if (Application.isPlaying)
-                    {
-                        DataManager dataManager = target as DataManager;
-                        dataManager.data.prefData = newData;
-                        dataManager.SendMessage("ReloadPref");
-                    }
-                }
+                Debug.LogWarning("⚠️ Không tìm thấy DataManager trong scene hiện tại.");
             }
-        }
-
-        private bool foldOut;
-
-        private void ShowPrefs()
-        {
-            int index = 0;
-            foldOut = EditorGUILayout.Foldout(foldOut, "ListPrefs");
-            if (foldOut)
-            {
-                EditorGUI.indentLevel++;
-                var newList = new Dictionary<string, string>(prefInfos);
-                foreach (var item in newList)
-                {
-                    EditorGUILayout.LabelField("Element " + index);
-                    EditorGUI.indentLevel++;
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(item.Key);
-                    string newValue = "";
-                    if (int.TryParse(item.Value, out int newNum))
-                    {
-                        newValue = EditorGUILayout.IntField(newNum).ToString();
-                    }
-                    else
-                    {
-                        newValue = EditorGUILayout.TextField(item.Value);
-                    }
-                    if (newValue != item.Value)
-                    {
-                        prefInfos[item.Key] = newValue;
-                        Debug.Log("change " + item.Key + ":" + newValue);
-                    }
-                    EditorGUILayout.EndHorizontal();
-                    index++;
-                    EditorGUI.indentLevel--;
-                }
-                EditorGUI.indentLevel--;
-            }
-
         }
     }
-
 #endif
-
 }
-public class DataManager : Singleton<DataManager>
-{
-    public static readonly string DATAPATH = "player_data";
-    public PlayerData data;
-    private Dictionary<string, string> userDicDataPref;
-    void LoadData()
-    {
-        string myData = SaveSystem.LoadGame(DATAPATH);
-        if (myData.Length > 1)
-        {
-            Debug.Log("Load:" + myData);
-            data = JsonUtility.FromJson<PlayerData>(myData);
-            if (data.prefData != null && data.prefData.Length > 0)
-            {
-                userDicDataPref = JsonConvert.DeserializeObject<Dictionary<string, string>>(data.prefData);
-            }
-        }
-        else
-        {
-            data = new PlayerData();
-        }
-    }
-    void SaveData()
-    {
-        data.prefData = JsonConvert.SerializeObject(userDicDataPref);
-        string dt = JsonConvert.SerializeObject(data);
-        Debug.Log("Save:" + dt);
-        SaveSystem.SaveFile(DATAPATH, dt);
-    }
-    private void ReloadPref()
-    {
-        Debug.Log("Reload");
-        userDicDataPref = JsonConvert.DeserializeObject<Dictionary<string, string>>(data.prefData);
-    }
 
-    #region Save Sync
+#region PlayerData
 
-    public string GetString(string key, string defaultValue)
-    {
-        if (userDicDataPref.ContainsKey(key))
-        {
-            return userDicDataPref[key];
-        }
-        else
-        {
-            return defaultValue;
-        }
-    }
-    public void SetString(string key, string newValue)
-    {
-        if (userDicDataPref.ContainsKey(key))
-        {
-            userDicDataPref[key] = newValue;
-        }
-        else
-        {
-            userDicDataPref.Add(key, newValue);
-        }
-        SaveData();
-    }
-    public int GetInt(string key, int defaultValue)
-    {
-        if (userDicDataPref.ContainsKey(key))
-        {
-            int data = Convert.ToInt32(userDicDataPref[key]);
-            return data;
-        }
-        else
-        {
-            return defaultValue;
-        }
-    }
-    public void SetInt(string key, int newValue)
-    {
-        if (userDicDataPref.ContainsKey(key))
-        {
-            userDicDataPref[key] = newValue.ToString();
-        }
-        else
-        {
-            userDicDataPref.Add(key, newValue.ToString());
-        }
-        SaveData();
-    }
-    #endregion
-}
 [System.Serializable]
 public class PlayerData
 {
-    public string prefData;
-    public PlayerData()
+    [Header("Base Stats")]
+    public float Attack;
+    public float Health;
+    public float Stamina;
+
+    [Header("Training Process")]
+    public int AttackLevel;             //
+    public int CurrentAttackProcess;    // 
+    public int MaxAttackProcess;
+    public int HealthLevel;             //
+    public int CurrentHealthProcess;    //
+    public int MaxHealthProcess;
+    public int StaminaLevel;            //
+    public int CurrentStaminaProcess;   // 
+    public int MaxStaminaProcess;
+
+    [Header("Cost Stamina")]
+    public float PunchCost;
+    public float CounterCost;
+    public float BlockCost;
+
+    public void SetDataForPlayer()
     {
-        prefData = "";
+        
+        Attack = DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Value;
+        Stamina = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].Value; 
+        Health = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Value;
+
+        AttackLevel = DataManager.Instance.CurrentPlayerData.AttackLevel;
+        StaminaLevel = DataManager.Instance.CurrentPlayerData.StaminaLevel;
+        HealthLevel = DataManager.Instance.CurrentPlayerData.HealthLevel;
+
+        CurrentAttackProcess = DataManager.Instance.CurrentPlayerData.AttackProcess;
+        CurrentStaminaProcess = DataManager.Instance.CurrentPlayerData.StaminaProcess;
+        CurrentHealthProcess = DataManager.Instance.CurrentPlayerData.HealthProcess;
+
+        MaxAttackProcess = DataManager.Instance.StatLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].ProgressToNext;
+        MaxStaminaProcess = DataManager.Instance.StatLevelTables.StatLevelTables[1].Levels[DataManager.Instance.CurrentPlayerData.StaminaLevel].ProgressToNext;
+        MaxHealthProcess = DataManager.Instance.StatLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].ProgressToNext;
+
+        PunchCost = DataManager.Instance.SkillLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Cost;
+        CounterCost = DataManager.Instance.SkillLevelTables.StatLevelTables[0].Levels[DataManager.Instance.CurrentPlayerData.AttackLevel].Cost;
+        BlockCost = DataManager.Instance.SkillLevelTables.StatLevelTables[2].Levels[DataManager.Instance.CurrentPlayerData.HealthLevel].Cost;
+
+        Debug.Log($"{Attack} == {Stamina} == {Health} == {AttackLevel} == {StaminaLevel} == {HealthLevel} == {CurrentAttackProcess}");
+    }
+
+    public bool UpgradeState(STATE_TYPE type)
+    {
+        var dataManager = DataManager.Instance;
+        var playerData = dataManager.CurrentPlayerData;
+        var statTables = dataManager.StatLevelTables.StatLevelTables;
+
+        SoundManager.Instance.PlaySound(SoundKey.LevelUp, 1f, 1f);
+
+        switch (type)
+        {
+            case STATE_TYPE.Attack:
+                {
+                    int maxLevel = statTables[0].Levels.Count - 1;
+                    if (playerData.AttackLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ Attack đã đạt cấp tối đa ({maxLevel})!");
+                        return false;
+                    }
+
+                    playerData.AttackLevel++;
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+                    Debug.Log($"✅ Attack upgraded to level {playerData.AttackLevel}");
+                    return true;
+                }
+
+            case STATE_TYPE.Health:
+                {
+                    int maxLevel = statTables[2].Levels.Count - 1;
+                    if (playerData.HealthLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ Health đã đạt cấp tối đa ({maxLevel})!");
+                        return false;
+                    }
+
+                    playerData.HealthLevel++;
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+                    Debug.Log($"✅ Health upgraded to level {playerData.HealthLevel}");
+                    return true;
+                }
+
+            case STATE_TYPE.Stamina:
+                {
+                    int maxLevel = statTables[1].Levels.Count - 1;
+                    if (playerData.StaminaLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ Stamina đã đạt cấp tối đa ({maxLevel})!");
+                        return false;
+                    }
+
+                    playerData.StaminaLevel++;
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+                    Debug.Log($"✅ Stamina upgraded to level {playerData.StaminaLevel}");
+                    return true;
+                }
+
+            default:
+                Debug.LogWarning("⚠️ STATE_TYPE không hợp lệ khi gọi UpgradeState()");
+                return false;
+        }
+    }
+
+    public void UpProcess(TYPE_TRAINING type)
+    {
+        var dataManager = DataManager.Instance;
+        var playerData = dataManager.CurrentPlayerData;
+
+        switch (type)
+        {
+            case TYPE_TRAINING.BOXING:
+                {
+                    int currentLevel = playerData.AttackLevel;
+                    int maxLevel = dataManager.StatLevelTables.StatLevelTables[0].Levels.Count - 1;
+
+                    if (currentLevel >= maxLevel)
+                    {
+                        Debug.LogWarning("🥊 Boxing đã đạt cấp tối đa!");
+                        return;
+                    }
+
+                    playerData.AttackProcess += DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value;
+                    DataManager.Instance.CurrentPlayerData.AttackProcess = playerData.AttackProcess;
+                    Debug.Log($"➡️ Process Boxing: {playerData.AttackProcess}/{MaxAttackProcess} == {DataManager.Instance.CurrentPlayerData.AttackProcess}");
+
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+
+                    if (playerData.AttackProcess >= MaxAttackProcess)
+                    {
+                        playerData.AttackProcess = 0;
+                        DataManager.Instance.CurrentPlayerData.AttackProcess = 0;
+
+                        bool upgraded = UpgradeState(STATE_TYPE.Attack);
+                        if (upgraded)
+                        {
+                            // 🪄 Hiển thị popup upgrade
+                            PopupManager.Instance.ShowPopup(Type_Popup.Upgrade);
+                        }
+                    }
+
+                    break;
+                }
+
+            case TYPE_TRAINING.RUNING:
+                {
+                    int currentLevel = playerData.StaminaLevel;
+                    int maxLevel = dataManager.StatLevelTables.StatLevelTables[1].Levels.Count - 1;
+
+                    if (currentLevel >= maxLevel)
+                    {
+                        Debug.LogWarning("🏃‍♂️ Running đã đạt cấp tối đa!");
+                        return;
+                    }
+
+                    playerData.StaminaProcess += DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value;
+                    DataManager.Instance.CurrentPlayerData.StaminaProcess = playerData.StaminaProcess;
+                    Debug.Log($"➡️ Process Running: {playerData.StaminaProcess}/{MaxStaminaProcess}");
+
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+
+                    if (playerData.StaminaProcess >= MaxStaminaProcess)
+                    {
+                        playerData.StaminaProcess = 0;
+                        DataManager.Instance.CurrentPlayerData.StaminaProcess = 0;
+
+                        bool upgraded = UpgradeState(STATE_TYPE.Stamina);
+                        if (upgraded)
+                        {
+                            // 🪄 Hiển thị popup upgrade
+                            PopupManager.Instance.ShowPopup(Type_Popup.Upgrade);
+                        }
+                    }
+
+                    break;
+                }
+
+            case TYPE_TRAINING.SQUAT:
+                {
+                    int currentLevel = playerData.HealthLevel;
+                    int maxLevel = dataManager.StatLevelTables.StatLevelTables[2].Levels.Count - 1;
+
+                    if (currentLevel >= maxLevel)
+                    {
+                        Debug.LogWarning("🏋️‍♂️ Squat đã đạt cấp tối đa!");
+                        return;
+                    }
+
+                    playerData.HealthProcess += DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value;
+                    DataManager.Instance.CurrentPlayerData.HealthProcess = playerData.HealthProcess;
+                    Debug.Log($"➡️ Process Squat: {playerData.HealthProcess}/{MaxHealthProcess}");
+
+                    dataManager.SaveData();
+                    SetDataForPlayer();
+
+                    if (playerData.HealthProcess >= MaxHealthProcess)
+                    {
+                        playerData.HealthProcess = 0;
+                        DataManager.Instance.CurrentPlayerData.HealthProcess = 0;
+                        
+                        bool upgraded = UpgradeState(STATE_TYPE.Health);
+                        if (upgraded)
+                        {
+                            // 🪄 Hiển thị popup upgrade
+                            PopupManager.Instance.ShowPopup(Type_Popup.Upgrade);
+                        }
+                    }
+
+                    break;
+                }
+
+            default:
+                Debug.LogWarning("⚠️ Loại tập luyện không hợp lệ!");
+                break;
+        }
     }
 }
+
+public enum STATE_TYPE
+{
+    Attack,
+    Health,
+    Stamina,
+}
+
+[SerializeField]
+public class DataSaveForPlayer
+{
+    public int AttackLevel;
+    public int HealthLevel;
+    public int StaminaLevel;
+    public int AttackProcess;
+    public int HealthProcess;
+    public int StaminaProcess;
+
+    public DataSaveForPlayer()
+    {
+        AttackLevel = 0;
+        HealthLevel = 0;
+        StaminaLevel = 0;
+        AttackProcess = 0;
+        HealthProcess = 0;
+        StaminaProcess = 0;
+    }
+}
+
+#endregion
+
+#region Enemy Runtime Data
+
+[Serializable]
+public class EnemyData
+{
+    public string Name;
+    public float Attack;
+    public float Health;
+    public int Reward;
+    public Sprite Avatar; 
+    public Material Material;
+    public Enemy_Difficult Difficult;
+
+    public void SetDataForEnemy()
+    {
+        Name = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Name;
+        Attack = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Attack; // Ve sau thay 0 = level luu trong Prefabs
+        Health = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Defense;
+        Reward = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].Money;
+
+        Avatar = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].iconEnemy;
+        Material = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].materialEnemy;
+        Difficult = DataManager.Instance.EnemyStatDatabase.Enemies[DataManager.Instance.CurrentEnemyData.Level].difficult;
+    }
+}
+
+[Serializable]
+public class DataSaveForEnemy
+{
+    public int Level;
+
+    public DataSaveForEnemy() { Level = 0; }
+}
+
+#endregion
+
+#region Wallet Data
+
+[Serializable]
+public class WalletData
+{
+    public int currentMoney;
+
+    public void SetDataForWallet()
+    {
+        currentMoney = DataManager.Instance.CurrentWalletData.currentMoney;
+    }
+}
+
+[SerializeField]
+public class DataSaveForWallet
+{
+    public int currentMoney;
+
+    public DataSaveForWallet()
+    {
+        currentMoney = 0;
+    }
+}
+
+#endregion
+
+#region Day Data 
+
+[Serializable]
+public class DayData
+{
+    public int currentDay;
+
+    public void SetDataForDay()
+    {
+        currentDay = DataManager.Instance.CurrentDayData.currentDay;
+    }
+}
+
+[Serializable]
+public class DataSaveForDay
+{
+    public int currentDay;
+    public int currentEnergy; 
+
+    public DataSaveForDay()
+    {
+        currentDay = 1;
+        currentEnergy = 3;
+    }
+}
+
+#endregion
+
+#region InteractableData
+
+[SerializeField]
+public class DataSaveForInteractable
+{
+    public int BoxingLevel;
+    public int RunningLevel;
+    public int SquatLevel;
+
+    public DataSaveForInteractable()
+    {
+        BoxingLevel = 0;
+        RunningLevel = 0;
+        SquatLevel = 0;
+    }
+}
+
+[Serializable]
+public class InteractableData
+{
+    public int Level;
+    public int Value;
+    public int Cost;
+
+    public void SetDataForInteractable(TYPE_TRAINING type)
+    {
+        switch (type)
+        {
+            case TYPE_TRAINING.NONE:
+                break;
+            case TYPE_TRAINING.BOXING:
+                Level = DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Level;
+                Value = DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Value;
+                Cost = DataManager.Instance.ListInteractableTable.InteractableTables[0].Levels[DataManager.Instance.CurrentInteractableData.BoxingLevel].Cost;
+                break;
+            case TYPE_TRAINING.RUNING:
+                Level = DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Level;
+                Value = DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Value;
+                Cost = DataManager.Instance.ListInteractableTable.InteractableTables[1].Levels[DataManager.Instance.CurrentInteractableData.RunningLevel].Cost;
+                break;
+            case TYPE_TRAINING.SQUAT:
+                Level = DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Level;
+                Value = DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Value;
+                Cost = DataManager.Instance.ListInteractableTable.InteractableTables[2].Levels[DataManager.Instance.CurrentInteractableData.SquatLevel].Cost;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpgradeInteractable(TYPE_TRAINING type)
+    {
+        var data = DataManager.Instance.CurrentInteractableData;
+        var tables = DataManager.Instance.ListInteractableTable.InteractableTables;
+
+        switch (type)
+        {
+            case TYPE_TRAINING.NONE:
+                return;
+
+            case TYPE_TRAINING.BOXING:
+                {
+                    int maxLevel = tables[0].Levels.Count - 1;
+                    if (data.BoxingLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ {type} đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    data.BoxingLevel++;
+                    DataManager.Instance.SaveData();
+                    break;
+                }
+
+            case TYPE_TRAINING.RUNING:
+                {
+                    int maxLevel = tables[1].Levels.Count - 1;
+                    if (data.RunningLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ {type} đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    data.RunningLevel++;
+                    DataManager.Instance.SaveData();
+                    break;
+                }
+
+            case TYPE_TRAINING.SQUAT:
+                {
+                    int maxLevel = tables[2].Levels.Count - 1;
+                    if (data.SquatLevel >= maxLevel)
+                    {
+                        Debug.LogWarning($"⚠️ {type} đã đạt cấp tối đa ({maxLevel})!");
+                        return;
+                    }
+
+                    data.SquatLevel++;
+                    DataManager.Instance.SaveData();
+                    break;
+                }
+        }
+
+        SetDataForInteractable(type);
+
+        Debug.Log($"✅ {type} upgraded! (Level: {Level})");
+    }
+}
+
+#endregion

@@ -1,0 +1,150 @@
+﻿using DG.Tweening;
+using UnityEngine;
+
+public class EnemyPunchState : IState
+{
+    private EnemyController enemyController;
+    private AnimatorStateInfo info;
+    private bool hasDealtDamage;
+    private Transform enemyTransform;
+    private Transform playerTransform;
+
+    private readonly string animStateName = "Punch";
+    private const float damageTriggerPercent = 0.3f;
+
+    public EnemyPunchState(EnemyController enemyController)
+    {
+        this.enemyController = enemyController;
+        enemyTransform = enemyController.transform;
+        playerTransform = enemyController.PlayerTransform;
+    }
+
+    public void Enter()
+    {
+        hasDealtDamage = false;
+        enemyController.Animator.ResetTrigger("isIdle");
+        enemyController.Animator.SetTrigger("isPunch");
+    }
+
+    public void Excute()
+    {
+        info = enemyController.Animator.GetCurrentAnimatorStateInfo(0);
+        Debug.Log($"[Punch] State={info.IsName(animStateName)} | Time={info.normalizedTime}");
+
+        if (info.IsName(animStateName) && info.normalizedTime >= damageTriggerPercent && !hasDealtDamage)
+        {
+            hasDealtDamage = true;
+            DealDamageToPlayer();
+        }
+
+        if (info.IsName(animStateName) && info.normalizedTime >= 1f)
+        {
+            switch (enemyController.RuntimeData.EnemyData.Difficult)
+            {
+                case Enemy_Difficult.Easy:
+                    enemyController.StateMachine.ChangeState(new EnemyIdleState(enemyController));
+                    break;
+                case Enemy_Difficult.Med:
+                    DecideNextActionMedEnemy();
+                    break;
+                case Enemy_Difficult.Hard:
+                    DecideNextActionMedEnemy();
+                    break;
+            }
+        }
+    }
+
+    public void Exit()
+    {
+        // Không reset trigger quá sớm, nếu muốn thì có thể reset sau delay
+        enemyController.Animator.SetTrigger("isIdle");
+    }
+
+    private void DealDamageToPlayer()
+    {
+        Transform hitPoint = enemyController.RightHand;
+        float radius = 0.5f;
+        LayerMask playerLayerMask = enemyController.LayerPlayer;
+
+        Collider[] hits = Physics.OverlapSphere(hitPoint.position, radius, playerLayerMask);
+
+        if (hits.Length > 0)
+        {
+            Debug.Log($"Enemy hit {hits[0].name}");
+            var playerController = hits[0].GetComponent<PlayerController>();
+            Transform effect = ObjectPooling.GetObject(DictionaryEffect.Instance.enemyHitEffect, enemyController.RightHand.position);
+
+            if (playerController.StateMachine.CurrentState.ToString() == "PlayerBlockState")
+            {
+                SoundManager.Instance.PlaySound(SoundKey.Block, 1, 1);
+
+                DOVirtual.DelayedCall(1f, () =>
+                {
+                    ObjectPooling.ReturnObject(effect);
+                });
+                return;
+            }
+
+            SoundManager.Instance.PlaySound(SoundKey.Punch, 1, 1);
+
+            if (EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult != Enemy_Difficult.Easy
+                && EnemyManager.Instance.EnemyController.Health.IsAuraActive)
+            {
+                playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack * (1f + (int)EnemyManager.Instance.EnemyController.RuntimeData.EnemyData.Difficult * 0.25f));
+            }
+            else
+            {
+                playerController.Health.ChangeHealth(-enemyController.RuntimeData.EnemyData.Attack);
+            }
+
+            TimeEffect.HitTimeEffect();
+            DOVirtual.DelayedCall(1f, () =>
+            {
+                ObjectPooling.ReturnObject(effect);
+            });
+        }
+    }
+
+    private bool CheckDistanceToPlayer()
+    {
+        bool inRange;
+        float currentDistance = Vector3.Distance(enemyTransform.position, playerTransform.position);
+
+        inRange = currentDistance > enemyController.DetectedRange ? false : true;
+        return inRange;
+    }
+
+    private void DecideNextActionMedEnemy()
+    {
+        float rand = Random.value; // 0 → 1
+
+        if (!CheckDistanceToPlayer())
+        {
+            enemyController.StateMachine.ChangeState(new EnemyMoveState(enemyController));
+            return;
+        }
+
+        if (enemyController.Health.IsAuraActive)
+        {
+            if (rand < 0.5f)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+            }
+            else
+            {
+                enemyController.StateMachine.ChangeState(new EnemyCounterState(enemyController));
+            }
+        }
+        else
+        {
+            if (rand < 0.5f)
+            {
+                enemyController.StateMachine.ChangeState(new EnemyPunchState(enemyController));
+            }
+            else
+            {
+                enemyController.StateMachine.ChangeState(new EnemyBlockState(enemyController));
+            }
+        }
+    }
+}

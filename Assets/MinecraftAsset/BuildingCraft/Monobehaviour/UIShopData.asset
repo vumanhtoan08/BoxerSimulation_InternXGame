@@ -1,0 +1,342 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2c30704e584e0b4ba4c44dc3cfc1ae7, type: 3}
+  m_Name: UIShopData
+  m_EditorClassIdentifier: 
+  packageShopData:
+  - siblingIndex: 0
+    tile: 
+    isX2IfFirst: 0
+    skuId: 
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 0
+      itemIcon: {fileID: 0}
+      itemAmount: 500
+      itemName: 
+      previewIcon: {fileID: -1391589471181017857, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    - itemType: 1
+      itemIcon: {fileID: 0}
+      itemAmount: 1000
+      itemName: 
+      previewIcon: {fileID: 3420871122580769833, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+  skinShopData: {fileID: 11400000, guid: 10b6d9e9cea1a8a4390f50be6b1df913, type: 2}
+  petShopData:
+  - siblingIndex: 0
+    tile: Fire Dragon
+    isX2IfFirst: 0
+    skuId: 
+    skuIdiOS: 
+    priceType: 0
+    priceIcon: {fileID: -5394103144211811178, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 50000
+    buyType: 1
+    allItems:
+    - itemType: 6
+      itemIcon: {fileID: 0}
+      itemAmount: 1
+      itemName: Egg-386
+      previewIcon: {fileID: 0}
+    idx: 0
+  - siblingIndex: 0
+    tile: Hell Dragon
+    isX2IfFirst: 0
+    skuId: 
+    skuIdiOS: 
+    priceType: 0
+    priceIcon: {fileID: -5394103144211811178, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 100000
+    buyType: 1
+    allItems:
+    - itemType: 6
+      itemIcon: {fileID: 0}
+      itemAmount: 1
+      itemName: Egg-385
+      previewIcon: {fileID: 0}
+    idx: 1
+  - siblingIndex: 0
+    tile: Griffin
+    isX2IfFirst: 0
+    skuId: 
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 100
+    buyType: 1
+    allItems:
+    - itemType: 6
+      itemIcon: {fileID: 0}
+      itemAmount: 1
+      itemName: Egg-387
+      previewIcon: {fileID: 0}
+    idx: 2
+  - siblingIndex: 0
+    tile: Gorilla
+    isX2IfFirst: 0
+    skuId: 
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 100
+    buyType: 1
+    allItems:
+    - itemType: 6
+      itemIcon: {fileID: 0}
+      itemAmount: 1
+      itemName: Egg-388
+      previewIcon: {fileID: 0}
+    idx: 3
+  - siblingIndex: 0
+    tile: Monkey
+    isX2IfFirst: 0
+    skuId: 
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 100
+    buyType: 1
+    allItems:
+    - itemType: 6
+      itemIcon: {fileID: 0}
+      itemAmount: 1
+      itemName: Egg-389
+      previewIcon: {fileID: 0}
+    idx: 4
+  itemShopData:
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: gem5
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 3000
+      itemName: 
+      previewIcon: {fileID: -1986917642803943527, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: gem4
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 1700
+      itemName: 
+      previewIcon: {fileID: 3420871122580769833, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: gem3
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 650
+      itemName: 
+      previewIcon: {fileID: -9063591451885864566, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: gem2
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 300
+      itemName: 
+      previewIcon: {fileID: -4154216829843164736, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: egg_pack_sale
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 200
+      itemName: 
+      previewIcon: {fileID: -1986917642803943527, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 1
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: gem1
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 130
+      itemName: 
+      previewIcon: {fileID: -7506088824210990468, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: char_pack_sale
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 50
+      itemName: 
+      previewIcon: {fileID: -1986917642803943527, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 1
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: egg_pack
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 35
+      itemName: 
+      previewIcon: {fileID: -1986917642803943527, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 1
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 1
+    skuId: char_pack
+    skuIdiOS: 
+    priceType: -1
+    priceIcon: {fileID: 0}
+    price: 0
+    buyType: 2
+    allItems:
+    - itemType: 1
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 20
+      itemName: 
+      previewIcon: {fileID: -1986917642803943527, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 1
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 0
+    skuId: gem0
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 1000
+    buyType: 1
+    allItems:
+    - itemType: 0
+      itemIcon: {fileID: -5394103144211811178, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 100000
+      itemName: 
+      previewIcon: {fileID: -8558145525645784571, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 0
+    skuId: craft_coin_pack_5
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 500
+    buyType: 1
+    allItems:
+    - itemType: 0
+      itemIcon: {fileID: -5394103144211811178, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 50000
+      itemName: 
+      previewIcon: {fileID: -1391589471181017857, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 0
+    skuId: craft_coin_pack_5
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 100
+    buyType: 1
+    allItems:
+    - itemType: 0
+      itemIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 10000
+      itemName: 
+      previewIcon: {fileID: 1991040305656700937, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 0
+    skuId: craft_coin_pack_5
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 50
+    buyType: 1
+    allItems:
+    - itemType: 0
+      itemIcon: {fileID: -5394103144211811178, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 5000
+      itemName: 
+      previewIcon: {fileID: -4698337197904521831, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0
+  - siblingIndex: -1
+    tile: 
+    isX2IfFirst: 0
+    skuId: craft_coin_pack_5
+    skuIdiOS: 
+    priceType: 1
+    priceIcon: {fileID: -2622212723038040429, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    price: 10
+    buyType: 1
+    allItems:
+    - itemType: 0
+      itemIcon: {fileID: -5394103144211811178, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+      itemAmount: 1000
+      itemName: 
+      previewIcon: {fileID: -4226755647848430749, guid: 2c92c99075a0c9244b1950935e209130, type: 3}
+    isInReview: 0

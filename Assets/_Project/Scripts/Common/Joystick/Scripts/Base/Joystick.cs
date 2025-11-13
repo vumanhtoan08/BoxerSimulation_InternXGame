@@ -134,6 +134,12 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         handle.anchoredPosition = Vector2.zero;
     }
 
+    public void ResetInput()
+    {
+        input = Vector2.zero;
+        handle.anchoredPosition = Vector2.zero; // nếu bạn có handle transform
+    }
+
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
     {
         Vector2 localPoint = Vector2.zero;

@@ -358,7 +358,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7015729072544632613}
   - component: {fileID: 4165762181111277345}
-  - component: {fileID: 6813577456535623299}
   m_Layer: 0
   m_Name: PunchingBag.006
   m_TagString: Untagged
@@ -444,29 +443,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0003202851, y: 0.031810835, z: -0.0003802022}
     m_Extent: {x: 0.01035089, y: 0.032054238, z: 0.010539341}
   m_DirtyAABB: 0
---- !u!136 &6813577456535623299
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6285019608743604070}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.013311505
-  m_Height: 0.02089617
-  m_Direction: 2
-  m_Center: {x: 0.00024097259, y: 0.00045158697, z: -0.013223401}
 --- !u!1 &6396736690736846834
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,9 +516,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1118294314556469742}
+  - component: {fileID: 2180655053207696369}
+  - component: {fileID: 1556777639529620493}
+  - component: {fileID: 6181851249481811557}
   m_Layer: 0
   m_Name: BoxingBag
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,6 +542,61 @@ Transform:
   - {fileID: 3338082261210423620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &2180655053207696369
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449003473562448080}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Height: 1.68
+  m_Direction: 1
+  m_Center: {x: -0.15, y: 1.49, z: 1.33}
+--- !u!114 &1556777639529620493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449003473562448080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 1, b: 0, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &6181851249481811557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449003473562448080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b193b99c421e3e849a5aeab9dadf361d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  type: 1
 --- !u!1 &7619278092597492091
 GameObject:
   m_ObjectHideFlags: 0
